@@ -17,7 +17,7 @@ public class Persona_serializable {
      */
     public static void main(String[] args) {
         Persona personaA = new Persona("Daniel", 23, "46262784D");
-        System.out.println(personaA.Dni.dni);
+        System.out.println(personaA.dni.dni);
     }
     
 }
