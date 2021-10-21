@@ -10,21 +10,21 @@
     	</description>
     	<display-name>Principal</display-name>
     	<servlet-name>Principal</servlet-name>
-    	<servlet-class>es.iespuertodelacruz.jc.matriculas.servlets.Principal</servlet-class>
+    	<servlet-class>es.iespuertodelacruz.dbr.matriculas.servlets.Principal</servlet-class>
     </servlet>
     <servlet>
     	<description>
     	</description>
     	<display-name>GestorAlumnos</display-name>
     	<servlet-name>GestorAlumnos</servlet-name>
-    	<servlet-class>es.iespuertodelacruz.jc.matriculas.servlets.GestorAlumnos</servlet-class>
+    	<servlet-class>es.iespuertodelacruz.dbr.matriculas.servlets.GestorAlumnos</servlet-class>
     </servlet>
     <servlet>
     	<description>
     	</description>
     	<display-name>GestorMatriculas</display-name>
     	<servlet-name>GestorMatriculas</servlet-name>
-    	<servlet-class>es.iespuertodelacruz.jc.matriculas.servlets.GestorMatriculas</servlet-class>
+    	<servlet-class>es.iespuertodelacruz.dbr.matriculas.servlets.GestorMatriculas</servlet-class>
     </servlet>
 
     <servlet-mapping>

@@ -5,21 +5,22 @@
 <html>
 	<head>
 		<meta charset="UTF-8">
+		<link rel="stylesheet" href="vista.css">
 		<title>Bienvenido</title>
 		</head>
 	<body>
-		Foro:
 		<br/>
-		<div style="display: flex;flex-direction: column;">
-			<div style="margin-bottom:35%;">
-			<textarea id="w3review" name="w3review" rows="4" cols="50">
+		<div class="contenedor">
+		<h1>Foro:</h1>
+			<div class="elemento areaTexto">
+			<textarea class="mensajes" name="w3review" rows="40" cols="200" readonly>
 				<c:forEach items="${listaMensajes}" var="mensaje">
 					<c:out value="${mensaje.getNombreUsuario()}"/>: <c:out value="${mensaje.getTexto()}"/>
 				</c:forEach>
 			</textarea>
 				
 			</div>
-			<div style="">
+			<div class="elemento formulario">
 				<form action="principal" method="POST"> 
 			
 					<span>Introduzca un mensaje:</span>
