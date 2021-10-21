@@ -28,6 +28,7 @@ private static final long serialVersionUID = 1L;
 			redireccion = "adios.jsp";
 		}
 		request.getRequestDispatcher(redireccion).forward(request, response);*/
+    	request.setCharacterEncoding("UTF-8");
 		ArrayList<Mensaje> listaMensajes = (ArrayList<Mensaje>) 
 				request.getServletContext().getAttribute("listaMensajes");
 		if (listaMensajes == null) {
@@ -41,12 +42,14 @@ private static final long serialVersionUID = 1L;
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) 
 			throws ServletException, IOException {
-		
+		request.setCharacterEncoding("UTF-8");
 		ArrayList<Mensaje> listaMensajes = (ArrayList<Mensaje>) 
 				request.getServletContext().getAttribute("listaMensajes");
-		if (listaMensajes != null) {
+		if (request.getParameter("usuario") != "" && request.getParameter("texto") != "") {
 			listaMensajes.add(new Mensaje(request.getParameter("usuario"), request.getParameter("texto")));
 		}
+		request.getRequestDispatcher("vista.jsp").forward(request, response);
+		
 	}
 }
 

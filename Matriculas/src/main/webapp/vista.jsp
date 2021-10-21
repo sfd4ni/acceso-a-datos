@@ -9,21 +9,32 @@
 		</head>
 	<body>
 		Foro:
+		<br/>
+		<div style="display: flex;flex-direction: column;">
+			<div style="margin-bottom:35%;">
+			<textarea id="w3review" name="w3review" rows="4" cols="50">
+				<c:forEach items="${listaMensajes}" var="mensaje">
+					<c:out value="${mensaje.getNombreUsuario()}"/>: <c:out value="${mensaje.getTexto()}"/>
+				</c:forEach>
+			</textarea>
+				
+			</div>
+			<div style="">
+				<form action="principal" method="POST"> 
+			
+					<span>Introduzca un mensaje:</span>
+					<br>
+					<label for="usuario">Usuario: </label>
+					<input type="text" name="usuario" id="usuario"  />
+					<label for="texto"> Mensaje: </label>
+					<input type="text" name="texto" id="texto"  />
+					<br>
+					<input type="submit" value="Enviar" />
+				                          
+				</form>	
+			</div>
+		</div>
 		
-		<c:forEach items="${listaMensajes}" var="mensaje">
-			<span><c:out value="${mensaje.getTexto()}"/>: <c:out value="${mensaje.getNombreUsuario()}"/></span><br/>
-		</c:forEach>
-		<form action="principal" method="POST"> 
 		
-			<label for="numero">Introduzca un mensaje:</label>
-			<br>
-			<label>Usuario: </label>
-			<input type="text" name="usuario" id="usuario"  />
-			<label> Mensaje: </label>
-			<input type="text" name="texto" id="texto"  />
-			<br>
-			<input type="submit" value="Enviar" />
-		                          
-		</form>	
 	</body>
 </html>
