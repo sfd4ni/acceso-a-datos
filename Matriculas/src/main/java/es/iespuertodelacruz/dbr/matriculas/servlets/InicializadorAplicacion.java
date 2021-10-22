@@ -7,7 +7,7 @@ import javax.servlet.ServletContextAttributeListener;
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
 import javax.servlet.annotation.WebListener;
-
+import es.iespuertodelacruz.dbr.matriculas.dao.*;
 /**
  * Application Lifecycle Listener implementation class InicializadorAplicacion
  *
@@ -40,7 +40,7 @@ public class InicializadorAplicacion implements ServletContextListener, ServletC
      * @see ServletContextListener#contextDestroyed(ServletContextEvent)
      */
     public void contextDestroyed(ServletContextEvent sce)  { 
-         ManejarFichero mf = sce.getServletContext().getAttribute("manejarFichero");
+         ManejarFicheros mf = (ManejarFicheros) sce.getServletContext().getAttribute("manejarFichero");
          mf.guardarTodo((ArrayList<String>) sce.getServletContext().getAttribute("listaMensajes"));
     }
 
@@ -55,7 +55,7 @@ public class InicializadorAplicacion implements ServletContextListener, ServletC
      * @see ServletContextListener#contextInitialized(ServletContextEvent)
      */
     public void contextInitialized(ServletContextEvent sce)  { 
-         ManejarFichero mf = new ManejarFichero("/tmp/mensajes.txt");
+         ManejarFicheros mf = new ManejarFicheros("/tmp/mensajes.txt");
          sce.getServletContext().setAttribute("manejarFichero", mf);
     }
 	
