@@ -1,0 +1,87 @@
+
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+		<meta name="author" content=" "/>
+		<title>Matriculas</title>
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+		<style type="text/css">
+		.cajas{
+			border-radius: 15px outset red;
+			border-color: rgb(179, 87, 87);
+			text-align: right;
+			size: 12px;
+			display: table;
+			table-layout: var(5px);
+		}
+		.central{
+			display: table;
+		}
+		</style>
+	</head>
+	<body>
+		<nav class="navbar navbar-expand-lg navbar-light bg-light">
+			<div aria-setsize="20px">
+		
+			<div id="titulo" aria-setsize="20px"><h1>Gestionar instituto</h1></div>
+			<div id="seccion" aria-setsize="20px"><h2>Alumnos</h2></div>
+
+			<div id="central" aria-setsize="20px">
+			
+				<div class="cajas" aria-setsize="5px">
+					<h3>Agregar alumno</h3>
+					<form>
+						<label for="dni">DNI:*</label>
+						<input type="text" name="dni"></input>
+						<label for="nombre">Nombre:*</label>
+						<input type="text" name="nombre"></input>
+						<label for="apellidos">Apellidos:</label>
+						<input type="text" name="apellidos"></input>
+						<label for="nacimiento">Nacimiento:</label>
+						<input type="text" name="nacimiento"></input>
+						<button type="submit">Agregar</button>
+					</form>
+				</div>
+
+				<div class="cajas" aria-setsize="5px">
+					<h3>Borrar alumno</h3>
+						<form>
+							<label for="dni">DNI:</label>
+							<input type="text" name="dni"></input>
+							<button type="submit">Borrar</button>
+						</form>
+				</div>
+
+				<div class="cajas" aria-setsize="5px">
+					<h3>Editar alumno</h3>
+					<form>
+						<label for="dni">DNI:*</label>
+						<input type="text" name="dni"></input>
+						<label for="nombre">Nombre:*</label>
+						<input type="text" name="nombre"></input>
+						<label for="apellidos">Apellidos:</label>
+						<input type="text" name="apellidos"></input>
+						<label for="nacimiento">Nacimiento:</label>
+						<input type="text" name="nacimiento"></input>
+						<button type="submit">Agregar</button>
+					</form>
+				</div>
+
+				<div class="cajas" aria-setsize="5px">
+					<h3>Mostrar alumnos:</h3>
+					<form>
+						<label for="dni">DNI:</label>
+						<input type="text" name="dni"></input>
+						<button type="submit">Borrar</button>
+					</form>
+				</div>
+				<h6>Nota:los campos marcados con asterisco son obligatorios.</h6>
+		 </div> <!--table-->
+		
+		</div>
+	</nav>
+	</body>
+	<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+</html>

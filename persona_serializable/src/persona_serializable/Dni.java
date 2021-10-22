@@ -17,16 +17,20 @@ public class Dni {
     }
     
     private String comprobarDni(String dniInput) {
-        if (dniInput.length() == 9) {
+        String llego = Integer.toString(dniInput.length());
+        if (dniInput.length() == 8) {
             int dniNum = Integer.parseInt(dniInput.substring(0, 7));
             String dniLetra = dniInput.substring(8, 8);
+            llego += dniNum + dniLetra;
             if (dniLetra.matches("[a-zA-Z]+")) {
+                llego += "letra";
                if (comprobarLetra(dniNum) == dniLetra) {
+                   llego += dniLetra;
                    return dniInput;
                }
             }
         }
-        return "";
+        return "Fallo";
     }
     
     private String comprobarLetra(int dni) {
