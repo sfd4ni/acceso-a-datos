@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Menu?>
+<?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.web.HTMLEditor?>
+
+<AnchorPane id="AnchorPane" fx:id="ventanaAnchorPane" prefHeight="724.0" prefWidth="833.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ej2_aed5.EditorFXMLDocumentController">
+   <children>
+      <HTMLEditor fx:id="editorHtmlEditor" htmlText="&lt;html&gt;&lt;head&gt;&lt;/head&gt;&lt;body contenteditable=&quot;true&quot;&gt;&lt;/body&gt;&lt;/html&gt;" layoutY="27.0" prefHeight="700.0" prefWidth="833.0" />
+      <MenuBar layoutY="2.0" prefHeight="25.0" prefWidth="833.0">
+        <menus>
+          <Menu mnemonicParsing="false" text="Archivo">
+            <items>
+              <MenuItem fx:id="abrirMenuItem" mnemonicParsing="false" onAction="#handleAbrirAction" text="Abrir" />
+                  <MenuItem mnemonicParsing="false" onAction="#handleGuardarAction" text="Guardar" />
+                  <MenuItem mnemonicParsing="false" onAction="#handleGuardarComoAction" text="Guardar  como" />
+            </items>
+          </Menu>
+        </menus>
+      </MenuBar>
+   </children>
+</AnchorPane>
