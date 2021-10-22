@@ -1,5 +1,11 @@
 package es.iespuertodelacruz.dbr.matriculas.dao;
 
-public class ManejarFicheros {
+import java.io.File;
 
+public class ManejarFicheros {
+	File file;
+	
+	public ManejarFicheros(String ruta) {
+		file = new File(ruta);
+	}
 }
