@@ -42,8 +42,8 @@ public class InicializadorAplicacion implements ServletContextListener, ServletC
      * @see ServletContextListener#contextDestroyed(ServletContextEvent)
      */
     public void contextDestroyed(ServletContextEvent sce)  { 
-         //ManejarFicheros mf = (ManejarFicheros) sce.getServletContext().getAttribute("manejarFichero");
-         //mf.guardarTodo((ArrayList<Mensaje>) sce.getServletContext().getAttribute("listaMensajes"));
+         ManejarFicheros mf = (ManejarFicheros) sce.getServletContext().getAttribute("manejarFichero");
+         mf.guardarTodo((ArrayList<Mensaje>) sce.getServletContext().getAttribute("listaMensajes"));
     }
 
 	/**
@@ -57,7 +57,7 @@ public class InicializadorAplicacion implements ServletContextListener, ServletC
      * @see ServletContextListener#contextInitialized(ServletContextEvent)
      */
     public void contextInitialized(ServletContextEvent sce)  {
-    	ManejarFicheros mf = new ManejarFicheros("/tmp/mensajes.txt");
+    	ManejarFicheros mf = new ManejarFicheros("C:\\Users\\Danieldb\\Desktop\\matriculas.txt");
     	sce.getServletContext().setAttribute("manejarFichero", mf);
     	ArrayList<Mensaje> listaMensajes = new ArrayList<>();
 		try {

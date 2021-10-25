@@ -28,7 +28,7 @@
 					<label for="usuario">Usuario: </label>
 					<input type="text" name="usuario" id="usuario"  />
 					<label for="texto"> Mensaje: </label>
-					<input type="text" name="texto" id="texto"  />
+					<input type="text" name="texto" id="texto"/>
 					<br>
 					<input type="submit" value="Enviar" />
 				                          
