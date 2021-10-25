@@ -51,7 +51,6 @@ private static final long serialVersionUID = 1L;
 			if (usuario != null) {
 				request.getSession().setAttribute("usuario", usuario);
 				usuarioSesion = request.getSession().getAttribute("usuario");
-				System.out.println((String) usuarioSesion);
 			}
 		}
 			
