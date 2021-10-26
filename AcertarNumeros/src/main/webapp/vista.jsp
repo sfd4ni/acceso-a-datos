@@ -11,28 +11,23 @@
 	<body>
 		<br/>
 		<div class="contenedor">
-		<h1>Foro:</h1>
-			<div class="elemento areaTexto">
-			<textarea class="mensajes" name="w3review" rows="40" cols="200" readonly>
-				<c:forEach items="${listaMensajes}" var="mensaje">
-					<c:out value="${mensaje.getNombreUsuario()}"/>: <c:out value="${mensaje.getTexto()}"/>
-				</c:forEach>
-			</textarea>
-				
-			</div>
+		<h1>Apuesta por un número:</h1>
 			<div class="elemento formulario">
 				<form action="principal" method="POST"> 
 			
-					<span>Introduzca un mensaje:</span>
+					<span>Introduzca una apuesta:</span>
 					<br>
-					<label for="usuario">Usuario: </label>
-					<input type="text" name="usuario" id="usuario"  />
-					<label for="texto"> Mensaje: </label>
-					<input type="text" name="texto" id="texto"/>
+					<label for="apuesta">Adivina: </label>
+					<input type="text" name="apuesta" id="usuario"  />
 					<br>
 					<input type="submit" value="Enviar" />
 				                          
-				</form>	
+				</form>
+			</div>
+			<div class="elemento areaTexto">
+				<c:forEach items="${listaApuestas}" var="mensaje">
+					<c:out value="${apuesta}"/>"/>
+				</c:forEach>
 			</div>
 		</div>
 		

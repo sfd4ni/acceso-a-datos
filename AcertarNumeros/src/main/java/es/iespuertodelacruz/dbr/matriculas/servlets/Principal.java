@@ -34,6 +34,7 @@ private static final long serialVersionUID = 1L;
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) 
 			throws ServletException, IOException {
+		request.getRequestDispatcher("vista.jsp").forward(request, response);
 		request.setCharacterEncoding("UTF-8");
 		
 		HashSet<String> usuariosUsados = (HashSet<String>)request.getSession().getAttribute("usuariosUsados");
