@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Iterator;
+import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Random;
 import java.util.TreeMap;
@@ -112,14 +113,18 @@ private static final long serialVersionUID = 1L;
 			Integer apuesta = Integer.parseInt(strApuesta);
 			Long horaApuesta = (new Date()).getTime();
 			System.out.println(secreto);
-			System.out.println(apuesta);
+			System.out.println(secreto==apuesta);
 			if (secreto == apuesta) {
 				request.getServletContext().setAttribute("ganador", 
 						request.getSession().getAttribute("usuario"));
 				request.getServletContext().setAttribute("horaGanador", 
 						horaApuesta);
 				request.getServletContext().setAttribute("secretoGanador", secreto);
-				mapaApuestas.clear();
+				for (Entry<Long, Integer> entry : mapaApuestas.entrySet()) {
+					if (entry.getKey() < horaApuesta) {
+						mapaApuestas.remove(entry);
+					}
+				}
 			} else {
 				mapaApuestas.put(horaApuesta, apuesta);
 			}
