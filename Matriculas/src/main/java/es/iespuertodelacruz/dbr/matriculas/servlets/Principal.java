@@ -51,13 +51,14 @@ private static final long serialVersionUID = 1L;
 			String usuario = request.getParameter("usuario");
 			if (usuario != null) {
 				request.getSession().setAttribute("usuario", usuario);
+				usuarioSesion = request.getSession().getAttribute("usuario");
 			}
-		} else {
-			ArrayList<Mensaje> listaMensajes = (ArrayList<Mensaje>) 
-					request.getServletContext().getAttribute("listaMensajes");
-			if ((String) usuarioSesion != "" && request.getParameter("texto") != "") {
-				listaMensajes.add(new Mensaje( (String) usuarioSesion, request.getParameter("texto")));
-			}
+		}
+			
+		ArrayList<Mensaje> listaMensajes = (ArrayList<Mensaje>) 
+				request.getServletContext().getAttribute("listaMensajes");
+		if ((String) usuarioSesion != "" && request.getParameter("texto") != "") {
+			listaMensajes.add(new Mensaje( (String) usuarioSesion, request.getParameter("texto")));
 		}
 		request.getRequestDispatcher("vista.jsp").forward(request, response);
 		
