@@ -24,9 +24,23 @@
 				                          
 				</form>
 			</div>
+			<c:if test="${ganador != null }">
+				El último ganador fue: <c:out value="${ganador}"/>,
+				a la hora <c:out value="${horaGanador}"/>,
+				acertó el número <c:out value="${secretoGanador}"/>
+			</c:if>
 			<div class="elemento areaTexto">
-				<c:forEach items="${listaApuestas}" var="mensaje">
-					<c:out value="${apuesta}"/>"/>
+				<c:forEach items="${mapaApuestas}" var="apuesta">
+					<c:choose>
+					    <c:when test="${secreto > apuesta.value}">
+					        secreto >
+					    </c:when>    
+					    <c:otherwise>
+					        secreto <
+					    </c:otherwise>
+					</c:choose>
+					<c:out value="${apuesta.value}"/>
+					<br />
 				</c:forEach>
 			</div>
 		</div>

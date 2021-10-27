@@ -6,6 +6,8 @@ import java.util.Date;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Map.Entry;
+import java.util.Random;
+import java.util.TreeMap;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -60,33 +62,50 @@ private static final long serialVersionUID = 1L;
 		} else {
 			gestionarApuestas(request, response);
 		}
-			
-		/*ArrayList<Mensaje> listaMensajes = (ArrayList<Mensaje>) 
-				request.getServletContext().getAttribute("listaMensajes");
-		if ((String) usuarioSesion != "" && request.getParameter("texto") != "") {
-			listaMensajes.add(new Mensaje( (String) usuarioSesion, request.getParameter("texto")));
-		}
-		request.getRequestDispatcher("vista.jsp").forward(request, response);*/
 		
 	}
-	public void gestionarApuestas(HttpServletRequest request, HttpServletResponse response) {
+	public void gestionarApuestas(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		Integer secreto = (Integer) request.getServletContext().getAttribute("secreto");
-		
 		Long horaSecreto = (Long) request.getServletContext().getAttribute("horaSecreto");
 		
-		String strApuesta = request.getParameter("apuesta");
-		Integer apuesta = null;
-		Long horaApuesta = (new Date()).getTime();
+		if (secreto == null) {
+			Random random = new Random();
+			secreto = random.nextInt(10000);
+			System.out.println(secreto);
+			horaSecreto = new Date().getTime();
+			request.getServletContext().setAttribute("secreto", secreto);
+			request.getServletContext().setAttribute("horaSecreto", horaSecreto);
+		}
 		
+		TreeMap<Long, Integer> mapaApuestas = (TreeMap<Long, Integer>) 
+				request.getServletContext().getAttribute("mapaApuestas");
+		
+		if (mapaApuestas == null) {
+			mapaApuestas = new TreeMap<>();
+		}
+		
+		String strApuesta = request.getParameter("apuesta");
+		
+		
+		if(strApuesta != null) {
+			Integer apuesta = Integer.parseInt(strApuesta);
+			Long horaApuesta = (new Date()).getTime();
+			System.out.println(secreto);
+			System.out.println(apuesta);
+			if (secreto == apuesta) {
+				request.getServletContext().setAttribute("ganador", 
+						request.getSession().getAttribute("usuario"));
+				request.getServletContext().setAttribute("horaGanador", 
+						horaApuesta);
+				request.getServletContext().setAttribute("secretoGanador", secreto);
+				mapaApuestas.clear();
+			} else {
+				mapaApuestas.put(horaApuesta, apuesta);
+			}
+			request.getServletContext().setAttribute("mapaApuestas", mapaApuestas);
+		}
 		
 	}
 	
-	/*public void eliminarApuestas() {
-		Iterator<Entry<Long, Integer>> iterator = apuestas.entrySet(iterator);
-		while(iterator.hasNext()) {
-			Entry entry = iterator.getNext();
-			
-		}
-	}*/
 }
 
