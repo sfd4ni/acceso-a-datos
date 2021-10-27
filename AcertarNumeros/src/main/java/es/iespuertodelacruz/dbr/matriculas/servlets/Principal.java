@@ -1,5 +1,6 @@
 package es.iespuertodelacruz.dbr.matriculas.servlets;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
@@ -65,16 +66,36 @@ private static final long serialVersionUID = 1L;
 		
 	}
 	public void gestionarApuestas(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		Integer secreto = (Integer) request.getServletContext().getAttribute("secreto");
-		Long horaSecreto = (Long) request.getServletContext().getAttribute("horaSecreto");
+		
+		
+		/*String realPath = request.getServletContext().getRealPath(File.separator);
+		
+		String publicFolder = realPath + "publicfolder" 
+		+ File.separator + "fichero.txt";
+		
+		File directorio = new File("/tmp/hola");
+		if(!directorio.exists()) {
+			directorio.mkdir();
+		}
+		/*
+		String realPath = request.getServletContext().getRealPath(File.separator);
+		
+		String publicFolder = realPath + "publicfolder" 
+		+ File.separator + "fichero.txt";
+		
+		String privatefolder = realPath + "WEB-INF" 
+		+ File.separator + "privatefolder" + File.separator + "fichero.txt";
+		*/
+		Integer secreto = (Integer) request.getSession().getAttribute("secreto");
+		Long horaSecreto = (Long) request.getSession().getAttribute("horaSecreto");
 		
 		if (secreto == null) {
 			Random random = new Random();
 			secreto = random.nextInt(10000);
 			System.out.println(secreto);
 			horaSecreto = new Date().getTime();
-			request.getServletContext().setAttribute("secreto", secreto);
-			request.getServletContext().setAttribute("horaSecreto", horaSecreto);
+			request.getSession().setAttribute("secreto", secreto);
+			request.getSession().setAttribute("horaSecreto", horaSecreto);
 		}
 		
 		TreeMap<Long, Integer> mapaApuestas = (TreeMap<Long, Integer>) 
