@@ -62,8 +62,6 @@ private static final long serialVersionUID = 1L;
 		}
 		request.getRequestDispatcher("vista.jsp").forward(request, response);
 	}
-	
-	
 	public void gestionarApuestas(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		
@@ -125,9 +123,11 @@ private static final long serialVersionUID = 1L;
 		if(strApuesta != null) {
 			Integer apuesta = Integer.parseInt(strApuesta);
 			Long horaApuesta = (new Date()).getTime();
+			System.out.println(secreto);
 			if (secreto.equals(apuesta)) {
 				String horaGanador = (new Date().getHours() + ":" + 
-			new Date().getMinutes() + ":" + new Date().getSeconds());
+			new Date().getMinutes());
+				request.getServletContext().setAttribute("horaString", horaGanador);
 				ManejarFicheros mf = new ManejarFicheros("C:\\Users\\Danieldb\\Desktop\\secreto.txt");
 				mf.guardarSecreto( (String) request.getSession().getAttribute("usuario"), 
 						secreto, ((horaApuesta - (Long) request.getServletContext().getAttribute("horaSecreto")) / 1000));

@@ -26,7 +26,7 @@
 			</div>
 			<c:if test="${ganador != null }">
 				El último ganador fue: <c:out value="${ganador}"/>,
-				a la hora <c:out value="${horaGanador}"/>,
+				a la hora <c:out value="${horaString}"/>,
 				acertó el número <c:out value="${secretoGanador}"/>
 			</c:if>
 			<div class="elemento areaTexto">
