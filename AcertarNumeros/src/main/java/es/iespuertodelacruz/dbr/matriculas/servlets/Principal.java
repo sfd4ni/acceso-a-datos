@@ -1,12 +1,9 @@
 package es.iespuertodelacruz.dbr.matriculas.servlets;
 
-import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Iterator;
-import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Random;
 import java.util.TreeMap;
@@ -16,7 +13,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import es.iespuertodelacruz.dbr.matriculas.modelo.Mensaje;
+import es.iespuertodelacruz.dbr.matriculas.dao.ManejarFicheros;
 
 
 
@@ -38,7 +35,6 @@ private static final long serialVersionUID = 1L;
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) 
 			throws ServletException, IOException {
-		request.getRequestDispatcher("vista.jsp").forward(request, response);
 		request.setCharacterEncoding("UTF-8");
 		
 		HashSet<String> usuariosUsados = (HashSet<String>)request.getSession().getAttribute("usuariosUsados");
@@ -64,8 +60,10 @@ private static final long serialVersionUID = 1L;
 		} else {
 			gestionarApuestas(request, response);
 		}
-		
+		request.getRequestDispatcher("vista.jsp").forward(request, response);
 	}
+	
+	
 	public void gestionarApuestas(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		
@@ -73,7 +71,6 @@ private static final long serialVersionUID = 1L;
 		
 		String publicFolder = realPath + "publicfolder" 
 		+ File.separator + "fichero.txt";
-		*/
 		File directorio = new File("/tmp/" + request.getSession().getAttribute("usuario"));
 		if(!directorio.exists()) {
 			directorio.mkdir();
@@ -87,50 +84,68 @@ private static final long serialVersionUID = 1L;
 		String privatefolder = realPath + "WEB-INF" 
 		+ File.separator + "privatefolder" + File.separator + "fichero.txt";
 		*/
-		Integer secreto = (Integer) request.getSession().getAttribute("secreto");
-		Long horaSecreto = (Long) request.getSession().getAttribute("horaSecreto");
+		Long horaUltimoSecreto = 
+				(Long) request.getServletContext().getAttribute("horaGanador");
+		
+		Integer secreto = (Integer) request.getServletContext().getAttribute("secreto");
+		Long horaSecreto = (Long) request.getServletContext().getAttribute("horaSecreto");
+		
+		TreeMap<Long, Integer> mapaApuestas = (TreeMap<Long, Integer>) 
+				request.getSession().getAttribute("mapaApuestas");
 		
 		if (secreto == null) {
 			Random random = new Random();
 			secreto = random.nextInt(10000);
-			System.out.println(secreto);
 			horaSecreto = new Date().getTime();
-			request.getSession().setAttribute("secreto", secreto);
-			request.getSession().setAttribute("horaSecreto", horaSecreto);
+			request.getServletContext().setAttribute("secreto", secreto);
+			request.getServletContext().setAttribute("horaSecreto", horaSecreto);
 		}
-		
-		TreeMap<Long, Integer> mapaApuestas = (TreeMap<Long, Integer>) 
-				request.getServletContext().getAttribute("mapaApuestas");
 		
 		if (mapaApuestas == null) {
 			mapaApuestas = new TreeMap<>();
 		}
 		
-		String strApuesta = request.getParameter("apuesta");
+		if (horaUltimoSecreto != null) {
+			if (horaUltimoSecreto < horaSecreto) {
+				Iterator<Entry<Long, Integer>> i = mapaApuestas.entrySet().iterator();
+				Entry<Long, Integer> e;
+				while (i.hasNext() && (e = i.next()) != null) {
+				    if (e.getKey() < horaSecreto) {
+				         i.remove();
+				    }
+				}
+			}
+		}
+		
+		
+		
+		String strApuesta =  request.getParameter("apuesta");
 		
 		
 		if(strApuesta != null) {
 			Integer apuesta = Integer.parseInt(strApuesta);
 			Long horaApuesta = (new Date()).getTime();
-			System.out.println(secreto);
-			System.out.println(secreto==apuesta);
-			if (secreto == apuesta) {
+			if (secreto.equals(apuesta)) {
+				String horaGanador = (new Date().getHours() + ":" + 
+			new Date().getMinutes() + ":" + new Date().getSeconds());
+				ManejarFicheros mf = new ManejarFicheros("C:\\Users\\Danieldb\\Desktop\\secreto.txt");
+				mf.guardarSecreto( (String) request.getSession().getAttribute("usuario"), 
+						secreto, ((horaApuesta - (Long) request.getServletContext().getAttribute("horaSecreto")) / 1000));
 				request.getServletContext().setAttribute("ganador", 
 						request.getSession().getAttribute("usuario"));
 				request.getServletContext().setAttribute("horaGanador", 
 						horaApuesta);
 				request.getServletContext().setAttribute("secretoGanador", secreto);
-				for (Entry<Long, Integer> entry : mapaApuestas.entrySet()) {
-					if (entry.getKey() < horaApuesta) {
-						mapaApuestas.remove(entry);
-					}
-				}
+				Random randomNuevo = new Random();
+				secreto = randomNuevo.nextInt(10000);
+				horaSecreto = new Date().getTime();
+				request.getServletContext().setAttribute("secreto", secreto);
+				request.getServletContext().setAttribute("horaSecreto", horaSecreto);
 			} else {
 				mapaApuestas.put(horaApuesta, apuesta);
 			}
-			request.getServletContext().setAttribute("mapaApuestas", mapaApuestas);
+			request.getSession().setAttribute("mapaApuestas", mapaApuestas);
 		}
-		
 	}
 	
 }
