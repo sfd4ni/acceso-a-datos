@@ -23,7 +23,7 @@ public class Main {
 	 try {
 	 conexion = DriverManager.getConnection(
 	 "jdbc:mysql://localhost/oficina?serverTimezone=UTC","root",
-	"1q2w3e4r");
+	null);
 
 	 Statement s = conexion.createStatement();
 	 String sql = "select * from lapices";

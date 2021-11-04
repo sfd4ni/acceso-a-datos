@@ -3,15 +3,21 @@
  pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
-   "http://www.w3.org/TR/html4/loose.dtd">
-
-<html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>JSP Page</title>
+        <title>Búsqueda</title>
     </head>
     <body>
-        <h1>Hello World!</h1>
+        <form action="principal" method="POST">
+	  <label for="marca">Introduce el nombre de la marca de lapiz:</label><br>
+	  <input type="text" id="marca" name="marca"><br>
+	   <input type="submit" value="Submit">
+	</form>
+	<div>
+		<c:forEach items="${lapicesList}" var="lapiz">
+			<c:out value="${lapiz.imprimirLapiz()}"/>
+			<br />
+		</c:forEach>
+	</div>
     </body>
 </html>
