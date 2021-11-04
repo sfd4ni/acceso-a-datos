@@ -14,6 +14,7 @@ private String nombreBD;
 	
 	public GestorLapices(String nombreBD) {
 		this.nombreBD = nombreBD;
+		cargarDriverMysql();
 	}
 	
 	private static void cargarDriverMysql(){
@@ -26,7 +27,6 @@ private String nombreBD;
 	 }
 	
 	public ArrayList<Lapiz> buscarPorMarca(String marca) {
-		 cargarDriverMysql();
 		 ArrayList <Lapiz> lapicesList = new ArrayList<>();
 		 Connection conexion = null;
 		 try {
@@ -48,5 +48,37 @@ private String nombreBD;
 		 conexion.close();
 		 } catch (SQLException ex) { ex.printStackTrace(); }
 		 return lapicesList;
+	}
+	
+	public boolean actualizarLapiz(Lapiz lapiz, int idLapiz) {
+		Connection conexion = null;
+		boolean status = false;
+		 try {
+			 conexion = DriverManager.getConnection(
+			 "jdbc:mysql://localhost/" + this.nombreBD + "?serverTimezone=UTC","root",
+			null);
+			 Statement stmt = conexion.createStatement();
+			 String query = "Update lapices Set idlapiz='" + lapiz.getId() + "', marca='" + lapiz.getMarca() + "', numero='" 
+			 + lapiz.getNumero() + "' Where idlapiz='" + idLapiz + "'";
+			 status = stmt.execute(query);
+		 } catch (SQLException ex) {
+			 ex.printStackTrace();
+			 }
+		 return status;
+	}
+	public boolean borrarLapiz(int idLapiz) {
+		Connection conexion = null;
+		boolean status = false;
+		 try {
+			 conexion = DriverManager.getConnection(
+			 "jdbc:mysql://localhost/" + this.nombreBD + "?serverTimezone=UTC","root",
+			null);
+			 Statement stmt = conexion.createStatement();
+			 String query = "DELETE FROM lapices WHERE idlapiz='" + idLapiz + "'";
+			 status = stmt.execute(query);
+		 } catch (SQLException ex) {
+			 ex.printStackTrace();
+			 }
+		 return status;
 	}
 }

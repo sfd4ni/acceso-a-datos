@@ -31,11 +31,25 @@ public class Principal extends HttpServlet {
 
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String marca = (String) request.getParameter("marca");
-		ArrayList<Lapiz> lapicesList = new ArrayList<>();
+		String buttonParam = request.getParameter("button");
 		GestorLapices gestorLapices = new GestorLapices("oficina");
-		lapicesList = gestorLapices.buscarPorMarca(marca);
-		request.getSession().setAttribute("lapicesList", lapicesList);
+		if(buttonParam.equals("mostrar")) {
+			String marca = (String) request.getParameter("marca");
+			ArrayList<Lapiz> lapicesList = new ArrayList<>();
+			lapicesList = gestorLapices.buscarPorMarca(marca);
+			request.getSession().setAttribute("lapicesList", lapicesList);
+		} else if (buttonParam.equals("borrar")) {
+			Integer id = Integer.parseInt(request.getParameter("idBorrar"));
+			gestorLapices.borrarLapiz(id);
+		} else if (buttonParam.equals("editar")) {
+			Lapiz lapizModificar = new Lapiz(
+					Integer.parseInt(request.getParameter("idEditar")),
+					request.getParameter("marcaEditar"),
+					Integer.parseInt(request.getParameter("numeroEditar"))
+					);
+			gestorLapices.actualizarLapiz(lapizModificar, Integer.parseInt(request.getParameter("idEditar")));
+		}
+		
 		request.getRequestDispatcher("index.jsp").forward(request, response);
 	}
 
