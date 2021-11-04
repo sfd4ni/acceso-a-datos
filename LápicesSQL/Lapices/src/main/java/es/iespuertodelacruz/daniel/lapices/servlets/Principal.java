@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import es.iespuertodelacruz.daniel.lapices.dao.GestorLapices;
 import es.iespuertodelacruz.daniel.lapices.dao.LapicesDAO;
 import es.iespuertodelacruz.daniel.lapices.modelo.Lapiz;
 
@@ -32,8 +33,8 @@ public class Principal extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String marca = (String) request.getParameter("marca");
 		ArrayList<Lapiz> lapicesList = new ArrayList<>();
-		LapicesDAO lapicesDao = new LapicesDAO();
-		lapicesList = lapicesDao.buscarPorMarca(marca);
+		GestorLapices gestorLapices = new GestorLapices("oficina");
+		lapicesList = gestorLapices.buscarPorMarca(marca);
 		request.getSession().setAttribute("lapicesList", lapicesList);
 		request.getRequestDispatcher("index.jsp").forward(request, response);
 	}

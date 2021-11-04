@@ -9,10 +9,10 @@ import java.util.ArrayList;
 
 import es.iespuertodelacruz.daniel.lapices.modelo.Lapiz;
 
-public class LapicesDAO {
-	private String nombreBD;
+public class GestorLapices {
+private String nombreBD;
 	
-	public LapicesDAO(String nombreBD) {
+	public GestorLapices(String nombreBD) {
 		this.nombreBD = nombreBD;
 	}
 	
