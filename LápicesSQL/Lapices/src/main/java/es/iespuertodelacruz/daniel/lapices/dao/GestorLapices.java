@@ -31,8 +31,8 @@ private String nombreBD;
 		 Connection conexion = null;
 		 try {
 		 conexion = DriverManager.getConnection(
-		 "jdbc:mysql://localhost/" + this.nombreBD + "?serverTimezone=UTC","root",
-		null);
+		 "jdbc:mysql://localhost/" + this.nombreBD + "?serverTimezone=UTC","admin",
+		"1q2w3e4r");
 
 		 Statement s = conexion.createStatement();
 		 String sql = "select * from lapices where idlapiz='" + id + "'";
@@ -51,8 +51,8 @@ private String nombreBD;
 		 Connection conexion = null;
 		 try {
 		 conexion = DriverManager.getConnection(
-		 "jdbc:mysql://localhost/" + this.nombreBD + "?serverTimezone=UTC","root",
-		null);
+		 "jdbc:mysql://localhost/" + this.nombreBD + "?serverTimezone=UTC","admin",
+			"1q2w3e4r");
 
 		 String sql = "select * from lapices where marca = ?";
 		 PreparedStatement ps = conexion.prepareStatement(sql);
@@ -76,8 +76,8 @@ private String nombreBD;
 		boolean status = false;
 		 try {
 			 conexion = DriverManager.getConnection(
-			 "jdbc:mysql://localhost/" + this.nombreBD + "?serverTimezone=UTC","root",
-			null);
+			 "jdbc:mysql://localhost/" + this.nombreBD + "?serverTimezone=UTC","admin",
+				 "admin");
 			 String query = "Update lapices Set idlapiz=?, marca=?, numero=? Where idlapiz=?"; 
 			 PreparedStatement ps = conexion.prepareStatement(query);
 			 ps.setInt(1, lapiz.getId());
@@ -95,8 +95,8 @@ private String nombreBD;
 		boolean status = false;
 		 try {
 			 conexion = DriverManager.getConnection(
-			 "jdbc:mysql://localhost/" + this.nombreBD + "?serverTimezone=UTC","root",
-			null);
+			 "jdbc:mysql://localhost/" + this.nombreBD + "?serverTimezone=UTC","admin",
+			"1q2w3e4r");
 			 String query = "DELETE FROM lapices WHERE idlapiz=?";
 			 PreparedStatement ps = conexion.prepareStatement(query);
 			 ps.setInt(1, idLapiz);
@@ -111,8 +111,8 @@ private String nombreBD;
 
 		 Lapiz resultado = new Lapiz();
 		 Connection conexion = DriverManager.getConnection(
-				 "jdbc:mysql://localhost/" + this.nombreBD + "?serverTimezone=UTC","root",
-					null);
+		 "jdbc:mysql://localhost/" + this.nombreBD + "?serverTimezone=UTC","admin",
+			"1q2w3e4r");
 
 		 if (!buscarPorId(lapiz.getId())) {
 			 String sql = "INSERT INTO lapices (idlapiz, marca, numero) VALUES(?,?,?)";
