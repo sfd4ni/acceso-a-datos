@@ -1,6 +1,7 @@
 package es.iespuertodelacruz.daniel.lapices.servlets;
 
 import java.io.IOException;
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 import javax.servlet.ServletException;
@@ -48,6 +49,17 @@ public class Principal extends HttpServlet {
 					Integer.parseInt(request.getParameter("numeroEditar"))
 					);
 			gestorLapices.actualizarLapiz(lapizModificar, Integer.parseInt(request.getParameter("idEditar")));
+		} else if (buttonParam.equals("agregar")) {
+			Lapiz lapizAgregar = new Lapiz(
+					Integer.parseInt(request.getParameter("idAgregar")),
+					request.getParameter("marcaAgregar"),
+					Integer.parseInt(request.getParameter("numeroAgregar"))
+					);
+			try {
+				gestorLapices.saveLapiz(lapizAgregar);
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
 		}
 		
 		request.getRequestDispatcher("index.jsp").forward(request, response);

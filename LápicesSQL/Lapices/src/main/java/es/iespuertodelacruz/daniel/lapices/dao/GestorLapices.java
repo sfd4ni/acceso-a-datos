@@ -25,7 +25,26 @@ private String nombreBD;
 			 System.exit(1);
 		 }
 	 }
-	
+	public boolean buscarPorId(int id) {
+		 Lapiz lapiz = new Lapiz();
+		 Connection conexion = null;
+		 try {
+		 conexion = DriverManager.getConnection(
+		 "jdbc:mysql://localhost/" + this.nombreBD + "?serverTimezone=UTC","root",
+		null);
+
+		 Statement s = conexion.createStatement();
+		 String sql = "select * from lapices where idlapiz='" + id + "'";
+		 ResultSet rs = s.executeQuery(sql);
+
+		 if(rs.next()){
+			 return true;
+		 }
+		 s.close();
+		 conexion.close();
+		 } catch (SQLException ex) { ex.printStackTrace(); }
+		 return false;
+	}
 	public ArrayList<Lapiz> buscarPorMarca(String marca) {
 		 ArrayList <Lapiz> lapicesList = new ArrayList<>();
 		 Connection conexion = null;
@@ -81,4 +100,30 @@ private String nombreBD;
 			 }
 		 return status;
 	}
+	
+	public Lapiz saveLapiz(Lapiz lapiz) throws SQLException{
+
+		 Lapiz resultado = null;
+		 Connection conexion = DriverManager.getConnection(
+				 "jdbc:mysql://localhost/" + this.nombreBD + "?serverTimezone=UTC","root",
+					null);
+
+		 if (!buscarPorId(lapiz.getId())) {
+			 String sql2 = "INSERT INTO lapices (idlapiz, marca, numero) VALUES('"
+					 + lapiz.getId() + "','" + lapiz.getMarca() + "','" + lapiz.getNumero() + "')";
+			 Statement st = conexion.createStatement();
+			 st.executeUpdate(sql2, Statement.RETURN_GENERATED_KEYS);
+			 ResultSet rs1 = st.getGeneratedKeys();
+			 while(rs1.next()){
+				 int id = rs1.getInt(1);
+				 resultado.setId(id);
+				 resultado.setMarca(lapiz.getMarca());
+				 resultado.setNumero(lapiz.getNumero());
+			 }
+			 st.close();
+			 conexion.close();
+		 }
+		 return resultado;
+	 }
+
 }
