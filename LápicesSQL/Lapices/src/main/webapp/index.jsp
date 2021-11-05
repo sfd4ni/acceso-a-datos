@@ -68,9 +68,7 @@
       <h6>Nota:los campos marcados con asterisco son obligatorios.</h6>
     </div>
     <textarea id="" name="mostrarTextArea" rows="17" cols="100" readonly><c:forEach items="${lapicesList}" var="lapiz">
-			<c:out value="${lapiz.imprimirLapiz()}"/>
-			<br />
-		</c:forEach></textarea>
+    <c:out value="${lapiz.imprimirLapiz()}"/></c:forEach></textarea>
   </div>
   <div>
   </div>

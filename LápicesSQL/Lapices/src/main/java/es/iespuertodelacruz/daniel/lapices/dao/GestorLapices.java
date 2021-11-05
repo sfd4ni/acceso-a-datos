@@ -2,6 +2,7 @@ package es.iespuertodelacruz.daniel.lapices.dao;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -53,9 +54,10 @@ private String nombreBD;
 		 "jdbc:mysql://localhost/" + this.nombreBD + "?serverTimezone=UTC","root",
 		null);
 
-		 Statement s = conexion.createStatement();
-		 String sql = "select * from lapices where marca='" + marca + "'";
-		 ResultSet rs = s.executeQuery(sql);
+		 String sql = "select * from lapices where marca = ?";
+		 PreparedStatement ps = conexion.prepareStatement(sql);
+		 ps.setString(1, marca);
+		 ResultSet rs = ps.executeQuery();
 
 		 while(rs.next()){
 			 int id = rs.getInt("idlapiz");
@@ -63,7 +65,7 @@ private String nombreBD;
 			 int numero = rs.getInt("numero");
 			 lapicesList.add(new Lapiz(id, marcaString, numero));
 		 }
-		 s.close();
+		 ps.close();
 		 conexion.close();
 		 } catch (SQLException ex) { ex.printStackTrace(); }
 		 return lapicesList;
@@ -76,10 +78,13 @@ private String nombreBD;
 			 conexion = DriverManager.getConnection(
 			 "jdbc:mysql://localhost/" + this.nombreBD + "?serverTimezone=UTC","root",
 			null);
-			 Statement stmt = conexion.createStatement();
-			 String query = "Update lapices Set idlapiz='" + lapiz.getId() + "', marca='" + lapiz.getMarca() + "', numero='" 
-			 + lapiz.getNumero() + "' Where idlapiz='" + idLapiz + "'";
-			 status = stmt.execute(query);
+			 String query = "Update lapices Set idlapiz=?, marca=?, numero=? Where idlapiz=?"; 
+			 PreparedStatement ps = conexion.prepareStatement(query);
+			 ps.setInt(1, lapiz.getId());
+			 ps.setString(2, lapiz.getMarca());
+			 ps.setInt(3, lapiz.getNumero());
+			 ps.setInt(4, idLapiz);
+			 status = ps.execute();
 		 } catch (SQLException ex) {
 			 ex.printStackTrace();
 			 }
@@ -92,9 +97,10 @@ private String nombreBD;
 			 conexion = DriverManager.getConnection(
 			 "jdbc:mysql://localhost/" + this.nombreBD + "?serverTimezone=UTC","root",
 			null);
-			 Statement stmt = conexion.createStatement();
-			 String query = "DELETE FROM lapices WHERE idlapiz='" + idLapiz + "'";
-			 status = stmt.execute(query);
+			 String query = "DELETE FROM lapices WHERE idlapiz=?";
+			 PreparedStatement ps = conexion.prepareStatement(query);
+			 ps.setInt(1, idLapiz);
+			 status = ps.execute();
 		 } catch (SQLException ex) {
 			 ex.printStackTrace();
 			 }
@@ -103,24 +109,26 @@ private String nombreBD;
 	
 	public Lapiz saveLapiz(Lapiz lapiz) throws SQLException{
 
-		 Lapiz resultado = null;
+		 Lapiz resultado = new Lapiz();
 		 Connection conexion = DriverManager.getConnection(
 				 "jdbc:mysql://localhost/" + this.nombreBD + "?serverTimezone=UTC","root",
 					null);
 
 		 if (!buscarPorId(lapiz.getId())) {
-			 String sql2 = "INSERT INTO lapices (idlapiz, marca, numero) VALUES('"
-					 + lapiz.getId() + "','" + lapiz.getMarca() + "','" + lapiz.getNumero() + "')";
-			 Statement st = conexion.createStatement();
-			 st.executeUpdate(sql2, Statement.RETURN_GENERATED_KEYS);
-			 ResultSet rs1 = st.getGeneratedKeys();
-			 while(rs1.next()){
-				 int id = rs1.getInt(1);
+			 String sql = "INSERT INTO lapices (idlapiz, marca, numero) VALUES(?,?,?)";
+			 PreparedStatement ps = conexion.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS);
+			 ps.setInt(1, lapiz.getId());
+			 ps.setString(2, lapiz.getMarca());
+			 ps.setInt(3, lapiz.getNumero());
+			 ps.executeUpdate();
+			 ResultSet rs = ps.getGeneratedKeys();
+			 while(rs.next()){
+				 int id = rs.getInt(1);
 				 resultado.setId(id);
 				 resultado.setMarca(lapiz.getMarca());
 				 resultado.setNumero(lapiz.getNumero());
 			 }
-			 st.close();
+			 ps.close();
 			 conexion.close();
 		 }
 		 return resultado;
