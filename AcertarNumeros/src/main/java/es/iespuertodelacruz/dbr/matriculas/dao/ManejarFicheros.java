@@ -64,6 +64,7 @@ public class ManejarFicheros {
 		
 		return listaMensajes;
 	}
+	
 	/*public long ultimaModificacion() {
 		long resultado = null;
 		try {
