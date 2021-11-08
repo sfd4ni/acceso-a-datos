@@ -38,12 +38,14 @@ public class GestorAlumnos extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		System.out.println("Hola");
 		String buttonParam = request.getParameter("button");
-		AlumnoDAO alumnoDao = new AlumnoDAO((GestorConexionesDDBB)request.getSession().getAttribute("gc"));
+		AlumnoDAO alumnoDao = new AlumnoDAO((GestorConexionesDDBB)request.getServletContext().getAttribute("gc"));
 		if(buttonParam.equals("agregar")) {
 			String fecha = request.getParameter("fechaAgregar");
 			String[] fechaIntrod = fecha.split("/");
-			Date fechaInt = new Date(Integer.parseInt(fechaIntrod[0]), Integer.parseInt(fechaIntrod[1]), Integer.parseInt(fechaIntrod[2]));
+			Date fechaInt = new Date(Integer.parseInt(fechaIntrod[2]), Integer.parseInt(fechaIntrod[1]) - 1,
+					Integer.parseInt(fechaIntrod[0]), 0, 0);
 			Alumno alumnoAgregar = new Alumno(
 					request.getParameter("dniAgregar"),
 					request.getParameter("nombreAgregar"),
