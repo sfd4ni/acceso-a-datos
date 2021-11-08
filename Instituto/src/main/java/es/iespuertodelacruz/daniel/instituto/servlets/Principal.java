@@ -10,7 +10,6 @@ import javax.servlet.http.HttpServletResponse;
 /**
  * Servlet implementation class Principal
  */
-@WebServlet("/Principal, /principal")
 public class Principal extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
@@ -35,9 +34,9 @@ public class Principal extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String buttonParam = request.getParameter("button");
 		if(buttonParam.equals("alumnos")) {
-			request.getRequestDispatcher("gestoralumnos").forward(request, response);
+			request.getRequestDispatcher("alumnos.jsp").forward(request, response);
 		} else if(buttonParam.equals("matriculas")) {
-			request.getRequestDispatcher("gestormatriculas").forward(request, response);
+			request.getRequestDispatcher("matriculas.jsp").forward(request, response);
 		} else {
 			request.getRequestDispatcher("asignaturas.jsp").forward(request, response);
 		}

@@ -1,6 +1,8 @@
 package es.iespuertodelacruz.daniel.instituto.servlets;
 
 import java.io.IOException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import javax.servlet.ServletException;
@@ -38,26 +40,31 @@ public class GestorAlumnos extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		System.out.println("Hola");
+		
 		String buttonParam = request.getParameter("button");
 		AlumnoDAO alumnoDao = new AlumnoDAO((GestorConexionesDDBB)request.getServletContext().getAttribute("gc"));
 		if(buttonParam.equals("agregar")) {
-			String fecha = request.getParameter("fechaAgregar");
-			String[] fechaIntrod = fecha.split("/");
-			Date fechaInt = new Date(Integer.parseInt(fechaIntrod[2]), Integer.parseInt(fechaIntrod[1]) - 1,
-					Integer.parseInt(fechaIntrod[0]), 0, 0);
+			String fecha = request.getParameter("nacimientoAgregar");
+			SimpleDateFormat format = new SimpleDateFormat("dd/mm/yyyy");
+			Date date = null;
+			
+			try {
+				date = format.parse(fecha);
+			} catch (ParseException e) {
+				e.printStackTrace();
+			}
 			Alumno alumnoAgregar = new Alumno(
 					request.getParameter("dniAgregar"),
 					request.getParameter("nombreAgregar"),
 					request.getParameter("apellidosAgregar"),
-					fechaInt
+					date
 					);
 			alumnoDao.save(alumnoAgregar);
 			request.getRequestDispatcher("alumnos.jsp").forward(request, response);
 		} else if(buttonParam.equals("matriculas")) {
 			request.getRequestDispatcher("gestormatriculas").forward(request, response);
 		} else {
-			request.getRequestDispatcher("asignaturas.jsp").forward(request, response);
+			request.getRequestDispatcher("gestormatriculas").forward(request, response);
 		}
 	}
 

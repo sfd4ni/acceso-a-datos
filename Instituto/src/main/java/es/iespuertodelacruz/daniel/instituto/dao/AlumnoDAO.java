@@ -4,6 +4,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -23,7 +25,7 @@ public class AlumnoDAO implements Crud<Alumno, String> {
 				+ " VALUES (?, ?, ?, ?)";
 		try (
 		Connection cn = gc.getConnection();
-		 PreparedStatement ps = cn.prepareStatement(query);
+		 PreparedStatement ps = cn.prepareStatement(query, PreparedStatement.RETURN_GENERATED_KEYS);
 		 ){
 			 ps.setString(1, alumno.getDni());
 			 ps.setString(2, alumno.getNombre());
@@ -36,6 +38,7 @@ public class AlumnoDAO implements Crud<Alumno, String> {
 				 String nombre = rs.getString(2);
 				 String apellidos = rs.getString(3);
 				 long fechaNacimiento = rs.getLong(4);
+
 				 resultado = new Alumno(dni, nombre, apellidos, new Date(fechaNacimiento));
 			 }
 		} catch (SQLException e) {

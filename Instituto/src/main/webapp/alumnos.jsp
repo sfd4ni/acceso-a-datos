@@ -21,9 +21,9 @@
       <div id="general" class="flex-container">
         <div id="agregar" class="flex-item">
         <h3>Agregar alumno</h3>
-        <form action="alumnos" method="post">
+        <form action="gestoralumnos" method="post">
 			<label for="nombreAgregar">*Nombre:</label>
-          <input type="text" name="nombreAgregar"></input><br>
+          	<input type="text" name="nombreAgregar"></input><br>
 			<label for="apellidosAgregar">*Apellidos:</label>
           <input type="text" name="apellidosAgregar"></input><br>
 			<label for="nacimientoAgregar">*Nacimiento:</label>
