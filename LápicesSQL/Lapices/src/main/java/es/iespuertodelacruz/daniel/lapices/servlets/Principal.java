@@ -17,7 +17,6 @@ import es.iespuertodelacruz.daniel.lapices.modelo.Lapiz;
 /**
  * Servlet implementation class Principal
  */
-@WebServlet("/Principal, /principal")
 public class Principal extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        

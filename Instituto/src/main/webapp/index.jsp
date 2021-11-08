@@ -18,9 +18,12 @@
     <div class="fondo">
       <h1>Gestionar alumnos</h1>
       <div class="container-md button-container" >
-        <button type="button" class="btn btn-primary">Gestionar alumnos</button>
-        <button type="button" class="btn btn-secondary">Gestionar asignaturas</button>
-        <button type="button" class="btn btn-success">Gestionar matrículas</button>
+      	<form action="principal" method="post">
+      		<button type="submit" name="button" value="alumnos" class="btn btn-primary">Gestionar alumnos</button>
+        	<button type="submit" name="button" value="asignaturas" class="btn btn-secondary">Gestionar asignaturas</button>
+        	<button type="submit" name="button" value="matriculas" class="btn btn-success">Gestionar matrículas</button>
+      	</form>
+        
       </div>
     </div>
   </body>

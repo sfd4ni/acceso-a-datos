@@ -5,10 +5,57 @@
       xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd"
       version="3.0">
   <display-name>Instituto</display-name>
-  <session-config>
-    <session-timeout>30</session-timeout>
-  </session-config>
-  <welcome-file-list>
-    <welcome-file>index.jsp</welcome-file>
-  </welcome-file-list>
-</web-app>
+
+
+	<servlet>
+    	<description>
+    	</description>
+    	<display-name>Principal</display-name>
+    	<servlet-name>Principal</servlet-name>
+    	<servlet-class>es.iespuertodelacruz.daniel.instituto.servlets.Principal</servlet-class>
+    </servlet>
+    <servlet>
+    	<description>
+    	</description>
+    	<display-name>GestorAlumnos</display-name>
+    	<servlet-name>GestorAlumnos</servlet-name>
+    	<servlet-class>es.iespuertodelacruz.daniel.instituto.servlets.GestorAlumnos</servlet-class>
+    </servlet>
+    <servlet>
+    	<description>
+    	</description>
+    	<display-name>GestorMatriculas</display-name>
+    	<servlet-name>GestorMatriculas</servlet-name>
+    	<servlet-class>es.iespuertodelacruz.daniel.instituto.servlets.GestorMatriculas</servlet-class>
+    </servlet>
+
+
+    <servlet-mapping>
+    	<servlet-name>Principal</servlet-name>
+    	<url-pattern>/Principal</url-pattern>
+		<url-pattern>/principal</url-pattern>    	
+    </servlet-mapping>
+  
+    <servlet-mapping>
+    	<servlet-name>GestorAlumnos</servlet-name>
+    	<url-pattern>/GestorAlumnos</url-pattern>
+    	<url-pattern>/gestoralumnos</url-pattern>
+    </servlet-mapping>
+   
+    <servlet-mapping>
+    	<servlet-name>GestorMatriculas</servlet-name>
+    	<url-pattern>/GestorMatriculas</url-pattern>
+		<url-pattern>/gestormatriculas</url-pattern>    	
+    </servlet-mapping>
+    <session-config>
+        <session-timeout>
+            30
+        </session-timeout>
+    </session-config>
+    <welcome-file-list>
+    	
+        
+       
+        <welcome-file>principal</welcome-file>
+        </welcome-file-list>
+    </web-app>

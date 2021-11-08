@@ -21,17 +21,17 @@
       <div id="general" class="flex-container">
         <div id="agregar" class="flex-item">
         <h3>Agregar alumno</h3>
-        <form>
-					<label for="nombreAgregar">*Nombre:</label>
+        <form action="alumnos" method="post">
+			<label for="nombreAgregar">*Nombre:</label>
           <input type="text" name="nombreAgregar"></input><br>
-					<label for="apellidosAgregar">*Apellidos:</label>
+			<label for="apellidosAgregar">*Apellidos:</label>
           <input type="text" name="apellidosAgregar"></input><br>
-					<label for="nacimientoAgregar">*Nacimiento:</label>
+			<label for="nacimientoAgregar">*Nacimiento:</label>
           <input type="text" name="nacimientoAgregar"></input><br>
           <label for="dniAgregar">*DNI:</label>
           <input type="text" name="dniAgregar"></input><br>
           <br>
-          <span><button name="agregarButton" class="btn btn-primary" type="submit">Agregar</button></span>
+          <span><button name="button" class="btn btn-primary" type="submit" value="agregar">Agregar</button></span>
         </form>
       </div>
 
@@ -41,7 +41,7 @@
 						<label for="dniBorrar">*DNI:</label>
 						<input type="text" name="dniBorrar"></input><br>
             <br>
-            <button name="borrarButton" class="btn btn-primary" type="submit">Borrar</button>
+            <button name="button" class="btn btn-primary" type="submit" value="borrar">Borrar</button>
           </form>
         </div>
 
@@ -57,7 +57,7 @@
           <label for="dniEditar">*DNI:</label>
           <input type="text" name="dniEditar"></input><br>
           <br>
-          <button name="editarButton" class="btn btn-primary" type="submit">Editar</button>
+          <button name="button" class="btn btn-primary" type="submit" value="editar">Editar</button>
         </form>
       </div>
 
@@ -70,7 +70,7 @@
           <label for="dniMostrar">*DNI:</label>
           <input type="text" name="dniMostrar"></input><br>
           <br>
-          <button name="mostrarButton" class="btn btn-primary" type="submit">Mostrar</button>
+          <button name="button" class="btn btn-primary" type="submit" value="mostrar">Mostrar</button>
         </form>
       </div>
       <h6>Nota:los campos marcados con asterisco son obligatorios.</h6>
@@ -80,7 +80,7 @@
       </textarea>
   </div>
   <div>
-    <a href="#" class="btn btn-secondary btn-lg" role="button">Volver</a>
+    <a href="principal" class="btn btn-secondary btn-lg" role="button">Volver</a>
   </div>
 
   </body>
