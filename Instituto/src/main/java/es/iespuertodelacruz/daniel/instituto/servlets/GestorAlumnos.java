@@ -12,7 +12,6 @@ import javax.servlet.http.HttpServletResponse;
 import es.iespuertodelacruz.daniel.instituto.dao.AlumnoDAO;
 import es.iespuertodelacruz.daniel.instituto.dao.GestorConexionesDDBB;
 import es.iespuertodelacruz.daniel.instituto.modelo.Alumno;
-import es.iespuertodelacruz.daniel.lapices.modelo.Lapiz;
 
 /**
  * Servlet implementation class GestorAlumnos
