@@ -34,7 +34,7 @@ public class Principal extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String buttonParam = request.getParameter("button");
 		if(buttonParam.equals("alumnos")) {
-			request.getRequestDispatcher("alumnos.jsp").forward(request, response);
+			request.getRequestDispatcher("gestoralumnos").forward(request, response);
 		} else if(buttonParam.equals("matriculas")) {
 			request.getRequestDispatcher("matriculas.jsp").forward(request, response);
 		} else {

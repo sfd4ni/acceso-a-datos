@@ -44,25 +44,35 @@ public class GestorAlumnos extends HttpServlet {
 		String buttonParam = request.getParameter("button");
 		AlumnoDAO alumnoDao = new AlumnoDAO((GestorConexionesDDBB)request.getServletContext().getAttribute("gc"));
 		if(buttonParam.equals("agregar")) {
+			String dni = (String) request.getParameter("dniAgregar");
+			String nombre = (String) request.getParameter("nombreAgregar");
+			String apellidos = (String) request.getParameter("apellidosAgregar");
 			String fecha = request.getParameter("nacimientoAgregar");
 			SimpleDateFormat format = new SimpleDateFormat("dd/mm/yyyy");
 			Date date = null;
-			
 			try {
 				date = format.parse(fecha);
 			} catch (ParseException e) {
 				e.printStackTrace();
 			}
-			Alumno alumnoAgregar = new Alumno(
-					request.getParameter("dniAgregar"),
-					request.getParameter("nombreAgregar"),
-					request.getParameter("apellidosAgregar"),
-					date
-					);
-			alumnoDao.save(alumnoAgregar);
+			
+			if (dni != null && dni.isEmpty() &&
+					nombre != null && !nombre.isEmpty() &&
+					apellidos != null && !apellidos.isEmpty() &&
+					date != null && date.getTime() > 0) {
+				Alumno alumnoAgregar = new Alumno(
+						request.getParameter("dniAgregar"),
+						request.getParameter("nombreAgregar"),
+						request.getParameter("apellidosAgregar"),
+						date
+						);
+				alumnoDao.save(alumnoAgregar);
+			}
 			request.getRequestDispatcher("alumnos.jsp").forward(request, response);
-		} else if(buttonParam.equals("matriculas")) {
-			request.getRequestDispatcher("gestormatriculas").forward(request, response);
+		} else if(buttonParam.equals("alumnos")) {
+			request.getSession().setAttribute("listaAlumnos", alumnoDao.findAll());
+			request.getRequestDispatcher("alumnos.jsp").forward(request, response);
+			
 		} else {
 			request.getRequestDispatcher("gestormatriculas").forward(request, response);
 		}

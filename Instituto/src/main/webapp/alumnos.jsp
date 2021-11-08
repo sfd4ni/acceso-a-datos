@@ -76,7 +76,9 @@
       <h6>Nota:los campos marcados con asterisco son obligatorios.</h6>
     </div>
     <textarea id="" name="mostrarTextArea" rows="17" cols="100" readonly>
-      Aquí se mostrará la consulta.
+      <c:forEach items="${listaAlumnos}" var="alumno">
+					<c:out value="${alumno.imprimir()}"/>"/>
+				</c:forEach>
       </textarea>
   </div>
   <div>

@@ -1,6 +1,7 @@
 package es.iespuertodelacruz.daniel.instituto.dao;
 
 import java.sql.Connection;
+import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -67,8 +68,26 @@ public class AlumnoDAO implements Crud<Alumno, String> {
 
 	@Override
 	public ArrayList<Alumno> findAll() {
-		// TODO Auto-generated method stub
-		return null;
+		ArrayList <Alumno> alumnosList = new ArrayList<>();
+		String query = "select * from alumnos";
+		try (
+				Connection cn = gc.getConnection();
+				 PreparedStatement ps = cn.prepareStatement(query, PreparedStatement.RETURN_GENERATED_KEYS);
+				 ){
+			
+		 ResultSet rs = ps.executeQuery();
+
+		 while(rs.next()){
+			 String dni = rs.getString("dni");
+			 String nombre = rs.getString("nombre");
+			 String apellidos = rs.getString("apellidos");
+			 Date date = new Date(rs.getLong("fechanacimiento"));
+			 alumnosList.add(new Alumno(dni, nombre, apellidos, date));
+		 }
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		 return alumnosList;
 	}
 
 }
