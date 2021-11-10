@@ -37,7 +37,7 @@
 
         <div id="borrar" class="flex-item">
           <h3>Borrar alumno</h3>
-          <form>
+          <form action="gestoralumnos" method="post">
 						<label for="dniBorrar">*DNI:</label>
 						<input type="text" name="dniBorrar"></input><br>
             <br>
@@ -64,7 +64,7 @@
       <div id="mostrar" class="flex-item">
         <h3>Mostrar alumno</h3>
         <label>(Escribir en uno de los campos únicamente)</label>
-        <form>
+        <form action="gestoralumnos" method="post">
 					<label for="nombreMostrar">*Nombre:</label>
           <input type="text" name="nombreMostrar"></input><br>
           <label for="dniMostrar">*DNI:</label>

@@ -10,6 +10,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
+import es.iespuertodelacruz.daniel.instituto.contracts.AlumnoContract;
 import es.iespuertodelacruz.daniel.instituto.modelo.Alumno;
 
 public class AlumnoDAO implements Crud<Alumno, String> {
@@ -21,13 +22,15 @@ public class AlumnoDAO implements Crud<Alumno, String> {
 	@Override
 	public Alumno save(Alumno alumno) {
 		Alumno resultado = null;
-		String query="INSERT INTO `alumnos` "
-				+ "(`dni`, `nombre`, `apellidos`, `fechanacimiento`)"
+		String query="INSERT INTO `" + AlumnoContract.TABLE_NAME + "` "
+				+ "(`" + AlumnoContract.DNI + "`, `" + AlumnoContract.NOMBRE + "`, `"
+						+ "" + AlumnoContract.APELLIDOS + "`, `" + AlumnoContract.FECHA_NACIMIENTO + "`)"
 				+ " VALUES (?, ?, ?, ?)";
 		try (
 		Connection cn = gc.getConnection();
 		 PreparedStatement ps = cn.prepareStatement(query, PreparedStatement.RETURN_GENERATED_KEYS);
 		 ){
+			 cn.setAutoCommit(false);
 			 ps.setString(1, alumno.getDni());
 			 ps.setString(2, alumno.getNombre());
 			 ps.setString(3, alumno.getApellidos());
@@ -49,39 +52,91 @@ public class AlumnoDAO implements Crud<Alumno, String> {
 	}
 
 	@Override
-	public Alumno findById(String id) {
-		// TODO Auto-generated method stub
-		return null;
+	public Alumno findById(String dni) {
+		Alumno alumno = null;
+		String query = "select * from `" + AlumnoContract.TABLE_NAME 
+				+ "` where `" + AlumnoContract.DNI + "`=?";
+		try (
+				Connection cn = gc.getConnection();
+				 PreparedStatement ps = cn.prepareStatement(query);
+				 ){
+			ps.setString(1, dni);
+		 ResultSet rs = ps.executeQuery();
+
+		 while(rs.next()){
+			 String dniStr = rs.getString(AlumnoContract.DNI);
+			 String nombre = rs.getString(AlumnoContract.NOMBRE);
+			 String apellidos = rs.getString(AlumnoContract.APELLIDOS);
+			 Date date = new Date(rs.getLong(AlumnoContract.FECHA_NACIMIENTO));
+			 alumno = new Alumno(dniStr, nombre, apellidos, date);
+		 }
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		 return alumno;
 	}
 
 	@Override
-	public boolean update(Alumno dao) {
-		// TODO Auto-generated method stub
-		return false;
+	public boolean update(Alumno alumno) {
+		boolean resultado = false;
+		String query = "update `" + AlumnoContract.TABLE_NAME + "` set `"
+				+ AlumnoContract.NOMBRE + "`=?,`"
+				+ AlumnoContract.APELLIDOS + "`=?,`"
+				+ AlumnoContract.FECHA_NACIMIENTO + "`=?"
+				+ " where `"
+				+ AlumnoContract.TABLE_NAME + "`=?" ;
+		try (
+				Connection cn = gc.getConnection();
+				 PreparedStatement ps = cn.prepareStatement(query);
+				 ){
+			ps.setString(1, alumno.getDni());
+			ps.setString(2, alumno.getNombre());
+			ps.setString(3, alumno.getApellidos());
+			ps.setLong(4, alumno.getFechaNacimiento().getTime());
+			resultado = ps.execute();
+		}catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		 
+		return resultado;
 	}
 
 	@Override
-	public boolean delete(String id) {
-		// TODO Auto-generated method stub
-		return false;
+	public boolean delete(String dni) {
+		boolean resultado = false;
+		String query = "delete from `" + AlumnoContract.TABLE_NAME
+				+ "` where `"
+				+ AlumnoContract.DNI + "`=?" ;
+		try (
+				Connection cn = gc.getConnection();
+				 PreparedStatement ps = cn.prepareStatement(query);
+				 ){
+			ps.setString(1, dni);
+			resultado = ps.execute();
+		}catch (SQLException e) {
+			e.printStackTrace();
+		}
+		 
+		return resultado;
 	}
 
 	@Override
 	public ArrayList<Alumno> findAll() {
 		ArrayList <Alumno> alumnosList = new ArrayList<>();
-		String query = "select * from alumnos";
+		String query = "select * from " + AlumnoContract.TABLE_NAME;
 		try (
 				Connection cn = gc.getConnection();
-				 PreparedStatement ps = cn.prepareStatement(query, PreparedStatement.RETURN_GENERATED_KEYS);
+				 PreparedStatement ps = cn.prepareStatement(query);
 				 ){
 			
 		 ResultSet rs = ps.executeQuery();
 
 		 while(rs.next()){
-			 String dni = rs.getString("dni");
-			 String nombre = rs.getString("nombre");
-			 String apellidos = rs.getString("apellidos");
-			 Date date = new Date(rs.getLong("fechanacimiento"));
+			 String dni = rs.getString(AlumnoContract.DNI);
+			 String nombre = rs.getString(AlumnoContract.NOMBRE);
+			 String apellidos = rs.getString(AlumnoContract.APELLIDOS);
+			 Date date = new Date(rs.getLong(AlumnoContract.FECHA_NACIMIENTO));
 			 alumnosList.add(new Alumno(dni, nombre, apellidos, date));
 		 }
 		} catch (SQLException e) {
@@ -89,5 +144,29 @@ public class AlumnoDAO implements Crud<Alumno, String> {
 		}
 		 return alumnosList;
 	}
+	
+	public ArrayList<Alumno> findByNombre(String nombre) {
+		ArrayList <Alumno> alumnosList = new ArrayList<>();
+		String query = "select * from `" + AlumnoContract.TABLE_NAME 
+				+ "` where `" + AlumnoContract.NOMBRE + "`=?";
+		try (
+				Connection cn = gc.getConnection();
+				 PreparedStatement ps = cn.prepareStatement(query);
+				 ){
+			ps.setString(0, nombre);
+		 ResultSet rs = ps.executeQuery();
 
+		 while(rs.next()){
+			 String dni = rs.getString(AlumnoContract.DNI);
+			 String nombreStr = rs.getString(AlumnoContract.NOMBRE);
+			 String apellidos = rs.getString(AlumnoContract.APELLIDOS);
+			 Date date = new Date(rs.getLong(AlumnoContract.FECHA_NACIMIENTO));
+			 alumnosList.add(new Alumno(dni, nombreStr, apellidos, date));
+		 }
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		 return alumnosList;
+	}
+		
 }

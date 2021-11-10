@@ -3,7 +3,9 @@ package es.iespuertodelacruz.daniel.instituto.servlets;
 import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -73,8 +75,32 @@ public class GestorAlumnos extends HttpServlet {
 			request.getSession().setAttribute("listaAlumnos", alumnoDao.findAll());
 			request.getRequestDispatcher("alumnos.jsp").forward(request, response);
 			
-		} else {
-			request.getRequestDispatcher("gestormatriculas").forward(request, response);
+		} else if (buttonParam.equals("mostrar")){
+			//request.getSession().setAttribute("listaAlumnos", alumnoDao.findByName());
+			String dni = (String) request.getParameter("dniMostrar");
+			String nombre = (String) request.getParameter("nombreMostrar");
+			if (!dni.isEmpty() && nombre.isEmpty()) {
+				ArrayList <Alumno> listaAlumnos = new ArrayList<>();
+				Alumno alumno = alumnoDao.findById(dni);
+				
+				if (alumno != null) {
+					listaAlumnos.add(alumno);
+					request.getSession().setAttribute("listaAlumnos", listaAlumnos);
+				}
+			} else if (dni.isEmpty() && !nombre.isEmpty()) {
+				ArrayList <Alumno> listaAlumnos = null;
+				listaAlumnos = alumnoDao.findByNombre(nombre);		
+				if (listaAlumnos != null) {
+					request.getSession().setAttribute("listaAlumnos", listaAlumnos);
+				}
+			}
+			request.getRequestDispatcher("alumnos.jsp").forward(request, response);
+		} else if (buttonParam.equals("borrar")) {
+			String dni = (String) request.getParameter("dniBorrar");
+			if (dni != null) {
+				alumnoDao.delete(dni);
+				request.getRequestDispatcher("alumnos.jsp").forward(request, response);
+			}
 		}
 	}
 

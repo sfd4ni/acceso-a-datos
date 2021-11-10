@@ -2,11 +2,13 @@ package es.iespuertodelacruz.daniel.instituto.modelo;
 
 import java.util.Date;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 public class Alumno {
 	private String dni, nombre, apellidos;
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy")
 	private Date fechaNacimiento;
 	
 	public Alumno() {}
