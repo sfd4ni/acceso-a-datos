@@ -28,7 +28,13 @@
     	<servlet-name>GestorMatriculas</servlet-name>
     	<servlet-class>es.iespuertodelacruz.daniel.instituto.servlets.GestorMatriculas</servlet-class>
     </servlet>
-
+	<servlet>
+    	<description>
+    	</description>
+    	<display-name>GestorAsignaturas</display-name>
+    	<servlet-name>GestorAsignaturas</servlet-name>
+    	<servlet-class>es.iespuertodelacruz.daniel.instituto.servlets.GestorAsignaturas</servlet-class>
+    </servlet>
 
     <servlet-mapping>
     	<servlet-name>Principal</servlet-name>
@@ -46,6 +52,11 @@
     	<servlet-name>GestorMatriculas</servlet-name>
     	<url-pattern>/GestorMatriculas</url-pattern>
 		<url-pattern>/gestormatriculas</url-pattern>    	
+    </servlet-mapping>
+    <servlet-mapping>
+    	<servlet-name>GestorAsignaturas</servlet-name>
+    	<url-pattern>/GestorAsignaturas</url-pattern>
+		<url-pattern>/gestorasignaturas</url-pattern>    	
     </servlet-mapping>
     <session-config>
         <session-timeout>

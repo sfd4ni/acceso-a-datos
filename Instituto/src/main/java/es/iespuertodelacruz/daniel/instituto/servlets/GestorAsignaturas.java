@@ -7,16 +7,21 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import es.iespuertodelacruz.daniel.instituto.dao.AlumnoDAO;
+import es.iespuertodelacruz.daniel.instituto.dao.AsignaturaDAO;
+import es.iespuertodelacruz.daniel.instituto.dao.GestorConexionesDDBB;
+import es.iespuertodelacruz.daniel.instituto.modelo.Asignatura;
+
 /**
- * Servlet implementation class Principal
+ * Servlet implementation class GestorAsignaturas
  */
-public class Principal extends HttpServlet {
+public class GestorAsignaturas extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public Principal() {
+    public GestorAsignaturas() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -25,7 +30,7 @@ public class Principal extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		request.getRequestDispatcher("index.jsp").forward(request, response);
+		request.getRequestDispatcher("asignaturas.jsp").forward(request, response);
 	}
 
 	/**
@@ -33,12 +38,11 @@ public class Principal extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String buttonParam = request.getParameter("button");
-		if(buttonParam.equals("alumnos")) {
-			request.getRequestDispatcher("gestoralumnos").forward(request, response);
-		} else if(buttonParam.equals("matriculas")) {
-			request.getRequestDispatcher("gestormatriculas").forward(request, response);
-		} else if(buttonParam.equals("asignaturas")) {
-			request.getRequestDispatcher("gestorasignaturas").forward(request, response);
+		AsignaturaDAO asignaturaDao = new AsignaturaDAO((GestorConexionesDDBB)request.getServletContext().getAttribute("gc"));
+		System.out.println(buttonParam);
+		if(buttonParam.equals("asignaturas")) {
+			request.getSession().setAttribute("listaAsignaturas", asignaturaDao.findAll());
+			request.getRequestDispatcher("asignaturas.jsp").forward(request, response);
 		}
 	}
 
