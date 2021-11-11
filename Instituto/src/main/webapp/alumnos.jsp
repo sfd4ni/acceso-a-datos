@@ -47,7 +47,7 @@
 
         <div id="editar" class="flex-item">
         <h3>Editar alumno</h3>
-        <form>
+        <form action="gestoralumnos" method="post">
           <label for="nombreEditar">*Nombre:</label>
           <input type="text" name="nombreEditar"></input><br>
 					<label for="apellidosEditar">*Apellidos:</label>
@@ -77,7 +77,7 @@
     </div>
     <textarea id="" name="mostrarTextArea" rows="17" cols="100" readonly>
       <c:forEach items="${listaAlumnos}" var="alumno">
-					<c:out value="${alumno.imprimir()}"/>"/>
+					<c:out value="${alumno.imprimir()}"/>
 				</c:forEach>
       </textarea>
   </div>

@@ -30,7 +30,6 @@ public class AlumnoDAO implements Crud<Alumno, String> {
 		Connection cn = gc.getConnection();
 		 PreparedStatement ps = cn.prepareStatement(query, PreparedStatement.RETURN_GENERATED_KEYS);
 		 ){
-			 cn.setAutoCommit(false);
 			 ps.setString(1, alumno.getDni());
 			 ps.setString(2, alumno.getNombre());
 			 ps.setString(3, alumno.getApellidos());
@@ -42,7 +41,6 @@ public class AlumnoDAO implements Crud<Alumno, String> {
 				 String nombre = rs.getString(2);
 				 String apellidos = rs.getString(3);
 				 long fechaNacimiento = rs.getLong(4);
-
 				 resultado = new Alumno(dni, nombre, apellidos, new Date(fechaNacimiento));
 			 }
 		} catch (SQLException e) {
@@ -84,16 +82,17 @@ public class AlumnoDAO implements Crud<Alumno, String> {
 				+ AlumnoContract.APELLIDOS + "`=?,`"
 				+ AlumnoContract.FECHA_NACIMIENTO + "`=?"
 				+ " where `"
-				+ AlumnoContract.TABLE_NAME + "`=?" ;
+				+ AlumnoContract.DNI + "`=?" ;
 		try (
 				Connection cn = gc.getConnection();
 				 PreparedStatement ps = cn.prepareStatement(query);
 				 ){
-			ps.setString(1, alumno.getDni());
-			ps.setString(2, alumno.getNombre());
-			ps.setString(3, alumno.getApellidos());
-			ps.setLong(4, alumno.getFechaNacimiento().getTime());
-			resultado = ps.execute();
+			System.out.println(query);
+			ps.setString(1, alumno.getNombre());
+			ps.setString(2, alumno.getApellidos());
+			ps.setLong(3, alumno.getFechaNacimiento().getTime());
+			ps.setString(4, alumno.getDni());
+			resultado = (ps.executeUpdate() == 1);
 		}catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -113,7 +112,7 @@ public class AlumnoDAO implements Crud<Alumno, String> {
 				 PreparedStatement ps = cn.prepareStatement(query);
 				 ){
 			ps.setString(1, dni);
-			resultado = ps.execute();
+			resultado = (ps.executeUpdate() == 1);
 		}catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -153,7 +152,7 @@ public class AlumnoDAO implements Crud<Alumno, String> {
 				Connection cn = gc.getConnection();
 				 PreparedStatement ps = cn.prepareStatement(query);
 				 ){
-			ps.setString(0, nombre);
+			ps.setString(1, nombre);
 		 ResultSet rs = ps.executeQuery();
 
 		 while(rs.next()){
