@@ -121,7 +121,6 @@ public class GestorAlumnos extends HttpServlet {
 					nombre != null && !nombre.isEmpty() &&
 					apellidos != null && !apellidos.isEmpty() &&
 					date != null && date.getTime() > 0) {
-				System.out.println("Llegué");
 				Alumno alumnoEditar = new Alumno(
 						dni,
 						nombre,

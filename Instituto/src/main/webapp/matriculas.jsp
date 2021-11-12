@@ -21,7 +21,7 @@
       <div id="general" class="flex-container">
         <div id="agregar" class="flex-item">
         <h3>Agregar matrícula</h3>
-        <form>
+        <form action="gestormatriculas" method="post">
           <label for="dni">*DNI alumno:</label>
           <input type="text" name="dniAgregar"></input><br>
           <label for="año">*Año:</label>
@@ -29,23 +29,23 @@
           <label for="asignaturas">*Asignaturas:</label>
           <input type="text" name="asignaturasAgregar"></input><br>
           <br>
-          <span><button name="agregarButton" class="btn btn-primary" type="submit">Agregar</button></span>
+          <span><button name="button" class="btn btn-primary" type="submit" value="agregar">Agregar</button></span>
         </form>
       </div>
 
         <div id="borrar" class="flex-item">
           <h3>Borrar matrícula</h3>
-          <form>
+          <form action="gestormatriculas" method="post">
             <label for="idMatricula">*ID Matrícula:</label>
             <input type="text" name="idMatriculaBorrar"></input><br>
             <br>
-            <button name="borrarButton" class="btn btn-primary" type="submit">Borrar</button>
+            <button name="button" class="btn btn-primary" type="submit" value="borrar">Borrar</button>
           </form>
         </div>
 
         <div id="editar" class="flex-item">
         <h3>Editar matrícula</h3>
-        <form>
+        <form action="gestormatriculas" method="post">
           <label for="idMatricula">*ID Matrícula:</label>
           <input type="text" name="idMatriculaEditar"></input><br>
           <label for="dni">*DNI alumno:</label>
@@ -55,20 +55,20 @@
           <label for="asignaturas">*Asignaturas:</label>
           <input type="text" name="asignaturas"></input><br>
           <br>
-          <button name="editarButton" class="btn btn-primary" type="submit">Editar</button>
+          <button name="button" class="btn btn-primary" type="submit" value="editar">Editar</button>
         </form>
       </div>
 
       <div id="mostrar" class="flex-item">
         <h3>Mostrar matrícula</h3>
         <label>(Escribir en uno de los campos únicamente)</label>
-        <form>
+        <form action="gestormatriculas" method="post">
           <label for="dni">*DNI alumno:</label>
           <input type="text" name="dniMostrar"></input><br>
           <label for="año">*Año:</label>
           <input type="text" name="añoMostrar"></input><br>
           <br>
-          <button name="mostrarButton" class="btn btn-primary" type="submit">Mostrar</button>
+          <button name="button" class="btn btn-primary" type="submit" value="mostrar">Mostrar</button>
         </form>
       </div>
       <h6>Nota:los campos marcados con asterisco son obligatorios.</h6>

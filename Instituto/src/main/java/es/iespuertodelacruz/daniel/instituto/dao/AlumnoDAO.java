@@ -87,7 +87,6 @@ public class AlumnoDAO implements Crud<Alumno, String> {
 				Connection cn = gc.getConnection();
 				 PreparedStatement ps = cn.prepareStatement(query);
 				 ){
-			System.out.println(query);
 			ps.setString(1, alumno.getNombre());
 			ps.setString(2, alumno.getApellidos());
 			ps.setLong(3, alumno.getFechaNacimiento().getTime());

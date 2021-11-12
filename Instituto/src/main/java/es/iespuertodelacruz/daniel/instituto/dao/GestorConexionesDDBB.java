@@ -14,7 +14,7 @@ public class GestorConexionesDDBB {
    String clave;
     
     public GestorConexionesDDBB(String ddbb, String nombreUsuario, String password) {
-        jdbcUrl = "jdbc:mysql://localhost/"+ddbb+"?serverTimezone=UTC";
+        jdbcUrl = "jdbc:mysql://localhost/" + ddbb + "?serverTimezone=UTC";
         usuario = nombreUsuario;
         clave = password;
         cargarDriverMysql();

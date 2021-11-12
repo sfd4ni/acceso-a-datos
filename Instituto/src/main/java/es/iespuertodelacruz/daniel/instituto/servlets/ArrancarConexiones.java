@@ -54,7 +54,7 @@ public class ArrancarConexiones implements ServletContextListener, ServletContex
      * @see ServletContextListener#contextInitialized(ServletContextEvent)
      */
     public void contextInitialized(ServletContextEvent sce)  { 
-    	GestorConexionesDDBB gc = new GestorConexionesDDBB("instituto", "admin", "1q2w3e4r");
+    	GestorConexionesDDBB gc = new GestorConexionesDDBB("instituto", "root", null);
     	sce.getServletContext().setAttribute("gc", gc);
     }
 	

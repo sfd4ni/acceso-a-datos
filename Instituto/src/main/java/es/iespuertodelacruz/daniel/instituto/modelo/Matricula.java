@@ -9,5 +9,5 @@ public class Matricula {
 	Alumno alumno;
 	@JsonProperty("año")
 	int year;
-	//ArrayList<Asignatura> asignaturas;
+	ArrayList<Asignatura> asignaturas;
 }

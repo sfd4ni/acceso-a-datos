@@ -33,8 +33,8 @@
 
         <div id="borrar" class="flex-item">
           <h3>Borrar asignatura</h3>
-          <form action="gestoralumnos" method="post">
-				<label for="dniBorrar">*ID:</label>
+          <form action="gestorasignaturas" method="post">
+				<label for="idBorrar">*ID:</label>
 				<input type="text" name="idBorrar"></input><br>
             <br>
             <button name="button" class="btn btn-primary" type="submit" value="borrar">Borrar</button>
@@ -76,7 +76,7 @@
       </textarea>
   </div>
   <div>
-    <a href="#" class="btn btn-secondary btn-lg" role="button">Volver</a>
+    <a href="principal" class="btn btn-secondary btn-lg" role="button">Volver</a>
   </div>
 
   </body>
