@@ -156,5 +156,33 @@ public class AsignaturaDAO implements Crud<Asignatura, Integer>{
 		}
 		 return asignaturasList;
 	}
+	
+	public ArrayList<Asignatura> findByIdMatricula(int idMatricula) {
+		ArrayList <Asignatura> asignaturasList = new ArrayList<>();
+		String query = "select a.* from " + AsignaturaContract.TABLE_NAME + 
+				" a JOIN asignatura_matricula am ON a.idasignatura = am.idasignatura" +
+				" WHERE am.idmatricula = " + idMatricula;
+				
+		try (
+				Connection cn = gc.getConnection();
+				 PreparedStatement ps = cn.prepareStatement(query);
+				 ){
+		 System.out.println(query);	
+		 ResultSet rs = ps.executeQuery();
+
+		 while(rs.next()){
+			 int id = rs.getInt(AsignaturaContract._ID);
+			 String nombre = rs.getString(AsignaturaContract.NOMBRE);
+			 String curso = rs.getString(AsignaturaContract.CURSO);
+			 Asignatura asignatura = new Asignatura(nombre, curso);
+			 System.out.println(nombre);
+			 asignatura.setIdasignatura(id);
+			 asignaturasList.add(asignatura);
+		 }
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		 return asignaturasList;
+	}
 
 }

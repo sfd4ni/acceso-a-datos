@@ -7,6 +7,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import es.iespuertodelacruz.daniel.instituto.dao.GestorConexionesDDBB;
+import es.iespuertodelacruz.daniel.instituto.dao.MatriculaDAO;
+
 /**
  * Servlet implementation class GestorMatriculas
  */
@@ -18,7 +21,6 @@ public class GestorMatriculas extends HttpServlet {
      */
     public GestorMatriculas() {
         super();
-        // TODO Auto-generated constructor stub
     }
 
 	/**
@@ -32,8 +34,25 @@ public class GestorMatriculas extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		doGet(request, response);
+		String buttonParam = request.getParameter("button");
+		MatriculaDAO matriculaDao = new MatriculaDAO((GestorConexionesDDBB)request.getServletContext().getAttribute("gc"));
+		switch (buttonParam) {
+			case "matriculas":
+				request.getSession().setAttribute("listaMatriculas", matriculaDao.findAll());
+				break;
+			case "borrar":
+				break;
+			case "agregar":
+				break;
+			case "mostrar":
+				break;
+			case "editar":
+				break;
+			default:
+				
+				break;
+		}
+		request.getRequestDispatcher("matriculas.jsp").forward(request, response);
 	}
 
 }
