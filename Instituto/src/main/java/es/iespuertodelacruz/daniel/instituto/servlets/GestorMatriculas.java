@@ -63,6 +63,7 @@ public class GestorMatriculas extends HttpServlet {
 				if (idBorrar != null) {
 					matriculaDao.delete(idBorrar);
 				}
+				request.getSession().setAttribute("listaMatriculas", matriculaDao.findAll());
 				break;
 				
 			case "agregar":
