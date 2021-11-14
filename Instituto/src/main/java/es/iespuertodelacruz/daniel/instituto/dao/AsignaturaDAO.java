@@ -9,6 +9,7 @@ import java.util.Date;
 
 import es.iespuertodelacruz.daniel.instituto.contracts.AlumnoContract;
 import es.iespuertodelacruz.daniel.instituto.contracts.AsignaturaContract;
+import es.iespuertodelacruz.daniel.instituto.contracts.AsignaturaMatriculaContract;
 import es.iespuertodelacruz.daniel.instituto.modelo.Alumno;
 import es.iespuertodelacruz.daniel.instituto.modelo.Asignatura;
 
@@ -160,14 +161,15 @@ public class AsignaturaDAO implements Crud<Asignatura, Integer>{
 	public ArrayList<Asignatura> findByIdMatricula(int idMatricula) {
 		ArrayList <Asignatura> asignaturasList = new ArrayList<>();
 		String query = "select a.* from " + AsignaturaContract.TABLE_NAME + 
-				" a JOIN asignatura_matricula am ON a.idasignatura = am.idasignatura" +
-				" WHERE am.idmatricula = " + idMatricula;
+				" a JOIN " + AsignaturaMatriculaContract.TABLE_NAME 
+				+ " am ON a." + AsignaturaContract._ID + " = am." 
+				+ AsignaturaMatriculaContract.ID_ASIGNATURA +
+				" WHERE am." + AsignaturaMatriculaContract.ID_MATRICULA+ " = " + idMatricula;
 				
 		try (
 				Connection cn = gc.getConnection();
 				 PreparedStatement ps = cn.prepareStatement(query);
 				 ){
-		 System.out.println(query);	
 		 ResultSet rs = ps.executeQuery();
 
 		 while(rs.next()){
@@ -175,7 +177,6 @@ public class AsignaturaDAO implements Crud<Asignatura, Integer>{
 			 String nombre = rs.getString(AsignaturaContract.NOMBRE);
 			 String curso = rs.getString(AsignaturaContract.CURSO);
 			 Asignatura asignatura = new Asignatura(nombre, curso);
-			 System.out.println(nombre);
 			 asignatura.setIdasignatura(id);
 			 asignaturasList.add(asignatura);
 		 }

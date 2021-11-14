@@ -24,8 +24,8 @@
         <form action="gestormatriculas" method="post">
           <label for="dni">*DNI alumno:</label>
           <input type="text" name="dniAgregar"></input><br>
-          <label for="año">*Año:</label>
-          <input type="text" name="añoAgregar"></input><br>
+          <label for="year">*Año:</label>
+          <input type="text" name="yearAgregar"></input><br>
           <label for="asignaturas">*Asignaturas:</label>
           <input type="text" name="asignaturasAgregar"></input><br>
           <br>
@@ -50,10 +50,10 @@
           <input type="text" name="idMatriculaEditar"></input><br>
           <label for="dni">*DNI alumno:</label>
           <input type="text" name="dniEditar"></input><br>
-          <label for="año">*Año:</label>
-          <input type="text" name="añoEditar"></input><br>
-          <label for="asignaturas">*Asignaturas:</label>
-          <input type="text" name="asignaturas"></input><br>
+          <label for="year">*Año:</label>
+          <input type="text" name="yearEditar"></input><br>
+          <label for="asignaturasEditar">*Asignaturas:</label>
+          <input type="text" name="asignaturasEditar"></input><br>
           <br>
           <button name="button" class="btn btn-primary" type="submit" value="editar">Editar</button>
         </form>
@@ -65,8 +65,8 @@
         <form action="gestormatriculas" method="post">
           <label for="dni">*DNI alumno:</label>
           <input type="text" name="dniMostrar"></input><br>
-          <label for="año">*Año:</label>
-          <input type="text" name="añoMostrar"></input><br>
+          <label for="year">*Año:</label>
+          <input type="text" name="yearMostrar"></input><br>
           <br>
           <button name="button" class="btn btn-primary" type="submit" value="mostrar">Mostrar</button>
         </form>
@@ -80,7 +80,7 @@
       </textarea>
   </div>
   <div>
-    <a href="#" class="btn btn-secondary btn-lg" role="button">Volver</a>
+    <a href="principal" class="btn btn-secondary btn-lg" role="button">Volver</a>
   </div>
 
   </body>
