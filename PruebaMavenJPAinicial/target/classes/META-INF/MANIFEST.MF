@@ -1,5 +1,5 @@
 Manifest-Version: 1.0
-Built-By: Danieldb
-Build-Jdk: 17
+Built-By: dama
+Build-Jdk: 16.0.2
 Created-By: Maven Integration for Eclipse
 
