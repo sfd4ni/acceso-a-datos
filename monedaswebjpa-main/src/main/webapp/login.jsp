@@ -7,7 +7,6 @@
 <title>login</title>
 </head>
 <body>
-<
 	<form method="post" action="login">
 		<input type="text" name="user" id="user" placeholder="nick usuario" /><br>
 		<input type="password" name="password" id="password" placeholder="contraseña" /><br>

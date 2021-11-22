@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
+import javax.persistence.NoResultException;
 
 import es.iespuertodelacruz.jc.monedaswebjpa.entities.Moneda;
 import es.iespuertodelacruz.jc.monedaswebjpa.entities.Usuario;
@@ -41,9 +42,15 @@ public class UsuarioRepository implements JPACRUD<Usuario,Integer>{
 	public Usuario findByName(String nombre) {
 		EntityManager em = emf.createEntityManager();
 		em.getTransaction().begin();
-		Usuario usuario = em.createNamedQuery("Usuario.findByName", Usuario.class)
-			.setParameter("name", nombre)
-			.getSingleResult();
+		Usuario usuario = null;
+		try {
+			usuario = em.createNamedQuery("Usuario.findByName", Usuario.class)
+					.setParameter("name", nombre)
+					.getSingleResult();
+		} catch (NoResultException nre){
+			// No hacemos nada, que no se encuentre usuario está bien
+		}
+		
 
 		em.getTransaction().commit();
 		em.close();

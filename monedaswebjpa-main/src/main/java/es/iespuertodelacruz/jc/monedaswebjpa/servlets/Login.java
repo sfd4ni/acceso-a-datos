@@ -48,7 +48,7 @@ public class Login extends HttpServlet {
 			Usuario usuario = usuarioR.findByName(paramUser);
 			
 			if(usuario != null) {
-				
+				System.out.println("Hola");
 				boolean okLogin = BCrypt.checkpw(paramPassword,usuario.getPassword());
 				/*
 				 * Para una página de registro. Se usaría la siguiente sentencia:
@@ -58,6 +58,7 @@ public class Login extends HttpServlet {
 				 * sean establecidas iguales 
 				*/
 				if( okLogin) {
+					System.out.println("Bien hecho.");
 					request.getSession().setAttribute("user", usuario);
 					redirect="users/monedas.jsp";
 				}
