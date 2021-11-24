@@ -4,12 +4,19 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>Monedas</title>
 </head>
 <body>
 	<div>
-		<span>Ahh</span>
-		<a href = "../logout">Logout</a>
+	<h1>Monedas</h1>
+	<a href = "../logout">Logout</a>
+	<ol>
+		<c:forEach items="${listaMonedas}" var="moneda">
+    		<li><a href="../gestormonedas?id=${moneda.getIdmoneda()}">${moneda.getNombre()}</a></li>
+		</c:forEach>
+	</ol>
+	
+		
 	</div>
 </body>
 </html>

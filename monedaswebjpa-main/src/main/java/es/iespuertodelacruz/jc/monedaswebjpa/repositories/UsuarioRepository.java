@@ -72,8 +72,15 @@ public class UsuarioRepository implements JPACRUD<Usuario,Integer>{
 
 	@Override
 	public boolean delete(Integer id) {
-		// TODO Auto-generated method stub
-		return false;
+		EntityManager em = emf.createEntityManager();
+		em.getTransaction().begin();
+		Moneda m = em.find(Moneda.class, id);
+		m.getHistoricocambioeuros()
+		.stream()
+		.forEach(h-> em.remove(h));
+		em.remove(m);
+		em.getTransaction().commit();
+		return true;
 	}
 
 }

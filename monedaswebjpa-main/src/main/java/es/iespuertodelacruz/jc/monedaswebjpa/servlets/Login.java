@@ -13,6 +13,7 @@ import javax.servlet.http.HttpSession;
 import org.mindrot.jbcrypt.BCrypt;
 
 import es.iespuertodelacruz.jc.monedaswebjpa.entities.Usuario;
+import es.iespuertodelacruz.jc.monedaswebjpa.repositories.MonedaRepository;
 import es.iespuertodelacruz.jc.monedaswebjpa.repositories.UsuarioRepository;
 
 /**
@@ -60,6 +61,8 @@ public class Login extends HttpServlet {
 				if( okLogin) {
 					System.out.println("Bien hecho.");
 					request.getSession().setAttribute("user", usuario);
+					MonedaRepository monedaR = new MonedaRepository(emf);
+					request.getSession().setAttribute("listaMonedas", monedaR.findAll());
 					redirect="users/monedas.jsp";
 				}
 				
