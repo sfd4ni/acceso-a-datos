@@ -1,4 +1,4 @@
-package es.iespuertodelacruz.jc.monedaswebjpa.servlets;
+package es.iespuertodelacruz.daniel.servlets;
 
 import java.io.IOException;
 
@@ -10,20 +10,19 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import es.iespuertodelacruz.jc.monedaswebjpa.entities.Moneda;
-import es.iespuertodelacruz.jc.monedaswebjpa.repositories.MonedaRepository;
+import es.iespuertodelacruz.daniel.repositories.OrderRepository;
 
 /**
- * Servlet implementation class GestorMonedas
+ * Servlet implementation class GestorOrders
  */
-@WebServlet({ "/GestorMonedas", "/gestormonedas" })
-public class GestorMonedas extends HttpServlet {
+@WebServlet({ "/GestorOrders", "/gestororders" })
+public class GestorOrders extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public GestorMonedas() {
+    public GestorOrders() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -34,24 +33,23 @@ public class GestorMonedas extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String idStr = request.getParameter("id");
 		EntityManagerFactory emf =(EntityManagerFactory)request.getServletContext().getAttribute("emf");
-		MonedaRepository monedaR = new MonedaRepository(emf);
+		OrderRepository orderR = new OrderRepository(emf);
 		EntityManager em = emf.createEntityManager();
 		
-		String redirect = "users/monedas.jsp";
+		String redirect = "users/orders.jsp";
 		if (idStr != null) {
-			Integer idMoneda = null;
+			Integer idOrder = null;
 			try {
-				idMoneda = Integer.parseInt(idStr);
+				idOrder = Integer.parseInt(idStr);
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
-			if (idMoneda != null) {
-				request.getSession().setAttribute("moneda", monedaR.findById(idMoneda));
-				redirect = "users/moneda.jsp";
+			if (idOrder != null) {
+				request.getSession().setAttribute("order", orderR.findById(idOrder));
+				redirect = "users/order.jsp";
 			}
 		}
 		request.getRequestDispatcher(redirect).forward(request, response);
-		
 	}
 
 	/**
@@ -61,4 +59,5 @@ public class GestorMonedas extends HttpServlet {
 		// TODO Auto-generated method stub
 		doGet(request, response);
 	}
+
 }

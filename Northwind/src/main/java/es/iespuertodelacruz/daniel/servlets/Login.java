@@ -12,6 +12,7 @@ import javax.servlet.http.HttpSession;
 import org.mindrot.jbcrypt.BCrypt;
 
 import es.iespuertodelacruz.daniel.entities.Usuario;
+import es.iespuertodelacruz.daniel.repositories.OrderRepository;
 import es.iespuertodelacruz.daniel.repositories.UsuarioRepository;
 
 /**
@@ -44,9 +45,9 @@ public class Login extends HttpServlet {
 		Usuario usuario = (Usuario)session.getAttribute("usuario");
 		String redirect = "login.jsp";
 		if(usuario != null)
-			redirect="users/monedas.jsp";
+			redirect="users/orders.jsp";
 		else {
-			String paramUsuario = request.getParameter("usuario");
+			String paramUsuario = request.getParameter("user");
 			String paramPassword = request.getParameter("password");
 			EntityManagerFactory emf =(EntityManagerFactory)request.getServletContext().getAttribute("emf");
 			UsuarioRepository UsuarioR = new UsuarioRepository(emf);
@@ -55,7 +56,8 @@ public class Login extends HttpServlet {
 			
 			if(usuario != null) {
 				System.out.println("Hola");
-				boolean okLogin = BCrypt.checkpw(paramPassword,usuario.getPassword());
+				boolean okLogin =  true;
+				//boolean okLogin = BCrypt.checkpw(paramPassword,usuario.getPassword());
 				/*
 				 * Para una pagina de registro. Se usaría la siguiente sentencia:
 				 * 	String enHash = BCrypt.hashpw( paramPassword, BCrypt.gensalt(10));
@@ -66,9 +68,9 @@ public class Login extends HttpServlet {
 				if( okLogin) {
 					System.out.println("Bien hecho.");
 					request.getSession().setAttribute("usuario", usuario);
-					//MonedaRepository monedaR = new MonedaRepository(emf);
-					//request.getSession().setAttribute("listaMonedas", monedaR.findAll());
-					redirect="users/monedas.jsp";
+					OrderRepository orderR = new OrderRepository(emf);
+					request.getSession().setAttribute("listaOrders", orderR.findAll());
+					redirect="users/orders.jsp";
 				}
 				
 			}

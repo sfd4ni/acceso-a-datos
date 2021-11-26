@@ -12,7 +12,7 @@ import java.util.List;
 @Entity
 @Table(name="usuario")
 @NamedQuery(name="Usuario.findAll", query="SELECT u FROM Usuario u")
-@NamedQuery(name="Usuario.findByName", query="SELECT u FROM Usuario u WHERE u.nombre = :name")
+@NamedQuery(name="Usuario.findByName", query="SELECT u FROM Usuario u WHERE u.nombre = :nombre")
 public class Usuario implements Serializable {
 	private static final long serialVersionUID = 1L;
 

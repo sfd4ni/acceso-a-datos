@@ -9,7 +9,7 @@
     </head>
     <body>
         <body>
-        <h1>Bienvenido a la aplicación Monedas</h1>
+        <h1>Bienvenido a la aplicación Northwind</h1>
         Para acceder se debe realizar login: <a href="login.jsp">login</a>
     </body>
     </body>
