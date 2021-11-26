@@ -8,6 +8,9 @@
         <title>JSP Page</title>
     </head>
     <body>
-        <h1>Hello World!</h1>
+        <body>
+        <h1>Bienvenido a la aplicación Monedas</h1>
+        Para acceder se debe realizar login: <a href="login.jsp">login</a>
+    </body>
     </body>
 </html>

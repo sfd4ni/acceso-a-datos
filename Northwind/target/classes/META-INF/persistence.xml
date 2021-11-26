@@ -9,6 +9,7 @@
 		<class>es.iespuertodelacruz.daniel.entities.Product</class>
 		<class>es.iespuertodelacruz.daniel.entities.Shipper</class>
 		<class>es.iespuertodelacruz.daniel.entities.Supplier</class>
+		<class>es.iespuertodelacruz.daniel.entities.Usuario</class>
 	<properties>
 		 <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/northwind?serverTimezone=UTC"/>
 		 <property name="javax.persistence.jdbc.user" value="root"/>
