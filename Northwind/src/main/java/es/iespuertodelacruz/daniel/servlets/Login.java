@@ -12,6 +12,7 @@ import javax.servlet.http.HttpSession;
 import org.mindrot.jbcrypt.BCrypt;
 
 import es.iespuertodelacruz.daniel.entities.Usuario;
+import es.iespuertodelacruz.daniel.repositories.CustomerRepository;
 import es.iespuertodelacruz.daniel.repositories.OrderRepository;
 import es.iespuertodelacruz.daniel.repositories.UsuarioRepository;
 
@@ -68,9 +69,9 @@ public class Login extends HttpServlet {
 				if( okLogin) {
 					System.out.println("Bien hecho.");
 					request.getSession().setAttribute("usuario", usuario);
-					OrderRepository orderR = new OrderRepository(emf);
-					request.getSession().setAttribute("listaOrders", orderR.findAll());
-					redirect="users/orders.jsp";
+					CustomerRepository customerR = new CustomerRepository(emf);
+					request.getSession().setAttribute("listaCustomers", customerR.findAll());
+					redirect="users/customers.jsp";
 				}
 				
 			}
