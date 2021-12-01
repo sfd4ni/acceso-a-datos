@@ -6,22 +6,21 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.NoResultException;
 
-import es.iespuertodelacruz.daniel.entities.Customer;
-import es.iespuertodelacruz.daniel.entities.Customer;
+import es.iespuertodelacruz.daniel.entities.Product;
 
-public class CustomerRepository implements JPACRUD<Customer,String>{
+public class ProductRepository implements JPACRUD<Product,Integer>{
 
 	private EntityManagerFactory emf;
 
-	public CustomerRepository(EntityManagerFactory emf) {
+	public ProductRepository(EntityManagerFactory emf) {
 		this.emf = emf;
 	}
 		
 	@Override
-	public List<Customer> findAll() {
+	public List<Product> findAll() {
 		EntityManager em = emf.createEntityManager();
 		em.getTransaction().begin();
-		List<Customer> lista = em.createNamedQuery("Customer.findAll", Customer.class)
+		List<Product> lista = em.createNamedQuery("Product.findAll", Product.class)
 			.getResultList();
 		em.getTransaction().commit();
 		em.close();
@@ -29,51 +28,50 @@ public class CustomerRepository implements JPACRUD<Customer,String>{
 	}
 
 	@Override
-	public Customer findById(String id) {
+	public Product findById(Integer id) {
 		EntityManager em = emf.createEntityManager();
 		em.getTransaction().begin();
-		Customer customer = em.find(Customer.class, id);
-		customer.getOrders().size();
+		Product product = em.find(Product.class, id);
 		em.getTransaction().commit();
 		em.close();
-		return customer;
+		return product;
 	}
 
 
-	public Customer findByName(String nombre) {
+	public Product findByName(String nombre) {
 		EntityManager em = emf.createEntityManager();
 		em.getTransaction().begin();
-		Customer customer = null;
+		Product product = null;
 		try {
-			customer = em.createNamedQuery("Customer.findByName", Customer.class)
+			product = em.createNamedQuery("Product.findByName", Product.class)
 					.setParameter("name", nombre)
 					.getSingleResult();
 		} catch (NoResultException nre){
-			// No hacemos nada, que no se encuentre Customer está bien
+			// No hacemos nada, que no se encuentre Product está bien
 		}
 		
 
 		em.getTransaction().commit();
 		em.close();
-		return customer;
-	}
-
+		return product;
+	}	
+	
+	
 	@Override
-	public Customer save(Customer obj) {
+	public Product save(Product obj) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public Customer update(Customer obj) {
+	public Product update(Product obj) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public boolean delete(String id) {
-		// TODO Auto-generated method stub
-		return false;
+	public boolean delete(Integer id) {
+		return true;
 	}
 
 }

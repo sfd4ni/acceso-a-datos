@@ -8,10 +8,20 @@
 <title>Order</title>
 </head>
 <body>
-<form action="gestorcustomers" method="POST">
-	<input style="display:none;" type="text" name="idorder" value="${customer.getCustomerID()}"/>
-	<input type="text" name="freight" value="${customer.getContactName()}"/>
-	<input type="submit" name="borrar" value="Borrar"/>
-	<input type="submit" name="modificar" value="Modificar"/>
-</form>
+	<h1>${customer.getContactName()}</h1>
+	<span>ID: ${customer.getCustomerID()}</span><br/>
+	<span>Adress: ${customer.getAddress()}</span><br/>
+	<span>City: ${customer.getCity()}</span><br/>
+	<span>Company Name: ${customer.getCompanyName()}</span><br/>
+	<span>Contact Title: ${customer.getContactTitle()}</span><br/>
+	<span>Country: ${customer.getCountry()}</span><br/>
+	<span>Fax: ${customer.getFax()}</span><br/>
+	<span>Phone: ${customer.getPhone()}</span><br/>
+	<span>Postal Code: ${customer.getPostalCode()}</span><br/>
+	<span>Region: ${customer.getRegion()}</span><br/>
+	<span>Lista pedidos:</span>
+	<c:forEach items="${customer.getOrders()}" var="order">
+   		<li><a href="gestororders?id=${order.getOrderID()}">${order.getRequiredDate()}</a></li>
+	</c:forEach>
+	<a href="gestororders?customerid="${customer.getCustomerID()}>Crear nuevo pedido</a>
 </body>
