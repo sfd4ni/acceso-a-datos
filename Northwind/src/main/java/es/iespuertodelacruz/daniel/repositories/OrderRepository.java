@@ -7,6 +7,7 @@ import javax.persistence.EntityManagerFactory;
 import javax.persistence.NoResultException;
 
 import es.iespuertodelacruz.daniel.entities.Order;
+import es.iespuertodelacruz.daniel.entities.OrderDetail;
 
 public class OrderRepository implements JPACRUD<Order,Integer>{
 
@@ -59,8 +60,16 @@ public class OrderRepository implements JPACRUD<Order,Integer>{
 	
 	@Override
 	public Order save(Order obj) {
-		// TODO Auto-generated method stub
-		return null;
+		EntityManager em = emf.createEntityManager();
+		em.getTransaction().begin();
+		for( OrderDetail orderdetail: obj.getOrderDetails()) {
+			orderdetail.setOrder(obj);
+			//em.persist(orderdetail);
+		}
+		em.persist(obj);
+		em.getTransaction().commit();
+		em.close();
+		return obj;
 	}
 
 	@Override

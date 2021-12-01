@@ -46,7 +46,7 @@ public class Login extends HttpServlet {
 		Usuario usuario = (Usuario)session.getAttribute("usuario");
 		String redirect = "login.jsp";
 		if(usuario != null)
-			redirect="users/orders.jsp";
+			redirect="users/customers.jsp";
 		else {
 			String paramUsuario = request.getParameter("user");
 			String paramPassword = request.getParameter("password");

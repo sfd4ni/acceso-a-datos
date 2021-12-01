@@ -5,14 +5,21 @@ import java.util.ArrayList;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
+import javax.persistence.EntityTransaction;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import es.iespuertodelacruz.daniel.entities.Customer;
+import es.iespuertodelacruz.daniel.entities.Order;
+import es.iespuertodelacruz.daniel.entities.OrderDetail;
+import es.iespuertodelacruz.daniel.entities.Product;
+import es.iespuertodelacruz.daniel.repositories.CustomerRepository;
 import es.iespuertodelacruz.daniel.repositories.OrderRepository;
 import es.iespuertodelacruz.daniel.repositories.ProductRepository;
+import es.iespuertodelacruz.daniel.repositories.UsuarioRepository;
 
 /**
  * Servlet implementation class GestorOrders
@@ -38,6 +45,7 @@ public class GestorOrders extends HttpServlet {
 		EntityManagerFactory emf =(EntityManagerFactory)request.getServletContext().getAttribute("emf");
 		OrderRepository orderR = new OrderRepository(emf);
 		ProductRepository productR = new ProductRepository(emf);
+		CustomerRepository customerR = new CustomerRepository(emf);
 		EntityManager em = emf.createEntityManager();
 		
 		String redirect = "users/orders.jsp";
@@ -55,7 +63,7 @@ public class GestorOrders extends HttpServlet {
 		}
 		if (customerId != null) {
 			request.getSession().setAttribute("productsList", productR.findAll());
-			request.getSession().setAttribute("customerId", customerId);
+			request.getSession().setAttribute("customer", customerR.findById(customerId));
 			redirect = "users/neworder.jsp";
 		}
 		request.getRequestDispatcher(redirect).forward(request, response);
@@ -66,15 +74,42 @@ public class GestorOrders extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String product = request.getParameter("productStr");
-		ArrayList<String> carritoList = (ArrayList<String>) request.getSession().getAttribute("carritoList");
-		String redirect = "users/neworder.jsp";
-		if (product != null) {
-			if (carritoList == null) {
-				carritoList = new ArrayList<>();
-			}
-			carritoList.add(product);
-			request.getSession().setAttribute("carritoList", carritoList);
+		String button = request.getParameter("add");
+		if (button == null) {
+			button = request.getParameter("save");
 		}
+		String productId = request.getParameter("productId");
+		String productQuantity = request.getParameter("productQuantity");
+		ArrayList<OrderDetail> carritoList = (ArrayList<OrderDetail>) request.getSession().getAttribute("carritoList");
+		String redirect = "users/neworder.jsp";
+		EntityManagerFactory emf =(EntityManagerFactory)request.getServletContext().getAttribute("emf");
+		OrderRepository orderR = new OrderRepository(emf);
+		ProductRepository productR = new ProductRepository(emf);
+		if (button.equals("add")) {
+			if (product != null) {
+				if (carritoList == null) {
+					carritoList = new ArrayList<>();
+				}
+				if (productQuantity != null) {
+					Product producto = productR.findById(Integer.parseInt(productId));
+					OrderDetail orderDetail = new OrderDetail();
+					orderDetail.setQuantity(Integer.parseInt(productQuantity));
+					orderDetail.setUnitPrice(producto.getUnitPrice());
+					orderDetail.setDiscount(0);
+					orderDetail.setProduct(producto);
+					carritoList.add(orderDetail);
+					request.getSession().setAttribute("carritoList", carritoList);
+				}
+				
+			}
+		} else if (button.equals("save")) {
+			Order order = new Order();
+			Customer customer = (Customer) request.getSession().getAttribute("customer");
+			order.setCustomer(customer);
+			order.setOrderDetails(carritoList);
+			orderR.save(order);
+		}
+		
 		request.getRequestDispatcher(redirect).forward(request, response);
 	}
 

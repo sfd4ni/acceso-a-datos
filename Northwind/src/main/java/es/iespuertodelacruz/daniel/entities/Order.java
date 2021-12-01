@@ -44,7 +44,7 @@ public class Order implements Serializable {
 	private String shipRegion;
 
 	//bi-directional many-to-one association to OrderDetail
-	@OneToMany(mappedBy="order")
+	@OneToMany(mappedBy="order", cascade=CascadeType.PERSIST)
 	private List<OrderDetail> orderDetails;
 
 	//bi-directional many-to-one association to Customer
