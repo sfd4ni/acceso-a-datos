@@ -67,7 +67,6 @@ public class Login extends HttpServlet {
 				 * sean establecidas iguales 
 				*/
 				if( okLogin) {
-					System.out.println("Bien hecho.");
 					request.getSession().setAttribute("usuario", usuario);
 					CustomerRepository customerR = new CustomerRepository(emf);
 					request.getSession().setAttribute("listaCustomers", customerR.findAll());

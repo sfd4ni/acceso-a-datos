@@ -12,9 +12,9 @@
 		<class>es.iespuertodelacruz.daniel.entities.Usuario</class>
 	<properties>
 		 <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/northwind?serverTimezone=UTC"/>
-		 <property name="javax.persistence.jdbc.user" value="admin"/>
+		 <property name="javax.persistence.jdbc.user" value="root"/>
 		 <property name="javax.persistence.jdbc.driver" value="com.mysql.cj.jdbc.Driver"/>
-		 <property name="javax.persistence.jdbc.password" value="1q2w3e4r"/>
+		 <property name="javax.persistence.jdbc.password" value=""/>
 		 <property name="hibernate.dialect" value="org.hibernate.dialect.MySQLDialect" />
 		 <property name="hibernate.show_sql" value="true" />
  	</properties>

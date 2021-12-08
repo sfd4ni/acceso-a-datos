@@ -6,22 +6,21 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.NoResultException;
 
-import es.iespuertodelacruz.daniel.entities.Order;
-import es.iespuertodelacruz.daniel.entities.OrderDetail;
+import es.iespuertodelacruz.daniel.entities.Employee;
 
-public class OrderRepository implements JPACRUD<Order,Integer>{
+public class EmployeeRepository implements JPACRUD<Employee,Integer>{
 
 	private EntityManagerFactory emf;
 
-	public OrderRepository(EntityManagerFactory emf) {
+	public EmployeeRepository(EntityManagerFactory emf) {
 		this.emf = emf;
 	}
 		
 	@Override
-	public List<Order> findAll() {
+	public List<Employee> findAll() {
 		EntityManager em = emf.createEntityManager();
 		em.getTransaction().begin();
-		List<Order> lista = em.createNamedQuery("Order.findAll", Order.class)
+		List<Employee> lista = em.createNamedQuery("Employee.findAll", Employee.class)
 			.getResultList();
 		em.getTransaction().commit();
 		em.close();
@@ -29,44 +28,39 @@ public class OrderRepository implements JPACRUD<Order,Integer>{
 	}
 
 	@Override
-	public Order findById(Integer id) {
+	public Employee findById(Integer id) {
 		EntityManager em = emf.createEntityManager();
 		em.getTransaction().begin();
-		Order order = em.find(Order.class, id);
-		order.getOrderDetails().size();
+		Employee employee = em.find(Employee.class, id);
 		em.getTransaction().commit();
 		em.close();
-		return order;
+		return employee;
 	}
 
 
-	public Order findByName(String nombre) {
+	public Employee findByName(String nombre) {
 		EntityManager em = emf.createEntityManager();
 		em.getTransaction().begin();
-		Order order = null;
+		Employee employee = null;
 		try {
-			order = em.createNamedQuery("Order.findByName", Order.class)
+			employee = em.createNamedQuery("Employee.findByName", Employee.class)
 					.setParameter("name", nombre)
 					.getSingleResult();
 		} catch (NoResultException nre){
-			// No hacemos nada, que no se encuentre Order está bien
+			// No hacemos nada, que no se encuentre Employee está bien
 		}
 		
 
 		em.getTransaction().commit();
 		em.close();
-		return order;
+		return employee;
 	}	
 	
 	
 	@Override
-	public Order save(Order obj) {
+	public Employee save(Employee obj) {
 		EntityManager em = emf.createEntityManager();
 		em.getTransaction().begin();
-		for( OrderDetail orderdetail: obj.getOrderDetails()) {
-			orderdetail.setOrder(obj);
-			//em.persist(orderdetail);
-		}
 		em.persist(obj);
 		em.getTransaction().commit();
 		em.close();
@@ -74,7 +68,7 @@ public class OrderRepository implements JPACRUD<Order,Integer>{
 	}
 
 	@Override
-	public Order update(Order obj) {
+	public Employee update(Employee obj) {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -85,3 +79,4 @@ public class OrderRepository implements JPACRUD<Order,Integer>{
 	}
 
 }
+

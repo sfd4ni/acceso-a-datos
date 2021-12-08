@@ -6,6 +6,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.NoResultException;
 
+import es.iespuertodelacruz.daniel.entities.OrderDetail;
 import es.iespuertodelacruz.daniel.entities.Product;
 
 public class ProductRepository implements JPACRUD<Product,Integer>{
@@ -59,8 +60,13 @@ public class ProductRepository implements JPACRUD<Product,Integer>{
 	
 	@Override
 	public Product save(Product obj) {
-		// TODO Auto-generated method stub
-		return null;
+		EntityManager em = emf.createEntityManager();
+		em.getTransaction().begin();
+		Product product = em.merge(obj);
+		em.persist(product);
+		em.getTransaction().commit();
+		em.close();
+		return obj;
 	}
 
 	@Override

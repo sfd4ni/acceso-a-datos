@@ -23,5 +23,6 @@
 	<c:forEach items="${customer.getOrders()}" var="order">
    		<li><a href="gestororders?id=${order.getOrderID()}">${order.getRequiredDate()}</a></li>
 	</c:forEach>
-	<a href="gestororders?customerid="${customer.getCustomerID()}>Crear nuevo pedido</a>
+	<a href="gestororders?customerid=${customer.getCustomerID()}">Crear nuevo pedido</a><br/>
+	<a href="users/customers.jsp">Back</a>
 </body>

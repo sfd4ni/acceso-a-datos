@@ -6,22 +6,21 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.NoResultException;
 
-import es.iespuertodelacruz.daniel.entities.Order;
-import es.iespuertodelacruz.daniel.entities.OrderDetail;
+import es.iespuertodelacruz.daniel.entities.Shipper;
 
-public class OrderRepository implements JPACRUD<Order,Integer>{
+public class ShipperRepository implements JPACRUD<Shipper,Integer>{
 
 	private EntityManagerFactory emf;
 
-	public OrderRepository(EntityManagerFactory emf) {
+	public ShipperRepository(EntityManagerFactory emf) {
 		this.emf = emf;
 	}
 		
 	@Override
-	public List<Order> findAll() {
+	public List<Shipper> findAll() {
 		EntityManager em = emf.createEntityManager();
 		em.getTransaction().begin();
-		List<Order> lista = em.createNamedQuery("Order.findAll", Order.class)
+		List<Shipper> lista = em.createNamedQuery("Shipper.findAll", Shipper.class)
 			.getResultList();
 		em.getTransaction().commit();
 		em.close();
@@ -29,44 +28,39 @@ public class OrderRepository implements JPACRUD<Order,Integer>{
 	}
 
 	@Override
-	public Order findById(Integer id) {
+	public Shipper findById(Integer id) {
 		EntityManager em = emf.createEntityManager();
 		em.getTransaction().begin();
-		Order order = em.find(Order.class, id);
-		order.getOrderDetails().size();
+		Shipper shipper = em.find(Shipper.class, id);
 		em.getTransaction().commit();
 		em.close();
-		return order;
+		return shipper;
 	}
 
 
-	public Order findByName(String nombre) {
+	public Shipper findByName(String nombre) {
 		EntityManager em = emf.createEntityManager();
 		em.getTransaction().begin();
-		Order order = null;
+		Shipper shipper = null;
 		try {
-			order = em.createNamedQuery("Order.findByName", Order.class)
+			shipper = em.createNamedQuery("Shipper.findByName", Shipper.class)
 					.setParameter("name", nombre)
 					.getSingleResult();
 		} catch (NoResultException nre){
-			// No hacemos nada, que no se encuentre Order está bien
+			// No hacemos nada, que no se encuentre Shipper está bien
 		}
 		
 
 		em.getTransaction().commit();
 		em.close();
-		return order;
+		return shipper;
 	}	
 	
 	
 	@Override
-	public Order save(Order obj) {
+	public Shipper save(Shipper obj) {
 		EntityManager em = emf.createEntityManager();
 		em.getTransaction().begin();
-		for( OrderDetail orderdetail: obj.getOrderDetails()) {
-			orderdetail.setOrder(obj);
-			//em.persist(orderdetail);
-		}
 		em.persist(obj);
 		em.getTransaction().commit();
 		em.close();
@@ -74,7 +68,7 @@ public class OrderRepository implements JPACRUD<Order,Integer>{
 	}
 
 	@Override
-	public Order update(Order obj) {
+	public Shipper update(Shipper obj) {
 		// TODO Auto-generated method stub
 		return null;
 	}
