@@ -2,6 +2,9 @@ package es.iespuertodelacruz.daniel.pruebarest.entity;
 
 import java.io.Serializable;
 import javax.persistence.*;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import java.util.List;
 
 
@@ -22,6 +25,7 @@ public class Moneda implements Serializable {
 
 	private String pais;
 
+	@JsonIgnore
 	//bi-directional many-to-one association to Historicocambioeuro
 	@OneToMany(mappedBy="moneda")
 	private List<Historicocambioeuro> historicocambioeuros;
