@@ -1,4 +1,4 @@
-package es.iespuertodelacruz.daniel.matriculasrest;
+package es.iespuertodelacruz.jc.cambiomonedas;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -9,22 +9,43 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 
 @SpringBootApplication
-public class MatriculasRestApplication {
+public class CambioMonedasApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(MatriculasRestApplication.class, args);
+		SpringApplication.run(CambioMonedasApplication.class, args);
 	}
-
+	
 	@EnableGlobalMethodSecurity(prePostEnabled = true)
 	@EnableWebSecurity
 	@Configuration
 	class WebSecurityConfig extends WebSecurityConfigurerAdapter {
+
+
+	    @Override
+	    public void configure(WebSecurity webSecurity) throws Exception
+	    {
+	        webSecurity
+	            .ignoring()
+	            //.antMatchers(HttpMethod.POST, "/api/login")
+	            .antMatchers("/api/**")
+	            ;
+	    }		
+		
+		/*
 		@Override
-		public void configure(WebSecurity webSecurity) throws Exception
-		{
-			webSecurity
-			.ignoring()
-			.antMatchers("/**");
+		protected void configure(HttpSecurity http) throws Exception {
+			http.csrf().disable()
+				.addFilterBefore(new FiltroJWT(), UsernamePasswordAuthenticationFilter.class)
+				.authorizeRequests()
+				//.antMatchers("/api/products").hasRole("ADMIN")
+				.anyRequest().authenticated();
+		
+			
 		}
-	}
+		*/
+		
+		
+	}		
+	
+
 }
