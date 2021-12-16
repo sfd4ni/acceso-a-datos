@@ -2,6 +2,9 @@ package es.iespuertodelacruz.daniel.matriculasrest.entity;
 
 import java.io.Serializable;
 import javax.persistence.*;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import java.util.List;
 
 
@@ -21,6 +24,7 @@ public class Matricula implements Serializable {
 	private int year;
 
 	//bi-directional many-to-one association to Alumno
+	@JsonIgnore
 	@ManyToOne
 	@JoinColumn(name="dni")
 	private Alumno alumno;
