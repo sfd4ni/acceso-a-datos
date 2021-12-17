@@ -19,7 +19,7 @@ public class AlumnoDTO {
 		nombre = alumno.getNombre();
 		apellidos = alumno.getApellidos();
 		fechaNacimiento = alumno.getFechanacimiento();
-		matriculasList = alumno.getMatriculas();
+		//matriculasList = alumno.getMatriculas();
 	}
 	public String getDni() {
 		return dni;

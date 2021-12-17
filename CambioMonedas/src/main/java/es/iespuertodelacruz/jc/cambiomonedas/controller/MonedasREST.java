@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import es.iespuertodelacruz.jc.cambiomonedas.dto.MonedasDTO;
@@ -30,15 +31,15 @@ public class MonedasREST {
 	
 
 	
-	@GetMapping
-	public Collection<MonedasDTO> getAll(){
+	//@GetMapping
+	/*public Collection<MonedasDTO> getAll(){
 		List l = new ArrayList<MonedasDTO>();
 		for(Monedas m: monedasService.findAll()) {
 			l.add(new MonedasDTO(m));
 		}
 		//return new ResponseEntity<>(l, HttpStatus.OK);
 		return 	l;
-	}
+	}*/
 	
 	@GetMapping("/{id}")
 	public ResponseEntity<?> getMonedaById(@PathVariable("id") Integer id) {
@@ -52,6 +53,33 @@ public class MonedasREST {
 		}
 	}
 	
+	//api/monedas?edad=21
+	@GetMapping
+	public ResponseEntity<?> getAll(@RequestParam(required=false, name="nombre") String nombre) {
+		
+		if (nombre == null) {
+			List<MonedasDTO> l = new ArrayList<MonedasDTO>();
+			for(Monedas m: monedasService.findAll()) {
+				l.add(new MonedasDTO(m));
+			}
+			if(l != null) {
+				
+				return ResponseEntity.ok(l);
+			}else {
+				return ResponseEntity.notFound().build();
+			}
+		} else {
+			List<Monedas> listMonedas = monedasService.findByNombre(nombre);
+			if(listMonedas != null) {
+				return ResponseEntity.ok(listMonedas);
+			}else {
+				return ResponseEntity.notFound().build();
+			}
+		}
+		
+		
+		
+	}
 	@PostMapping
 	public ResponseEntity<?> save(@RequestBody MonedasDTO mDTO){
 		Monedas m = new Monedas();

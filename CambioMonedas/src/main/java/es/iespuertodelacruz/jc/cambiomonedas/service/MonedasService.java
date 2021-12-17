@@ -1,11 +1,13 @@
 package es.iespuertodelacruz.jc.cambiomonedas.service;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import es.iespuertodelacruz.jc.cambiomonedas.entity.Monedas;
 import es.iespuertodelacruz.jc.cambiomonedas.repository.MonedasRepository;
@@ -35,6 +37,12 @@ public class MonedasService implements GenericServiceInterface<Monedas,Integer> 
 		return monedasRepository.findById(id);
 	}
 
+	@Transactional(readOnly=true)
+		public List<Monedas> findByNombre(String nom) {
+		return
+		((MonedasRepository)monedasRepository).findByNombre(nom);
+	}
+	
 	@Override
 	public Monedas save(Monedas objeto) {
 		// TODO Auto-generated method stub

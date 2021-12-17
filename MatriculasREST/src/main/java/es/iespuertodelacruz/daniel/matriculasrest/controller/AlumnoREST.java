@@ -69,7 +69,6 @@ public class AlumnoREST {
 			return ResponseEntity.notFound().build();
 		}
 	}
-	
 	@DeleteMapping("/{id}")
 	public ResponseEntity<?> delete(@PathVariable String id){
 		Optional<Alumno> optM = alumnoService.findById(id);
@@ -86,16 +85,28 @@ public class AlumnoREST {
 			@RequestBody AlumnoDTO alumnoDto) {
 		Alumno alumno = new Alumno();
 		alumno.setDni(alumnoDto.getDni());
-		alumno.setNombre(alumno.getNombre());
+		alumno.setNombre(alumnoDto.getNombre());
 		alumno.setApellidos(alumnoDto.getApellidos());
-		alumno.setFechanacimiento(alumno.getFechanacimiento());
+		alumno.setFechanacimiento(alumnoDto.getFechaNacimiento());
 		alumnoService.save(alumno);
 		return new ResponseEntity<>(alumno, HttpStatus.OK);
 	}
-	@PostMapping("/{id}/matricula") 
+	/*
+	@PostMapping("/{idAlu}/matricula") 
 	public ResponseEntity<?> saveMatricula (
-			@PathVariable("id") Integer id,
+			@PathVariable("idAlu") String idAlu,
 			@RequestBody Matricula matricula) {
-		return null;
-	}
+		Optional<Alumno> optAlumno = alumnoService.findById(idAlu);
+		if(optAlumno.isPresent()) {
+			Optional<Matricula> optMatr = matriculaService.findById(idMatr);
+			if (optMatr.isPresent()) {
+				return ResponseEntity.ok(optMatr.get());
+			} else {
+				return ResponseEntity.notFound().build();
+			}
+			
+		}else {
+			return ResponseEntity.notFound().build();
+		}
+	}*/
 }
