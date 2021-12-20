@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import es.iespuertodelacruz.daniel.matriculasrest.dto.AlumnoDTO;
+import es.iespuertodelacruz.daniel.matriculasrest.dto.MatriculaDTO;
 import es.iespuertodelacruz.daniel.matriculasrest.entity.Alumno;
 import es.iespuertodelacruz.daniel.matriculasrest.entity.Matricula;
 import es.iespuertodelacruz.daniel.matriculasrest.service.AlumnoService;
@@ -47,13 +48,13 @@ public class AlumnoREST {
 		Optional<Alumno> optAlumno = alumnoService.findById(id);
 		if(optAlumno.isPresent()) {
 			
-			return ResponseEntity.ok(new AlumnoDTO(optAlumno.get()));
+			return ResponseEntity.ok(optAlumno.get());
 		}else {
 			return ResponseEntity.notFound().build();
 		}
 	}
 	
-	@GetMapping("/{idalu}/matricula/{idmatr}")
+	/*@GetMapping("/{idalu}/matricula/{idmatr}")
 	public ResponseEntity<?> getMatriculaById(@PathVariable("idalu") String idAlu,
 			@PathVariable("idmatr") Integer idMatr) {
 		Optional<Alumno> optAlumno = alumnoService.findById(idAlu);
@@ -68,18 +69,57 @@ public class AlumnoREST {
 		}else {
 			return ResponseEntity.notFound().build();
 		}
+	}*/
+	
+	@GetMapping("/{idalu}/matricula")
+	public ResponseEntity<?> getAllMatriculas(@PathVariable("idalu") String idAlu) {
+		Optional<Alumno> optAlumno = alumnoService.findById(idAlu);
+		if(optAlumno.isPresent()) {
+			List<Matricula> list = optAlumno.get().getMatriculas();
+			
+			List l = new ArrayList<MatriculaDTO>();
+			for(Matricula matricula : matriculaService.findAll()) {
+				MatriculaDTO matriculaDto = new MatriculaDTO(matricula);
+				matriculaDto.setAsignaturas(matricula.getAsignaturas());
+				l.add(matriculaDto);
+			}
+			return new ResponseEntity<>(l, HttpStatus.OK);
+			
+		}else {
+			return ResponseEntity.notFound().build();
+		}
 	}
+	
+	
+	
 	@DeleteMapping("/{id}")
 	public ResponseEntity<?> delete(@PathVariable String id){
 		Optional<Alumno> optM = alumnoService.findById(id);
 		if(optM.isPresent()) {
 			alumnoService.deleteById(id);
-			return ResponseEntity.ok("moneda borrada");
+			return ResponseEntity.ok("alumno borrado");
 		}else {
 			return ResponseEntity.status(HttpStatus.NOT_FOUND).body("el id del registro no existe");
 		}
 
 	}
+	
+	@PostMapping("/{idalu}/matricula")
+	public ResponseEntity<?> saveMatricula(@PathVariable("idalu") String idAlu, 
+			@RequestBody MatriculaDTO matriculaDto) {
+		Optional<Alumno> optAlumno = alumnoService.findById(idAlu);
+		if(optAlumno.isPresent()) {
+			Matricula matricula = new Matricula();
+			matricula.setAlumno(optAlumno.get());
+			matricula.setAsignaturas(matriculaDto.getAsignaturas());
+			matricula.setYear(matriculaDto.getYear());
+			matriculaService.save(matricula);
+			return ResponseEntity.ok(matricula);
+		}else {
+			return ResponseEntity.notFound().build();
+		}
+	}
+	
 	@PostMapping
 	public ResponseEntity<?> saveAlumno(
 			@RequestBody AlumnoDTO alumnoDto) {
@@ -91,22 +131,4 @@ public class AlumnoREST {
 		alumnoService.save(alumno);
 		return new ResponseEntity<>(alumno, HttpStatus.OK);
 	}
-	/*
-	@PostMapping("/{idAlu}/matricula") 
-	public ResponseEntity<?> saveMatricula (
-			@PathVariable("idAlu") String idAlu,
-			@RequestBody Matricula matricula) {
-		Optional<Alumno> optAlumno = alumnoService.findById(idAlu);
-		if(optAlumno.isPresent()) {
-			Optional<Matricula> optMatr = matriculaService.findById(idMatr);
-			if (optMatr.isPresent()) {
-				return ResponseEntity.ok(optMatr.get());
-			} else {
-				return ResponseEntity.notFound().build();
-			}
-			
-		}else {
-			return ResponseEntity.notFound().build();
-		}
-	}*/
 }
