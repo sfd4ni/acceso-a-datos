@@ -10,9 +10,14 @@ public class AsignaturaDTO {
 
 	private String nombre;
 
+	private List<Matricula> matriculasList;
+	
+	public AsignaturaDTO() {}
+	
 	public AsignaturaDTO(Asignatura asignatura) {
 		this.curso = asignatura.getCurso();
 		this.nombre = asignatura.getNombre();
+		this.matriculasList = asignatura.getMatriculas();
 	}
 
 	public String getCurso() {
@@ -29,6 +34,14 @@ public class AsignaturaDTO {
 
 	public void setNombre(String nombre) {
 		this.nombre = nombre;
+	}
+
+	public List<Matricula> getMatriculas() {
+		return matriculasList;
+	}
+
+	public void setMatriculas(List<Matricula> matriculas) {
+		this.matriculasList = matriculas;
 	}
 	
 }

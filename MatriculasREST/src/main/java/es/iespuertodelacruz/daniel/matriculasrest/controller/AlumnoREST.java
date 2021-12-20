@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -19,6 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 import es.iespuertodelacruz.daniel.matriculasrest.dto.AlumnoDTO;
 import es.iespuertodelacruz.daniel.matriculasrest.dto.MatriculaDTO;
 import es.iespuertodelacruz.daniel.matriculasrest.entity.Alumno;
+import es.iespuertodelacruz.daniel.matriculasrest.entity.Asignatura;
 import es.iespuertodelacruz.daniel.matriculasrest.entity.Matricula;
 import es.iespuertodelacruz.daniel.matriculasrest.service.AlumnoService;
 import es.iespuertodelacruz.daniel.matriculasrest.service.MatriculaService;
@@ -54,7 +56,7 @@ public class AlumnoREST {
 		}
 	}
 	
-	/*@GetMapping("/{idalu}/matricula/{idmatr}")
+	@GetMapping("/{idalu}/matricula/{idmatr}")
 	public ResponseEntity<?> getMatriculaById(@PathVariable("idalu") String idAlu,
 			@PathVariable("idmatr") Integer idMatr) {
 		Optional<Alumno> optAlumno = alumnoService.findById(idAlu);
@@ -69,21 +71,14 @@ public class AlumnoREST {
 		}else {
 			return ResponseEntity.notFound().build();
 		}
-	}*/
+	}
 	
 	@GetMapping("/{idalu}/matricula")
 	public ResponseEntity<?> getAllMatriculas(@PathVariable("idalu") String idAlu) {
 		Optional<Alumno> optAlumno = alumnoService.findById(idAlu);
 		if(optAlumno.isPresent()) {
 			List<Matricula> list = optAlumno.get().getMatriculas();
-			
-			List l = new ArrayList<MatriculaDTO>();
-			for(Matricula matricula : matriculaService.findAll()) {
-				MatriculaDTO matriculaDto = new MatriculaDTO(matricula);
-				matriculaDto.setAsignaturas(matricula.getAsignaturas());
-				l.add(matriculaDto);
-			}
-			return new ResponseEntity<>(l, HttpStatus.OK);
+			return new ResponseEntity<>(list, HttpStatus.OK);
 			
 		}else {
 			return ResponseEntity.notFound().build();
@@ -100,6 +95,23 @@ public class AlumnoREST {
 			return ResponseEntity.ok("alumno borrado");
 		}else {
 			return ResponseEntity.status(HttpStatus.NOT_FOUND).body("el id del registro no existe");
+		}
+
+	}
+	
+	@DeleteMapping("/{idAlu}/matricula/{idMatr}")
+	public ResponseEntity<?> deleteMatricula(@PathVariable String idAlu, @PathVariable Integer idMatr){
+		Optional<Alumno> optM = alumnoService.findById(idAlu);
+		if(optM.isPresent()) {
+			Optional<Matricula> optMatr = matriculaService.findById(idMatr);
+			if (optMatr.isPresent()) {
+				matriculaService.deleteById(idMatr);
+				return ResponseEntity.ok("matricula borrada");
+			} else {
+				return ResponseEntity.status(HttpStatus.NOT_FOUND).body("el id de matricula no existe en el alumno");
+			}
+		}else {
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).body("el id del alumno no existe");
 		}
 
 	}
@@ -130,5 +142,20 @@ public class AlumnoREST {
 		alumno.setFechanacimiento(alumnoDto.getFechaNacimiento());
 		alumnoService.save(alumno);
 		return new ResponseEntity<>(alumno, HttpStatus.OK);
+	}
+	
+	@PutMapping("/{id}")
+	public ResponseEntity<?> update(@PathVariable String id,
+		@RequestBody Alumno aDTO){
+		Optional<Alumno> optA = alumnoService.findById(id);
+		if(optA.isPresent()) {
+			Alumno a = optA.get();
+			a.setNombre(aDTO.getNombre());
+			a.setApellidos(aDTO.getApellidos());
+			a.setFechanacimiento(aDTO.getFechanacimiento());
+			return ResponseEntity.ok(alumnoService.save(a));
+		}else {
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("el id del registro no existe");
+		}
 	}
 }

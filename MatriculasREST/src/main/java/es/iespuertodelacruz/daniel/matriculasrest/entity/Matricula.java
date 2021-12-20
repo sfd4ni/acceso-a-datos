@@ -29,6 +29,7 @@ public class Matricula implements Serializable {
 	@JoinColumn(name="dni")
 	private Alumno alumno;
 
+
 	//bi-directional many-to-many association to Asignatura
 	@ManyToMany(mappedBy="matriculas")
 	private List<Asignatura> asignaturas;

@@ -7,7 +7,7 @@ import es.iespuertodelacruz.daniel.matriculasrest.entity.Asignatura;
 import es.iespuertodelacruz.daniel.matriculasrest.entity.Matricula;
 
 public class MatriculaDTO {
-	private int year;
+	private int year, idMatr;
 	private Alumno alumno;
 	private List<Asignatura> asignaturas;
 	
@@ -41,6 +41,14 @@ public class MatriculaDTO {
 
 	public void setAsignaturas(List<Asignatura> asignaturas) {
 		this.asignaturas = asignaturas;
+	}
+
+	public int getIdMatr() {
+		return idMatr;
+	}
+
+	public void setIdMatr(int idMatr) {
+		this.idMatr = idMatr;
 	}
 	
 }
