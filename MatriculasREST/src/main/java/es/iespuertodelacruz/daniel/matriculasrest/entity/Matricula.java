@@ -19,6 +19,7 @@ public class Matricula implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private int idmatricula;
 
 	private int year;
@@ -31,7 +32,11 @@ public class Matricula implements Serializable {
 
 
 	//bi-directional many-to-many association to Asignatura
-	@ManyToMany(mappedBy="matriculas")
+	@ManyToMany
+	@JoinTable( name="asignatura_matricula",
+		joinColumns = @JoinColumn(name="idmatricula"),
+		inverseJoinColumns = @JoinColumn(name="idasignatura")
+	)
 	private List<Asignatura> asignaturas;
 
 	public Matricula() {

@@ -23,6 +23,7 @@ import es.iespuertodelacruz.daniel.matriculasrest.entity.Alumno;
 import es.iespuertodelacruz.daniel.matriculasrest.entity.Asignatura;
 import es.iespuertodelacruz.daniel.matriculasrest.entity.Matricula;
 import es.iespuertodelacruz.daniel.matriculasrest.service.AlumnoService;
+import es.iespuertodelacruz.daniel.matriculasrest.service.AsignaturaService;
 import es.iespuertodelacruz.daniel.matriculasrest.service.MatriculaService;
 
 @RestController
@@ -33,6 +34,8 @@ public class AlumnoREST {
 	AlumnoService alumnoService;
 	@Autowired
 	MatriculaService matriculaService;
+	@Autowired
+	AsignaturaService asignaturaService;
 	
 	@GetMapping
 	public ResponseEntity<?> getAll(){
@@ -91,7 +94,12 @@ public class AlumnoREST {
 	public ResponseEntity<?> delete(@PathVariable String id){
 		Optional<Alumno> optM = alumnoService.findById(id);
 		if(optM.isPresent()) {
-			alumnoService.deleteById(id);
+			try {
+				alumnoService.deleteById(id);
+			} catch (Exception e) {
+				e.printStackTrace();
+				return new ResponseEntity<>("Hay matriculas relacionadas, elimínelas antes", HttpStatus.CONFLICT);
+			}
 			return ResponseEntity.ok("alumno borrado");
 		}else {
 			return ResponseEntity.status(HttpStatus.NOT_FOUND).body("el id del registro no existe");
@@ -123,10 +131,70 @@ public class AlumnoREST {
 		if(optAlumno.isPresent()) {
 			Matricula matricula = new Matricula();
 			matricula.setAlumno(optAlumno.get());
-			matricula.setAsignaturas(matriculaDto.getAsignaturas());
+			//matricula.setAsignaturas(matriculaDto.getAsignaturas());
+			ArrayList<Asignatura> asignaturas = new ArrayList<>();
 			matricula.setYear(matriculaDto.getYear());
-			matriculaService.save(matricula);
-			return ResponseEntity.ok(matricula);
+			if (matriculaDto.getAsignaturas() != null) {
+				for (Asignatura asignatura : matriculaDto.getAsignaturas()) {
+					Optional<Asignatura> optAsignatura = asignaturaService.findById(asignatura.getIdasignatura());
+					if (optAsignatura.isPresent()) {
+						asignaturas.add(optAsignatura.get());
+					}
+				}
+			}
+			matricula.setAsignaturas(asignaturas);
+			MatriculaDTO matriculaSave = null;
+			try {
+				matriculaSave = new MatriculaDTO(matriculaService.save(matricula));
+				
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			if (matriculaSave != null) {
+				return ResponseEntity.ok(matriculaSave);
+			} else {
+				return new ResponseEntity<>("Ya existe esa combinación de valores (Año, DNI)", HttpStatus.CONFLICT);
+			}
+		}else {
+			return ResponseEntity.notFound().build();
+		}
+	}
+	
+	@PutMapping("/{idAlu}/matricula/{idMatr}")
+	public ResponseEntity<?> updateMatricula(@PathVariable String idAlu, @PathVariable Integer idMatr, @RequestBody MatriculaDTO mDTO) {
+		Optional<Alumno> optAlumno = alumnoService.findById(idAlu);
+		if(optAlumno.isPresent()) {
+			Optional<Matricula> optMatricula = matriculaService.findById(idMatr);
+			if(optMatricula.isPresent()) {
+				Matricula matricula = optMatricula.get();
+				//matricula.setAsignaturas(matriculaDto.getAsignaturas());
+				ArrayList<Asignatura> asignaturas = new ArrayList<>();
+				matricula.setYear(mDTO.getYear());
+				if (optMatricula.get().getAsignaturas() != null) {
+					for (Asignatura asignatura : mDTO.getAsignaturas()) {
+						Optional<Asignatura> optAsignatura = asignaturaService.findById(asignatura.getIdasignatura());
+						if (optAsignatura.isPresent()) {
+							asignaturas.add(optAsignatura.get());
+						}
+					}
+				}
+				matricula.setAsignaturas(asignaturas);
+				MatriculaDTO matriculaSave = null;
+				try {
+					matriculaSave = new MatriculaDTO(matriculaService.save(matricula));
+					
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+				if (matriculaSave != null) {
+					return ResponseEntity.ok(matriculaSave);
+				} else {
+					return new ResponseEntity<>("Ya existe esa combinación de valores (Año, DNI)", HttpStatus.CONFLICT);
+				}
+			} else {
+				return ResponseEntity.notFound().build();
+			}
+			
 		}else {
 			return ResponseEntity.notFound().build();
 		}
@@ -140,8 +208,17 @@ public class AlumnoREST {
 		alumno.setNombre(alumnoDto.getNombre());
 		alumno.setApellidos(alumnoDto.getApellidos());
 		alumno.setFechanacimiento(alumnoDto.getFechaNacimiento());
-		alumnoService.save(alumno);
-		return new ResponseEntity<>(alumno, HttpStatus.OK);
+		Alumno alumnoC = null;
+		try {
+			alumnoC = alumnoService.save(alumno);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		if (alumnoC != null) {
+			return new ResponseEntity<>(alumnoC, HttpStatus.OK);
+		} else {
+			return new ResponseEntity<>("Ya existe ese DNI", HttpStatus.CONFLICT);
+		}
 	}
 	
 	@PutMapping("/{id}")

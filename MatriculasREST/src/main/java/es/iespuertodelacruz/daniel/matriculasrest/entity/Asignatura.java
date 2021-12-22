@@ -19,6 +19,7 @@ public class Asignatura implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private int idasignatura;
 
 	private String curso;
@@ -27,11 +28,7 @@ public class Asignatura implements Serializable {
 
 	//bi-directional many-to-many association to Matricula
 	@JsonIgnore
-	@ManyToMany
-	@JoinTable( name="asignatura_matricula",
-		joinColumns = @JoinColumn(name="idasignatura"),
-		inverseJoinColumns = @JoinColumn(name="idmatricula")
-	)
+	@ManyToMany(mappedBy="asignaturas")
 	private List<Matricula> matriculas;
 
 	public Asignatura() {

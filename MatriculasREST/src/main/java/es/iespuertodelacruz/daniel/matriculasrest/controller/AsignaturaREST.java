@@ -57,7 +57,6 @@ public class AsignaturaREST {
 		
 		Optional<Asignatura> optAsignatura = asignaturaService.findById(id);
 		if(optAsignatura.isPresent()) {
-			
 			return ResponseEntity.ok(optAsignatura.get());
 		}else {
 			return ResponseEntity.notFound().build();
@@ -84,8 +83,17 @@ public class AsignaturaREST {
 		Asignatura asignatura = new Asignatura();
 		asignatura.setCurso(asignaturaDto.getCurso());
 		asignatura.setNombre(asignaturaDto.getNombre());
-		//asignatura.setMatriculas(asignaturaDto.getMatriculas());
-		Asignatura asignaturaC = asignaturaService.save(asignatura);
-		return new ResponseEntity<>(asignaturaC, HttpStatus.OK);
+		Asignatura asignaturaC = null;
+		try {
+			asignaturaC = asignaturaService.save(asignatura);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		if (asignaturaC != null) {
+			return new ResponseEntity<>(asignaturaC, HttpStatus.OK);
+		} else {
+			return new ResponseEntity<>("Ya existe esa combinación de valores (Curso, Nombre)", HttpStatus.CONFLICT);
+		}
+		
 	}
 }
