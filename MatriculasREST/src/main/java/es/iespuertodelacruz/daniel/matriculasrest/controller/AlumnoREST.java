@@ -76,6 +76,8 @@ public class AlumnoREST {
 		}
 	}
 	
+	
+	
 	@GetMapping("/{idalu}/matricula")
 	public ResponseEntity<?> getAllMatriculas(@PathVariable("idalu") String idAlu) {
 		Optional<Alumno> optAlumno = alumnoService.findById(idAlu);
@@ -220,6 +222,24 @@ public class AlumnoREST {
 			return new ResponseEntity<>("Ya existe ese DNI", HttpStatus.CONFLICT);
 		}
 	}
+	
+	@GetMapping("/{idalu}/matricula/year/{year}")
+	public ResponseEntity<?> getMatriculaByYear(@PathVariable("idalu") String idAlu,
+			@PathVariable("year") Integer year) {
+		Optional<Alumno> optAlumno = alumnoService.findById(idAlu);
+		if(optAlumno.isPresent()) {
+			List<Matricula> matriculas = matriculaService.findByYear(year);
+			if (matriculas != null) {
+				return ResponseEntity.ok(matriculas);
+			} else {
+				return ResponseEntity.notFound().build();
+			}
+			
+		}else {
+			return ResponseEntity.notFound().build();
+		}
+	}
+	
 	
 	@PutMapping("/{id}")
 	public ResponseEntity<?> update(@PathVariable String id,
