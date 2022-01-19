@@ -102,6 +102,20 @@ public class V3REST {
 
 	}
 	
+	@PutMapping("/usuario/{nombre}")
+	public ResponseEntity<?> updateUsuario(
+			@PathVariable String nombre,
+			@RequestBody Usuarioconrol usuario){
+		Optional<Usuarioconrol> optU = Optional.of(usuarioService.findByNombre(nombre));
+		if(optU.isPresent()) {
+			optU.get().setNombre(usuario.getNombre());
+			optU.get().setPassword(usuario.getPassword());
+			optU.get().setRol(usuario.getRol());
+			return ResponseEntity.ok(usuarioService.save(optU.get()));
+		}else {
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("el nombre de usuario no existe");
+		}
+	}
 	
 	
 	@ApiOperation(value = "Devuelve una lista de AlumnosDTO", 
