@@ -4,6 +4,7 @@
 		<class>es.iespuertodelacruz.daniel.matriculasrest.entity.Alumno</class>
 		<class>es.iespuertodelacruz.daniel.matriculasrest.entity.Asignatura</class>
 		<class>es.iespuertodelacruz.daniel.matriculasrest.entity.Matricula</class>
+		<class>es.iespuertodelacruz.daniel.matriculasrest.entity.Usuarioconrol</class>
 		<properties>
 		 <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/instituto?serverTimezone=UTC"/>
 		 <property name="javax.persistence.jdbc.user" value="admin"/>
