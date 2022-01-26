@@ -1,15 +1,21 @@
 import React from "react";
 const Tabla = (props) => {
+    const [contador, incrementar] = React.useState(0);
+    const {tabla} = props;
     const multiplicarResultado = ()=>{
-        //contador %= 10;
-        incrementar(contador + 1);
+        if (contador >= 10) {
+            incrementar(1);
+        }else{
+            incrementar(contador + 1);
+        }
+        
     }
-const [contador, incrementar] = React.useState(0);
+
 return (
     <>
-        <p>2 * {contador} = {2 * contador}</p>
+        <p> {tabla} * {contador} = {tabla * contador}</p>
         <button onClick={multiplicarResultado }>
-            2 * {contador}
+        {tabla} * {contador}
         </button>
     </>
 );
