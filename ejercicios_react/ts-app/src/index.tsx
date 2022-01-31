@@ -2,6 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import MostrarInput from './MostrarInput';
 import OperarBotones  from  './OperarBotones';
-ReactDOM.render(<OperarBotones/>,
+import { PadreModificadoPorHijo } from './PadreHijo';
+ReactDOM.render(<PadreModificadoPorHijo/>,
   document.getElementById('root')
 );
