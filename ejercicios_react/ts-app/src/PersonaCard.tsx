@@ -3,27 +3,33 @@ import { Persona } from './Persona';
 
 interface IProps {
     modificarstatepadre: Function;
-    statepadre: Array<Persona>;
+    statepadre: Persona;
 }
 interface IState { persona: Persona }
 
 export class PersonaCard extends React.Component<IProps, IState> {
+    modificarstatepadre: any;
   constructor(props: IProps)  {
     super(props);
-    this.state = { persona: new Persona(0, "", "", 0, 0, 0) };
+    
     const { modificarstatepadre, statepadre } = props;
-    modificarstatepadre(this.state.persona);
+    this.modificarstatepadre = modificarstatepadre;
+    this.state = { persona: statepadre };
+    console.log(statepadre);
+    
+    
+    //modificarstatepadre(this.state.persona);
     //this.operarBoton = this.operarBoton.bind(this);
     }
     render() {
         return (
             <div>
-              <h4>id:</h4>
-              <span>nombre: </span><input type="text" value={this.state.persona.nombre}></input>
-              <span>apellido: </span><input type="text" value={this.state.persona.apellido}></input>
-              <span>altura: </span><input type="text" value={this.state.persona.altura}></input>
-              <span>edad: </span><input type="text" value={this.state.persona.edad}></input>
-              <span>peso: </span><input type="text" value={this.state.persona.peso}></input>
+              <h4>id: {this.state.persona.id}</h4>
+              <span>nombre: </span><input type="text" value={this.state.persona.nombre} onChange={this.modificarstatepadre(this.state.persona)}></input>
+              <span>apellido: </span><input type="text" value={this.state.persona.apellido} onChange={this.modificarstatepadre(this.state.persona)}></input>
+              <span>altura: </span><input type="text" value={this.state.persona.altura > 0 ? this.state.persona.altura : ""} onChange={this.modificarstatepadre(this.state.persona)}></input>
+              <span>edad: </span><input type="text" value={this.state.persona.edad > 0 ? this.state.persona.edad : ""} onChange={this.modificarstatepadre(this.state.persona)}></input>
+              <span>peso: </span><input type="text" value={this.state.persona.peso > 0 ? this.state.persona.peso : ""} onChange={this.modificarstatepadre(this.state.persona)}></input>
               <span>imc: {this.state.persona.getIMC}</span>
             </div>
           )
