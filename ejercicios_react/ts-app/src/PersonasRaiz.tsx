@@ -17,23 +17,25 @@ export class PersonasRaiz extends React.Component<IProps, IState> {
     }
     modificarState(persona: Persona) {
 
-        let newarray = [...this.state.arrayPersonas];
-        let index = newarray.findIndex((el) => el.id = persona.id);
-        newarray[index] = persona;
-        this.setState({ arrayPersonas: newarray });
+        this.modificarStateLogic(persona);
     }
 
     añadirPersona() {
         let arrayPers = this.state.arrayPersonas;
         let i = this.state.idcount;
-        arrayPers.push(new Persona(i, "",  "", 0, 0, 0));
+        arrayPers.push(new Persona(i, "",  "", 0.0, 0, 0));
         this.setState({ arrayPersonas: arrayPers, idcount: i + 1 });
-        console.log(this.state.arrayPersonas[0]);
     }
 
     llamarFuncion(event: React.MouseEvent<HTMLButtonElement>) {
         event.preventDefault();
         this.añadirPersona();
+    }
+    modificarStateLogic(persona: Persona) {
+        let newarray = [...this.state.arrayPersonas];
+        let index = newarray.findIndex((el) => el.id = persona.id);
+        newarray[index] = persona;
+        this.setState({ arrayPersonas: newarray });
     }
 
     render() {

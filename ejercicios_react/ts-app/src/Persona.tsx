@@ -11,7 +11,11 @@ export class Persona {
 
 
     getIMC() {
-        return this.peso / (Math.pow(this.altura, 2));
+        if (this.altura !== 0) {
+            console.log(this.peso / (Math.pow(this.altura, 2)));
+            return this.peso / (Math.pow(this.altura, 2));
+        }
+        return 0;
     }
 
 }
