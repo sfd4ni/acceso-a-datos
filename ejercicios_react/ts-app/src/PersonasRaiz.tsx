@@ -13,24 +13,28 @@ export class PersonasRaiz extends React.Component<IProps, IState> {
             idcount: 0
         }
         this.modificarState = this.modificarState.bind(this);
-        this.llamarFuncion = this.llamarFuncion.bind(this);
+        this.anadirPersona = this.anadirPersona.bind(this);
+        //this.llamarFuncion = this.llamarFuncion.bind(this);
     }
     modificarState(persona: Persona) {
 
-        this.modificarStateLogic(persona);
+        let newarray = [...this.state.arrayPersonas];
+        let index = newarray.findIndex((el) => el.id = persona.id);
+        newarray[index] = persona;
+        this.setState({ arrayPersonas: newarray });
     }
 
-    añadirPersona() {
+    anadirPersona(event: React.MouseEvent<HTMLButtonElement>) {
         let arrayPers = this.state.arrayPersonas;
         let i = this.state.idcount;
         arrayPers.push(new Persona(i, "",  "", 0.0, 0, 0));
         this.setState({ arrayPersonas: arrayPers, idcount: i + 1 });
     }
 
-    llamarFuncion(event: React.MouseEvent<HTMLButtonElement>) {
+    /*llamarFuncion(event: React.MouseEvent<HTMLButtonElement>) {
         event.preventDefault();
-        this.añadirPersona();
-    }
+        this.anadirPersona();
+    }*/
     modificarStateLogic(persona: Persona) {
         let newarray = [...this.state.arrayPersonas];
         let index = newarray.findIndex((el) => el.id = persona.id);
@@ -47,7 +51,7 @@ export class PersonasRaiz extends React.Component<IProps, IState> {
                     );
                 })
                 }
-                <button onClick={this.llamarFuncion}>+</button>
+                <button onClick={this.anadirPersona}>+</button>
             </div>
         )
     }

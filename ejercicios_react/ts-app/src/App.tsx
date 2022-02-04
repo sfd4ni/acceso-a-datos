@@ -3,6 +3,8 @@ import { Link, Route, BrowserRouter, Routes } from 'react-router-dom';
 import Monedas from './Monedas';
 import OperarBotones from './OperarBotones';
 import MostrarInput from './MostrarInput';
+import { MonedasFunc } from './MonedasFunc';
+import { PersonasRaiz } from './PersonasRaiz';
 interface IProps { }
 interface IState { }
 class App extends React.Component<IProps, IState>{
@@ -19,7 +21,8 @@ class App extends React.Component<IProps, IState>{
                     <Route path="/" element={<Monedas />} />
                     <Route path="/operar" element={<OperarBotones />} />
                     <Route path="/mostrar" element={<MostrarInput />} />
-                    <Route path="/monedas" element={<Monedas />} />
+                    <Route path="/monedas" element={<MonedasFunc />} />
+                    <Route path="/personas" element={<PersonasRaiz/>}/>
                 </Routes>
             </BrowserRouter>
         );
@@ -33,6 +36,7 @@ function Navbar() {
             <Link to="/operar"> Operar Botones </Link> &nbsp;
             <Link to="/mostrar"> Mostrar Input </Link> &nbsp;
             <Link to="/monedas"> Monedas </Link>
+            <Link to="/personas"> PersonasRaiz </Link>
         </nav>
     );
 }
