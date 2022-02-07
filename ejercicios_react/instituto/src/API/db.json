@@ -1,0 +1,171 @@
+{
+  "asignaturas": [
+    {
+      "idasignatura": 4,
+      "curso": "2º DAM",
+      "nombre": "AED"
+    },
+    {
+      "idasignatura": 1,
+      "curso": "1º DAM",
+      "nombre": "BAE"
+    },
+    {
+      "idasignatura": 6,
+      "curso": "2º DAW",
+      "nombre": "DPL"
+    },
+    {
+      "idasignatura": 5,
+      "curso": "2º DAW",
+      "nombre": "DSW"
+    },
+    {
+      "idasignatura": 9,
+      "curso": "3º ESO",
+      "nombre": "FYQ"
+    },
+    {
+      "idasignatura": 3,
+      "curso": "1º DAM",
+      "nombre": "LND"
+    },
+    {
+      "idasignatura": 8,
+      "curso": "2º DAM",
+      "nombre": "PGL"
+    },
+    {
+      "idasignatura": 2,
+      "curso": "2º DAM",
+      "nombre": "PGV"
+    },
+    {
+      "idasignatura": 7,
+      "curso": "1º DAM",
+      "nombre": "PRO"
+    }
+  ],
+  "matriculas": [
+    {
+      "id": 1,
+      "year": 2021,
+      "asignaturas": [
+        {
+          "idasignatura": 2,
+          "curso": "2º DAM",
+          "nombre": "PGV"
+        },
+        {
+          "idasignatura": 7,
+          "curso": "1º DAM",
+          "nombre": "PRO"
+        }
+      ],
+      "dnialumno": "46262784D"
+    },
+    {
+      "id": 2,
+      "year": 2020,
+      "asignaturas": [
+        {
+          "idasignatura": 3,
+          "curso": "1º DAM",
+          "nombre": "LND"
+        },
+        {
+          "idasignatura": 7,
+          "curso": "1º DAM",
+          "nombre": "PRO"
+        }
+      ],
+      "dnialumno": "46262784D"
+    },
+    {
+      "id": 3,
+      "year": 2021,
+      "asignaturas": [
+        {
+          "idasignatura": 3,
+          "curso": "1º DAM",
+          "nombre": "LND"
+        },
+        {
+          "idasignatura": 7,
+          "curso": "1º DAM",
+          "nombre": "PRO"
+        }
+      ],
+      "dnialumno": "46262784A"
+    }
+  ],
+  "alumnos": [
+    {
+      "dnialumno": "46262784D",
+      "nombre": "Daniel",
+      "apellidos": "Barroso Rocio",
+      "fechanacimiento": 800000000000,
+      "matriculas": [
+        {
+          "id": 1,
+          "year": 2021,
+          "asignaturas": [
+            {
+              "idasignatura": 2,
+              "curso": "2º DAM",
+              "nombre": "PGV"
+            },
+            {
+              "idasignatura": 7,
+              "curso": "1º DAM",
+              "nombre": "PRO"
+            }
+          ],
+          "dnialumno": "46262784D"
+        },
+        {
+          "id": 2,
+          "year": 2020,
+          "asignaturas": [
+            {
+              "idasignatura": 3,
+              "curso": "1º DAM",
+              "nombre": "LND"
+            },
+            {
+              "idasignatura": 7,
+              "curso": "1º DAM",
+              "nombre": "PRO"
+            }
+          ],
+          "dnialumno": "46262784D"
+        }
+      ]
+    },
+    {
+      "dnialumno": "46262784A",
+      "nombre": "Rigoberto",
+      "apellidos": "Base Datos",
+      "fechanacimiento": 800000000000,
+      "matriculas": [
+        {
+          "id": 3,
+          "year": 2021,
+          "asignaturas": [
+            {
+              "idasignatura": 3,
+              "curso": "1º DAM",
+              "nombre": "LND"
+            },
+            {
+              "idasignatura": 7,
+              "curso": "1º DAM",
+              "nombre": "PRO"
+            }
+          ],
+          "dnialumno": "46262784A"
+        }
+      ]
+    }
+  ]
+}
