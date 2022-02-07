@@ -1,10 +1,10 @@
 import React from 'react';
 import { Link, Route, BrowserRouter, Routes } from 'react-router-dom';
 import Monedas from './Monedas';
-import OperarBotones from './OperarBotones';
-import MostrarInput from './MostrarInput';
 import { MonedasFunc } from './MonedasFunc';
-import { PersonasRaiz } from './PersonasRaiz';
+import { MonedasPost }from './MonedasPost';
+import {MonedasDelete} from './MonedasDelete';
+import { MonedasPut} from './MonedasPut';
 interface IProps { }
 interface IState { }
 class App extends React.Component<IProps, IState>{
@@ -19,10 +19,10 @@ class App extends React.Component<IProps, IState>{
                 <Navbar />
                 <Routes>
                     <Route path="/" element={<Monedas />} />
-                    <Route path="/operar" element={<OperarBotones />} />
-                    <Route path="/mostrar" element={<MostrarInput />} />
+                    <Route path="/post" element={<MonedasPost />} />
+                    <Route path="/delete" element={<MonedasDelete />} />
                     <Route path="/monedas" element={<MonedasFunc />} />
-                    <Route path="/personas" element={<PersonasRaiz/>}/>
+                    <Route path="/update" element={<MonedasPut/>}/>
                 </Routes>
             </BrowserRouter>
         );
@@ -33,10 +33,10 @@ function Navbar() {
     return (
         <nav>
             <Link to="/"> Inicio </Link> &nbsp;
-            <Link to="/operar"> Operar Botones </Link> &nbsp;
-            <Link to="/mostrar"> Mostrar Input </Link> &nbsp;
-            <Link to="/monedas"> Monedas </Link>
-            <Link to="/personas"> PersonasRaiz </Link>
+            <Link to="/post"> Crear moneda</Link> &nbsp;
+            <Link to="/delete"> Eliminar Moneda </Link> &nbsp;
+            <Link to="/monedas"> Buscar Monedas </Link>
+            <Link to="/update"> Modificar Moneda </Link>
         </nav>
     );
 }

@@ -1,5 +1,7 @@
 import axios from 'axios';
 import React from 'react';
+import { MonedaComponent } from './MonedaComponent';
+import { MonedaId } from './MonedaId';
 interface IProps { }
 interface IState {
     monedas?: Array<any>;
@@ -15,7 +17,7 @@ class Monedas extends React.Component<IProps, IState>{
             monedas: []
         };
         this.ip = "localhost";
-        this.puerto = 3000;
+        this.puerto = 8080;
         this.rutaBase = "http://" + this.ip + ":" + this.puerto + "/api/v1";
         this.rutaMonedas = this.rutaBase + "/monedas";
     }
@@ -25,16 +27,20 @@ class Monedas extends React.Component<IProps, IState>{
             <>
                 <h3>Un componente sencillo para monedas</h3>
                 <div>
-                    Monedas: {JSON.stringify(monedas)}
+                    Monedas:
+                    {this.state.monedas?.map((monedaId: MonedaId) => {
+                    return (
+                        <MonedaComponent moneda={monedaId}/>
+                    );
+                })
+                }
                 </div>
             </>
         );
     }
     public async componentDidMount() {
         let ruta = this.rutaMonedas;
-        console.log(ruta);
         let respuesta = await axios.get(ruta);
-        console.log(respuesta.data);
         this.setState({ monedas: respuesta.data });
     }
 }
