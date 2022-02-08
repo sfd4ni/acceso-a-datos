@@ -1,39 +1,52 @@
 import React from 'react';
+import axios from 'axios';
 import { Link, Route, BrowserRouter, Routes } from 'react-router-dom';
 import { AlumnosGet } from './AlumnosGet';
+import { Alumno } from './modelo/Alumno';
+import { AlumnoComponent } from './AlumnoComponent';
 interface IProps { }
-interface IState { }
+interface IState { alumnos: [] }
 class App extends React.Component<IProps, IState>{
+    ip: string;
+    puerto: number;
+    rutaBase: string;
+    rutaMonedas: string;
     constructor(props: IProps) {
         super(props);
-        this.state = {};
+        this.state = {
+            alumnos: []
+        };
+        this.ip = "localhost";
+        this.puerto = 8081  ;
+        this.rutaBase = "http://" + this.ip + ":" + this.puerto + "/api/v1";
+        this.rutaMonedas = this.rutaBase + "/alumnos";
     }
+
+    public async componentDidMount() {
+        let ruta = this.rutaMonedas;
+        let respuesta = await axios.get(ruta);
+        this.setState({ alumnos: respuesta.data });
+    }
+    
     render() {
         return (
             <BrowserRouter>
                 <h1>Aplicación Monedas</h1>
-                <Navbar />
+                <ul>
+            {this.state.alumnos?.map((alumno: Alumno) => {
+                    return (
+                        <li><Link to={'alumnos/' + alumno.dnialumno}>{alumno.dnialumno}</Link></li>
+                    );
+                })
+                }
+                </ul>
                 <Routes>
-                    <Route path="/" element={<AlumnosGet/>} />
-                    <Route path="/post" element={<AlumnosGet />} />
-                    <Route path="/delete" element={<AlumnosGet />} />
-                    <Route path="/monedas" element={<AlumnosGet />} />
-                    <Route path="/update" element={<AlumnosGet/>}/>
+                    <Route path="/" />
+                    <Route path="alumnos/:dnialumno" element={<AlumnosGet/>} />
+                    <Route path="alumnos/:dnialumno/matricula/:idmatricula"/>
                 </Routes>
             </BrowserRouter>
         );
     }
-}
-function Navbar() {
-    // visible on every page
-    return (
-        <nav>
-            <Link to="/"> Inicio </Link> &nbsp;
-            <Link to="/post"> Crear moneda</Link> &nbsp;
-            <Link to="/delete"> Eliminar Moneda </Link> &nbsp;
-            <Link to="/monedas"> Buscar Monedas </Link>
-            <Link to="/update"> Modificar Moneda </Link>
-        </nav>
-    );
 }
 export default App;
