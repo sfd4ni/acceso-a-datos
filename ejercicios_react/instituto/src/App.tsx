@@ -4,6 +4,7 @@ import { Link, Route, BrowserRouter, Routes } from 'react-router-dom';
 import { AlumnosGet } from './AlumnosGet';
 import { Alumno } from './modelo/Alumno';
 import { AlumnoComponent } from './AlumnoComponent';
+import { MatriculasGet } from './MatriculasGet';
 interface IProps { }
 interface IState { alumnos: [] }
 class App extends React.Component<IProps, IState>{
@@ -31,7 +32,7 @@ class App extends React.Component<IProps, IState>{
     render() {
         return (
             <BrowserRouter>
-                <h1>Aplicación Monedas</h1>
+                <h1>Instituto</h1>
                 <ul>
             {this.state.alumnos?.map((alumno: Alumno) => {
                     return (
@@ -43,7 +44,7 @@ class App extends React.Component<IProps, IState>{
                 <Routes>
                     <Route path="/" />
                     <Route path="alumnos/:dnialumno" element={<AlumnosGet/>} />
-                    <Route path="alumnos/:dnialumno/matricula/:idmatricula"/>
+                    <Route path="alumnos/:dnialumno/matriculas/:idmatricula" element={<MatriculasGet/>}/>
                 </Routes>
             </BrowserRouter>
         );

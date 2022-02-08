@@ -1,47 +1,47 @@
 {
   "asignaturas": [
     {
-      "idasignatura": 4,
+      "id": 4,
       "curso": "2º DAM",
       "nombre": "AED"
     },
     {
-      "idasignatura": 1,
+      "id": 1,
       "curso": "1º DAM",
       "nombre": "BAE"
     },
     {
-      "idasignatura": 6,
+      "id": 6,
       "curso": "2º DAW",
       "nombre": "DPL"
     },
     {
-      "idasignatura": 5,
+      "id": 5,
       "curso": "2º DAW",
       "nombre": "DSW"
     },
     {
-      "idasignatura": 9,
+      "id": 9,
       "curso": "3º ESO",
       "nombre": "FYQ"
     },
     {
-      "idasignatura": 3,
+      "id": 3,
       "curso": "1º DAM",
       "nombre": "LND"
     },
     {
-      "idasignatura": 8,
+      "id": 8,
       "curso": "2º DAM",
       "nombre": "PGL"
     },
     {
-      "idasignatura": 2,
+      "id": 2,
       "curso": "2º DAM",
       "nombre": "PGV"
     },
     {
-      "idasignatura": 7,
+      "id": 7,
       "curso": "1º DAM",
       "nombre": "PRO"
     }
@@ -52,12 +52,12 @@
       "year": 2021,
       "asignaturas": [
         {
-          "idasignatura": 2,
+          "id": 2,
           "curso": "2º DAM",
           "nombre": "PGV"
         },
         {
-          "idasignatura": 7,
+          "id": 7,
           "curso": "1º DAM",
           "nombre": "PRO"
         }
@@ -69,12 +69,12 @@
       "year": 2020,
       "asignaturas": [
         {
-          "idasignatura": 3,
+          "id": 3,
           "curso": "1º DAM",
           "nombre": "LND"
         },
         {
-          "idasignatura": 7,
+          "id": 7,
           "curso": "1º DAM",
           "nombre": "PRO"
         }
@@ -86,12 +86,12 @@
       "year": 2021,
       "asignaturas": [
         {
-          "idasignatura": 3,
+          "id": 3,
           "curso": "1º DAM",
           "nombre": "LND"
         },
         {
-          "idasignatura": 7,
+          "id": 7,
           "curso": "1º DAM",
           "nombre": "PRO"
         }
@@ -111,12 +111,12 @@
           "year": 2021,
           "asignaturas": [
             {
-              "idasignatura": 2,
+              "id": 2,
               "curso": "2º DAM",
               "nombre": "PGV"
             },
             {
-              "idasignatura": 7,
+              "id": 7,
               "curso": "1º DAM",
               "nombre": "PRO"
             }
@@ -128,12 +128,12 @@
           "year": 2020,
           "asignaturas": [
             {
-              "idasignatura": 3,
+              "id": 3,
               "curso": "1º DAM",
               "nombre": "LND"
             },
             {
-              "idasignatura": 7,
+              "id": 7,
               "curso": "1º DAM",
               "nombre": "PRO"
             }
@@ -153,12 +153,12 @@
           "year": 2021,
           "asignaturas": [
             {
-              "idasignatura": 3,
+              "id": 3,
               "curso": "1º DAM",
               "nombre": "LND"
             },
             {
-              "idasignatura": 7,
+              "id": 7,
               "curso": "1º DAM",
               "nombre": "PRO"
             }
