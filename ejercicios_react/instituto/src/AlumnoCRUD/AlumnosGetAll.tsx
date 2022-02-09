@@ -31,11 +31,11 @@ class AlumnosGetAll extends React.Component<IProps, IState>{
   render() {
     return (
       <>
-        <h1>Instituto</h1>
+        <h2>Alumnos</h2>
         <ul>
         {this.state.alumnos?.map((alumno: Alumno) => {
           return (
-            <li><Link to={alumno.dnialumno}>{alumno.dnialumno}</Link></li>
+            <li><Link to={alumno.id}>{alumno.id}</Link></li>
             );
           })
         }

@@ -1,9 +1,6 @@
 import axios from 'axios';
-import { stat } from 'fs';
 import React from 'react';
-import { useNavigate } from 'react-router-dom';
-import { Alumno } from './modelo/Alumno';
-import { Asignatura } from './modelo/Asignatura';
+import { Asignatura } from '../modelo/Asignatura';
 interface IProps {
   asignatura: Asignatura
 }

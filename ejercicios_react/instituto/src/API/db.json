@@ -21,11 +21,6 @@
       "nombre": "DSW"
     },
     {
-      "id": 9,
-      "curso": "3º ESO",
-      "nombre": "FYQ"
-    },
-    {
       "id": 3,
       "curso": "1º DAM",
       "nombre": "LND"
@@ -34,11 +29,6 @@
       "id": 8,
       "curso": "2º DAM",
       "nombre": "PGL"
-    },
-    {
-      "id": 2,
-      "curso": "2º DAM",
-      "nombre": "PGV"
     },
     {
       "id": 7,
@@ -101,49 +91,14 @@
   ],
   "alumnos": [
     {
-      "dnialumno": "46262784D",
-      "nombre": "Daniel",
-      "apellidos": "Barroso Rocio",
-      "fechanacimiento": 800000000000,
-      "matriculas": [
-        {
-          "id": 1,
-          "year": 2021,
-          "asignaturas": [
-            {
-              "id": 2,
-              "curso": "2º DAM",
-              "nombre": "PGV"
-            },
-            {
-              "id": 7,
-              "curso": "1º DAM",
-              "nombre": "PRO"
-            }
-          ],
-          "dnialumno": "46262784D"
-        },
-        {
-          "id": 2,
-          "year": 2020,
-          "asignaturas": [
-            {
-              "id": 3,
-              "curso": "1º DAM",
-              "nombre": "LND"
-            },
-            {
-              "id": 7,
-              "curso": "1º DAM",
-              "nombre": "PRO"
-            }
-          ],
-          "dnialumno": "46262784D"
-        }
-      ]
+      "id": "46262784D",
+      "nombre": "aaaa",
+      "apellidos": "aaa",
+      "fechanacimiento": 883612800000,
+      "matriculas": []
     },
     {
-      "dnialumno": "46262784A",
+      "id": "46262784A",
       "nombre": "Rigoberto",
       "apellidos": "Base Datos",
       "fechanacimiento": 800000000000,
@@ -168,10 +123,17 @@
       ]
     },
     {
-      "dnialumno": "55555555A",
-      "nombre": "Roberto",
-      "apellidos": "Ramirez Mesa",
-      "fechanacimiento": 890524800000,
+      "id": "55555555A",
+      "nombre": "ssssss",
+      "apellidos": "ssss",
+      "fechanacimiento": 886377600000,
+      "matriculas": []
+    },
+    {
+      "id": "a",
+      "nombre": "aaaaaaa",
+      "apellidos": "aaaaaaaaa",
+      "fechanacimiento": 883612800000,
       "matriculas": []
     }
   ]

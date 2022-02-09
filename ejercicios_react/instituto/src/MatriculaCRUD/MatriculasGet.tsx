@@ -1,6 +1,6 @@
 import axios from 'axios';
 import React from 'react';
-import { Matricula } from './modelo/Matricula';
+import { Matricula } from '../modelo/Matricula';
 import { MatriculaComponent } from './MatriculaComponent';
 import { useParams } from 'react-router-dom';
 interface IProps { }
@@ -25,7 +25,6 @@ export const MatriculasGet = () => {
     }, [idmatricula]);
     return (
         <>
-            <h3>Un componente sencillo para matriculas de manera funcional</h3>
             <div>
                 <MatriculaComponent matricula={state.matricula}/>
             </div>

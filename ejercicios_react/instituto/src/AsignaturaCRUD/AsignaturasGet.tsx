@@ -1,8 +1,8 @@
 import axios from 'axios';
 import React from 'react';
-import { Asignatura } from './modelo/Asignatura';
+import { Asignatura } from '../modelo/Asignatura';
 import { AsignaturaComponent } from './AsignaturaComponent';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 interface IProps { }
 interface IState {
     asignatura: Asignatura;
@@ -13,17 +13,16 @@ export const AsignaturasGet = () => {
     
     const [state, setstate] = React.useState<IState>({asignatura: new Asignatura(0, "", "")});
     const rutaBase = "http://" + ip + ":" + puerto + "/api/v1/asignaturas/";
-    const { idasignatura } = useParams();
-    console.log(idasignatura);
+    const { id } = useParams();
+    const navigate = useNavigate();
+
     React.useEffect(() => {
         const getAsignatura = async (id: string | undefined) =>{
             let { data } = await axios.get(rutaBase + id);
-            let arrayMatr = data;
-            console.log(data);
-            setstate({asignatura: arrayMatr[0]});
+            setstate({asignatura: data});
             }
-        getAsignatura(idasignatura);
-    }, [idasignatura]);
+        getAsignatura(id);
+    }, [id]);
     return (
         <>
             <h3>Un componente sencillo para asignaturas de manera funcional</h3>

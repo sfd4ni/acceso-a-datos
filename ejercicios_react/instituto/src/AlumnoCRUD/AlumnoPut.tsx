@@ -4,26 +4,25 @@ import { Alumno } from '../modelo/Alumno';
 import { AlumnoComponent } from './AlumnoComponent';
 import { matchPath, Location, useParams, useNavigate } from 'react-router-dom';
 interface IState {
-  alumnoPost: Alumno
+  alumnoPut: Alumno
 }
-export const AlumnosPost = () => {
+export const AlumnosPut = () => {
 const ip = "localhost";
 const puerto = 8081;
 const rutaBase = "http://" + ip + ":" + puerto + "/api/v1";
-const rutaAlumnos = rutaBase + "/alumnos";
-const [statePost, setStatePost] = React.useState<IState>({alumnoPost: new Alumno("", "", "", 0, new Array())});
+const rutaAlumnos = rutaBase + "/alumnos/";
+const [statePut, setStatePut] = React.useState<IState>({alumnoPut: new Alumno("", "", "", 0, new Array())});
 const nombrealumno = React.useRef<HTMLInputElement>(null);
-const dnialumno = React.useRef<HTMLInputElement>(null);
 const apellidosalumno = React.useRef<HTMLInputElement>(null);
 const fechanacimiento = React.useRef<HTMLInputElement>(null);
 const navigate = useNavigate();
 
-
-const postAlumnoEffect = React.useEffect(() => {
-    const postAlumno = async (alumno: Alumno) =>{
+const { id } = useParams();
+const putAlumnoEffect = React.useEffect(() => {
+    const putAlumno = async (alumno: Alumno) =>{
       if (alumno.nombre !== "" && alumno.id !== ""
       && alumno.apellidos !== "" && alumno.fechanacimiento !== 0) {
-        await axios.post(rutaAlumnos, alumno)
+        await axios.put(rutaAlumnos + alumno.id, alumno)
           .then(function (response) {
             navigate('/alumnos');
             console.log(response);
@@ -33,35 +32,36 @@ const postAlumnoEffect = React.useEffect(() => {
           });
       }
       }
-    console.log(statePost.alumnoPost);
-    postAlumno(statePost.alumnoPost);
-}, [statePost]);
+    console.log(statePut.alumnoPut);
+    putAlumno(statePut.alumnoPut);
+}, [statePut]);
 
-const postAlumno = (event: React.MouseEvent<HTMLButtonElement>) =>  {
+const putAlumno = (event: React.MouseEvent<HTMLButtonElement>) =>  {
     event.preventDefault();
     console.log("Algo pasa");
-    const dniAlumno = dnialumno.current?.value;
+
     const nombreAlumno = nombrealumno.current?.value;
     const apellidosAlumno = apellidosalumno.current?.value;
     const fechaNacimiento = fechanacimiento.current?.value;
-    if (typeof nombreAlumno === "string" && typeof dniAlumno === "string"
-    && typeof apellidosAlumno === "string" && typeof fechaNacimiento === "string") {
+    if (typeof nombreAlumno === "string" && typeof apellidosAlumno === "string"
+    && typeof fechaNacimiento === "string") {
         console.log("Hemos entrado");
         let fechaNacimientoInt = new Date(fechaNacimiento).getTime();
+        let dniAlumno = id || '';
         let alumno = new Alumno(dniAlumno, nombreAlumno, apellidosAlumno, fechaNacimientoInt, new Array());
-        setStatePost({alumnoPost: alumno});
+        setStatePut({alumnoPut: alumno});
     }
 }
 return (
     <>
-        <h3>Crear una alumno</h3>
+        <h3>Modificar una alumno</h3>
         <div>
-          <span>Alumno a introducir:</span><br/>
-          <span>Dni: </span><input type="text" ref={dnialumno}></input><br/>
+          <span>Alumno a modificar:</span><br/>
+          <span>Dni: {id}</span>
           <span>Nombre: </span><input type="text" ref={nombrealumno}></input><br/>
           <span>Apellidos: </span><input type="text" ref={apellidosalumno}></input><br/>
           <span>Fecha nacimiento: </span><input type="text" ref={fechanacimiento} placeholder="mm/dd/yyyy"></input><br/>
-          <button onClick={postAlumno}>Introducir Alumno</button>
+          <button onClick={putAlumno}>Introducir Alumno</button>
         </div>
     </>
 );

@@ -2,11 +2,12 @@ import React from 'react';
 import axios from 'axios';
 import { Link, Route, BrowserRouter, Routes } from 'react-router-dom';
 import { AlumnosGet } from './AlumnoCRUD/AlumnosGet';
-import { MatriculasGet } from './MatriculasGet';
-import { AsignaturasGet } from './AsignaturasGet';
+import { MatriculasGet } from './MatriculaCRUD/MatriculasGet';
+import { AsignaturasGet } from './AsignaturaCRUD/AsignaturasGet';
 import AlumnosGetAll from './AlumnoCRUD/AlumnosGetAll';
-import AsignaturasGetAll from './AsignaturasGetAll';
+import AsignaturasGetAll from './AsignaturaCRUD/AsignaturasGetAll';
 import { AlumnosPost } from './AlumnoCRUD/AlumnoAdd';
+import { AlumnosPut } from './AlumnoCRUD/AlumnoPut';
 interface IProps { }
 interface IState { alumnos: [] }
 class App extends React.Component<IProps, IState>{
@@ -43,11 +44,12 @@ class App extends React.Component<IProps, IState>{
                     <Route path="/" />
                     <Route path="/alumnos" element={<AlumnosGetAll/>}/>
                     <Route path="/alumnos/add" element={<AlumnosPost/>}/>
+                    <Route path="/alumnos/:id/put" element={<AlumnosPut/>}/>
                     <Route path="/asignaturas" element={<AsignaturasGetAll/>}/>
                     <Route path="alumnos/:dnialumno" element={<AlumnosGet/>} />
                     <Route path="alumnos/:dnialumno/matriculas/:idmatricula" element={<MatriculasGet/>}/>
-                    <Route path="alumnos/:dnialumno/matriculas/:idmatricula/asignaturas/:idasignatura" element={<AsignaturasGet/>}/>
-                    <Route path="/asignaturas/:idasignatura" element={<AsignaturasGet/>}/>
+                    <Route path="alumnos/:dnialumno/matriculas/:idmatricula/asignaturas/:id" element={<AsignaturasGet/>}/>
+                    <Route path="/asignaturas/:id" element={<AsignaturasGet/>}/>
                 </Routes>
             </BrowserRouter>
         );

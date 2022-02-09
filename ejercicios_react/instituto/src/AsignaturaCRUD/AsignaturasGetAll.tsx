@@ -1,10 +1,7 @@
 import React from 'react';
 import axios from 'axios';
 import { Link, Route, BrowserRouter, Routes } from 'react-router-dom';
-import { AsignaturasGet } from './AsignaturasGet';
-import { Asignatura } from './modelo/Asignatura';
-import { AsignaturaComponent } from './AsignaturaComponent';
-import { MatriculasGet } from './MatriculasGet';
+import { Asignatura } from '../modelo/Asignatura';
 interface IProps { }
 interface IState { asignaturas: [] }
 class AsignaturasGetAll extends React.Component<IProps, IState>{
@@ -32,7 +29,7 @@ class AsignaturasGetAll extends React.Component<IProps, IState>{
   render() {
     return (
       <>
-        <h1>Instituto</h1>
+        <h1>Asignaturas</h1>
         <ul>
         {this.state.asignaturas?.map((asignatura: Asignatura) => {
           return (
