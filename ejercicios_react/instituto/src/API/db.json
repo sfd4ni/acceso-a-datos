@@ -166,6 +166,13 @@
           "dnialumno": "46262784A"
         }
       ]
+    },
+    {
+      "dnialumno": "55555555A",
+      "nombre": "Roberto",
+      "apellidos": "Ramirez Mesa",
+      "fechanacimiento": 890524800000,
+      "matriculas": []
     }
   ]
 }

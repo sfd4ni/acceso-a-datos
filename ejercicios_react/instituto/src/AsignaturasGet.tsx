@@ -19,6 +19,7 @@ export const AsignaturasGet = () => {
         const getAsignatura = async (id: string | undefined) =>{
             let { data } = await axios.get(rutaBase + id);
             let arrayMatr = data;
+            console.log(data);
             setstate({asignatura: arrayMatr[0]});
             }
         getAsignatura(idasignatura);

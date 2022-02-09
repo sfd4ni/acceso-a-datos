@@ -1,6 +1,6 @@
 import axios from 'axios';
 import React from 'react';
-import { Alumno } from './modelo/Alumno';
+import { Alumno } from '../modelo/Alumno';
 import { AlumnoComponent } from './AlumnoComponent';
 import { matchPath, Location, useParams } from 'react-router-dom';
 interface IProps { }

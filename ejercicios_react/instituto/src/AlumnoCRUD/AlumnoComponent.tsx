@@ -1,10 +1,10 @@
 import axios from 'axios';
 import { stat } from 'fs';
 import React from 'react';
-import { Alumno } from './modelo/Alumno';
-import { Matricula } from './modelo/Matricula';
+import { Alumno } from '../modelo/Alumno';
+import { Matricula } from '../modelo/Matricula';
 import { Link, Route, BrowserRouter, Routes } from 'react-router-dom';
-import { MatriculasGet } from './MatriculasGet';
+import { MatriculasGet } from '../MatriculasGet';
 interface IProps {
   alumno: Alumno
  }
