@@ -32,6 +32,10 @@ export const AsignaturaComponent = (props: IProps) => {
         event.preventDefault();
         setPulsado(true);
     }
+    function modificarAsignatura(event: React.MouseEvent<HTMLButtonElement>) {
+      event.preventDefault();
+      navigate('put/');
+  }
   return (
     <>
       <h3>{asignatura.nombre}</h3>
@@ -39,6 +43,7 @@ export const AsignaturaComponent = (props: IProps) => {
         <h4>Curso: {asignatura.curso}</h4>
       </div>
       <button onClick={eliminarAsignatura}>Eliminar</button>
+      <button onClick={modificarAsignatura}>Modificar</button>
     </>
     );
   }

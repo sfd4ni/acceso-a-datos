@@ -38,6 +38,7 @@ class AsignaturasGetAll extends React.Component<IProps, IState>{
           })
         }
         </ul>
+        <Link to='add'>Añadir asignatura</Link>
       </>
       );
     }
