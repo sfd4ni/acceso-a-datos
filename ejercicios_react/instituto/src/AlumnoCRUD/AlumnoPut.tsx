@@ -18,49 +18,59 @@ const fechanacimiento = React.useRef<HTMLInputElement>(null);
 const navigate = useNavigate();
 
 const { id } = useParams();
-const putAlumnoEffect = React.useEffect(() => {
-    const putAlumno = async (alumno: Alumno) =>{
-      if (alumno.nombre !== "" && alumno.id !== ""
-      && alumno.apellidos !== "" && alumno.fechanacimiento !== 0) {
-        await axios.put(rutaAlumnos + alumno.id, alumno)
-          .then(function (response) {
-            navigate('/alumnos');
-            console.log(response);
-          })
-          .catch(function (error) {
-            console.log(error);
-          });
+
+
+async function putAlumnoDb(alumno: Alumno) {
+  if (alumno.nombre !== "" && alumno.id !== ""
+  && alumno.apellidos !== "" && alumno.fechanacimiento !== 0) {
+    await axios.put(rutaAlumnos + alumno.id, alumno)
+      .then(function (response) {
+        navigate('/alumnos/' + alumno.id);
+        console.log(response);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+  }
+}
+
+const getAlumno = React.useEffect(() => {
+  const getAlumno = async (dnialumno: string | undefined) =>{
+      let { data } = await axios.get(rutaAlumnos + dnialumno);
+      setStatePut({alumnoPut: data});
+      console.log(statePut.alumnoPut);
       }
-      }
-    console.log(statePut.alumnoPut);
-    putAlumno(statePut.alumnoPut);
-}, [statePut]);
+  getAlumno(id);
+}, [id]);
 
 const putAlumno = (event: React.MouseEvent<HTMLButtonElement>) =>  {
     event.preventDefault();
-    console.log("Algo pasa");
 
     const nombreAlumno = nombrealumno.current?.value;
     const apellidosAlumno = apellidosalumno.current?.value;
     const fechaNacimiento = fechanacimiento.current?.value;
     if (typeof nombreAlumno === "string" && typeof apellidosAlumno === "string"
     && typeof fechaNacimiento === "string") {
-        console.log("Hemos entrado");
         let fechaNacimientoInt = new Date(fechaNacimiento).getTime();
-        let dniAlumno = id || '';
-        let alumno = new Alumno(dniAlumno, nombreAlumno, apellidosAlumno, fechaNacimientoInt, new Array());
-        setStatePut({alumnoPut: alumno});
+        
+        let alumno = statePut.alumnoPut;
+        alumno.nombre = nombreAlumno;
+        alumno.apellidos = apellidosAlumno;
+        alumno.fechanacimiento = fechaNacimientoInt;
+
+        putAlumnoDb(alumno);
     }
 }
+let fecha = statePut.alumnoPut.fechanacimiento;
 return (
     <>
         <h3>Modificar una alumno</h3>
         <div>
           <span>Alumno a modificar:</span><br/>
-          <span>Dni: {id}</span>
-          <span>Nombre: </span><input type="text" ref={nombrealumno}></input><br/>
-          <span>Apellidos: </span><input type="text" ref={apellidosalumno}></input><br/>
-          <span>Fecha nacimiento: </span><input type="text" ref={fechanacimiento} placeholder="mm/dd/yyyy"></input><br/>
+          <span>Dni: {statePut.alumnoPut.id}</span>
+          <span>Nombre: </span><input type="text" ref={nombrealumno} defaultValue={statePut.alumnoPut.nombre}></input><br/>
+          <span>Apellidos: </span><input type="text" ref={apellidosalumno} defaultValue={statePut.alumnoPut.apellidos}></input><br/>
+          <span>Fecha nacimiento: </span><input key={`${Math.floor((Math.random() * 1000))}-min`} type="text" ref={fechanacimiento} placeholder="mm/dd/yyyy" defaultValue={fecha}></input><br/>
           <button onClick={putAlumno}>Introducir Alumno</button>
         </div>
     </>

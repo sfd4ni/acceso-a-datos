@@ -34,6 +34,11 @@
       "id": 7,
       "curso": "1º DAM",
       "nombre": "PRO"
+    },
+    {
+      "nombre": "AAA",
+      "curso": "AAA",
+      "id": 9
     }
   ],
   "matriculas": [
@@ -127,6 +132,13 @@
       "nombre": "ssssss",
       "apellidos": "ssss",
       "fechanacimiento": 886377600000,
+      "matriculas": []
+    },
+    {
+      "id": "aaaa",
+      "nombre": "aaaaa",
+      "apellidos": "aaaa",
+      "fechanacimiento": 890524800000,
       "matriculas": []
     }
   ]
