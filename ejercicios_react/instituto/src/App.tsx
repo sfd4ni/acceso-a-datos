@@ -10,6 +10,7 @@ import { AlumnosPost } from './AlumnoCRUD/AlumnoAdd';
 import { AlumnosPut } from './AlumnoCRUD/AlumnoPut';
 import { AsignaturasPost } from './AsignaturaCRUD/AsignaturaAdd';
 import { AsignaturasPut } from './AsignaturaCRUD/AsignaturaPut';
+import { MatriculasPost } from './MatriculaCRUD/MatriculaAdd';
 interface IProps { }
 interface IState { alumnos: [] }
 class App extends React.Component<IProps, IState>{
@@ -50,6 +51,7 @@ class App extends React.Component<IProps, IState>{
                     <Route path="/asignaturas" element={<AsignaturasGetAll/>}/>
                     <Route path="alumnos/:dnialumno" element={<AlumnosGet/>} />
                     <Route path="alumnos/:dnialumno/matriculas/:idmatricula" element={<MatriculasGet/>}/>
+                    <Route path="alumnos/:dnialumno/matriculas/add" element={<MatriculasPost/>}/>
                     <Route path="alumnos/:dnialumno/matriculas/:idmatricula/asignaturas/:id" element={<AsignaturasGet/>}/>
                     <Route path="/asignaturas/:id" element={<AsignaturasGet/>}/>
                     <Route path="/asignaturas/add" element={<AsignaturasPost/>}/>

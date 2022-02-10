@@ -17,10 +17,16 @@ export const AlumnosGet = () => {
         const getAlumno = async (dnialumno: string | undefined) =>{
             console.log(rutaBase + dnialumno);
             let { data } = await axios.get(rutaBase + dnialumno);
-            setstate({alumno: data});
-            console.log(state?.alumno);
-            }
+            let alumnoSinMatr = data;
+            data = await axios.get(rutaBase + dnialumno + '/matriculas');
+            console.log(data);
+            alumnoSinMatr.matriculas = data.data;
+            console.log(alumnoSinMatr);
+            setstate({alumno: alumnoSinMatr});
+            
+        }
         getAlumno(dnialumno);
+        console.log(state.alumno);
     }, [dnialumno]);
     return (
         <>

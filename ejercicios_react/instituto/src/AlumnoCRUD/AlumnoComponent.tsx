@@ -42,16 +42,20 @@ export const AlumnoComponent = (props: IProps) => {
         event.preventDefault();
         navigate('put');
     }
+    function addMatricula(event: React.MouseEvent<HTMLButtonElement>) {
+        event.preventDefault();
+        navigate('matriculas/add');
+    }
     return (
         <>
             <h3>{alumno.id}</h3>
             <div>
                 <span>Nombre: {alumno.nombre}</span><br/>
                 <span>Apellidos: {alumno.apellidos} </span><br/>
-                <span>Fecha nacimiento: {day}/{month}/{year} </span><br/>
+                <span>Fecha nacimiento: {month}/{day}/{year} </span><br/>
                 <h4>Matriculas: </h4>
                 <ul>
-                {alumno.matriculas?.map((matricula: Matricula) => {
+                {alumno.matriculas.map((matricula: Matricula) => {
                         return (
                             <li><Link to={'matriculas/' + matricula.id}>Curso {matricula.year-1}/{matricula.year}</Link></li>
                         );
@@ -60,6 +64,7 @@ export const AlumnoComponent = (props: IProps) => {
                 </ul>
                 <button onClick={eliminarAlumno}>Eliminar alumno</button>
                 <button onClick={modificarAlumno}>Modificar alumno</button>
+                <button onClick={addMatricula}>Añadir matrícula</button>
             </div>
         </>
     );

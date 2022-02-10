@@ -34,11 +34,6 @@
       "id": 7,
       "curso": "1º DAM",
       "nombre": "PRO"
-    },
-    {
-      "nombre": "AAA",
-      "curso": "AAA",
-      "id": 9
     }
   ],
   "matriculas": [
@@ -92,6 +87,18 @@
         }
       ],
       "dnialumno": "46262784A"
+    },
+    {
+      "year": 1980,
+      "asignaturas": [],
+      "dnialumno": "55555555A",
+      "id": 4
+    },
+    {
+      "year": 1890,
+      "asignaturas": [],
+      "dnialumno": "55555555A",
+      "id": 5
     }
   ],
   "alumnos": [
@@ -131,14 +138,7 @@
       "id": "55555555A",
       "nombre": "ssssss",
       "apellidos": "ssss",
-      "fechanacimiento": 886377600000,
-      "matriculas": []
-    },
-    {
-      "id": "aaaa",
-      "nombre": "aaaaa",
-      "apellidos": "aaaa",
-      "fechanacimiento": 890524800000,
+      "fechanacimiento": 886464000000,
       "matriculas": []
     }
   ]

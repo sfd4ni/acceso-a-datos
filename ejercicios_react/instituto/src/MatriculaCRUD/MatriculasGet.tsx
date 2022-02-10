@@ -14,12 +14,12 @@ export const MatriculasGet = () => {
     const [state, setstate] = React.useState<IState>({matricula: new Matricula(0, 0, new Array(), "")});
     const rutaBase = "http://" + ip + ":" + puerto + "/api/v1/matriculas/";
     const { idmatricula } = useParams();
-    console.log(idmatricula);
+    
     React.useEffect(() => {
         const getMatricula = async (id: string | undefined) =>{
             let { data } = await axios.get(rutaBase + id);
             let arrayMatr = data;
-            setstate({matricula: arrayMatr[0]});
+            setstate({matricula: arrayMatr});
             }
         getMatricula(idmatricula);
     }, [idmatricula]);

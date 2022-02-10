@@ -61,7 +61,10 @@ const putAlumno = (event: React.MouseEvent<HTMLButtonElement>) =>  {
         putAlumnoDb(alumno);
     }
 }
-let fecha = statePut.alumnoPut.fechanacimiento;
+let fecha = new Date(statePut.alumnoPut.fechanacimiento);
+let day = fecha.getUTCDate();
+let month = fecha.getUTCMonth() + 1;
+let year = fecha.getUTCFullYear();
 return (
     <>
         <h3>Modificar una alumno</h3>
@@ -70,8 +73,9 @@ return (
           <span>Dni: {statePut.alumnoPut.id}</span>
           <span>Nombre: </span><input type="text" ref={nombrealumno} defaultValue={statePut.alumnoPut.nombre}></input><br/>
           <span>Apellidos: </span><input type="text" ref={apellidosalumno} defaultValue={statePut.alumnoPut.apellidos}></input><br/>
-          <span>Fecha nacimiento: </span><input key={`${Math.floor((Math.random() * 1000))}-min`} type="text" ref={fechanacimiento} placeholder="mm/dd/yyyy" defaultValue={fecha}></input><br/>
-          <button onClick={putAlumno}>Introducir Alumno</button>
+          <span>Fecha nacimiento: </span><input key={`${Math.floor((Math.random() * 1000))}-min`} type="text" ref={fechanacimiento} 
+          placeholder="mm/dd/yyyy" defaultValue={day + "/" + month + "/" + year}></input><br/>
+          <button onClick={putAlumno}>Modificar Alumno</button>
         </div>
     </>
 );
