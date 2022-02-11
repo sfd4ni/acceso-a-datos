@@ -1,9 +1,9 @@
 {
   "asignaturas": [
     {
-      "id": 4,
-      "curso": "2º DAM",
-      "nombre": "AED"
+      "nombre": "AED",
+      "curso": "1º DAM",
+      "id": 4
     },
     {
       "id": 1,
@@ -89,16 +89,33 @@
       "dnialumno": "46262784A"
     },
     {
-      "year": 1980,
-      "asignaturas": [],
-      "dnialumno": "55555555A",
-      "id": 4
-    },
-    {
-      "year": 1890,
+      "year": 2021,
       "asignaturas": [],
       "dnialumno": "55555555A",
       "id": 5
+    },
+    {
+      "year": 2121,
+      "asignaturas": [],
+      "dnialumno": "55555555A",
+      "id": 6
+    },
+    {
+      "year": 2012,
+      "asignaturas": [
+        {
+          "id": 8,
+          "curso": "2º DAM",
+          "nombre": "PGL"
+        },
+        {
+          "id": 7,
+          "curso": "1º DAM",
+          "nombre": "PRO"
+        }
+      ],
+      "dnialumno": "55555555A",
+      "id": 7
     }
   ],
   "alumnos": [

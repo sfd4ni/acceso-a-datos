@@ -3,6 +3,7 @@ import React from 'react';
 import { Asignatura } from '../modelo/Asignatura';
 import { AsignaturaComponent } from './AsignaturaComponent';
 import { useNavigate, useParams } from 'react-router-dom';
+import { AsignaturaMatriculaComponent } from './AsignaturaMatriculaComp';
 interface IProps { }
 interface IState {
     asignatura: Asignatura;
@@ -13,8 +14,13 @@ export const AsignaturasGet = () => {
     
     const [state, setstate] = React.useState<IState>({asignatura: new Asignatura(0, "", "")});
     const rutaBase = "http://" + ip + ":" + puerto + "/api/v1/asignaturas/";
-    const { id } = useParams();
+    const { id, idmatricula } = useParams();
+    
+    const noHaymatricula = (typeof idmatricula === "undefined");
+    
     const navigate = useNavigate();
+
+    
 
     React.useEffect(() => {
         const getAsignatura = async (id: string | undefined) =>{
@@ -25,9 +31,11 @@ export const AsignaturasGet = () => {
     }, [id]);
     return (
         <>
-            <h3>Un componente sencillo para asignaturas de manera funcional</h3>
             <div>
-                <AsignaturaComponent asignatura={state.asignatura}/>
+            {noHaymatricula
+                ? <AsignaturaComponent asignatura={state.asignatura} />
+                : <AsignaturaMatriculaComponent asignatura={state.asignatura} />
+            }
             </div>
         </>
     );
