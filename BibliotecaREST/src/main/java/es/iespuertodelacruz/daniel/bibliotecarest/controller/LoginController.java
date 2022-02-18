@@ -43,11 +43,11 @@ public class LoginController {
 	
 	
 	static class OperadorJsonLogin{
-		String name;
+		String nick;
 		String password;
-		public String getName() { return name;};
+		public String getNick() { return nick;};
 		public String getPassword() {return password;};
-		public void setName(String name ) {this.name = name;};
+		public void setNick(String nick ) {this.nick = nick;};
 		public void setPassword(String password ) {this.password = password;};
 			
 	}
@@ -57,7 +57,7 @@ public class LoginController {
 	public ResponseEntity<?> login(@RequestBody OperadorJsonLogin operadorJson) {
 		
 		
-		String token = getJWTToken(operadorJson.name, operadorJson.password);
+		String token = getJWTToken(operadorJson.nick, operadorJson.password);
 		
 		//token nulo si operador/pass no es válido
 		if( token != null) {
@@ -78,7 +78,8 @@ public class LoginController {
 		GestorDeJWT gestorDeJWT = GestorDeJWT.getInstance();
 		
 		Operadore operador = operadorService.findByNick(username);
-		
+		logger.info("Password operador: " + operador.getPassword());
+		logger.info("Password recibida: " + passTextoPlanoRecibida);
         
         String passwordOperadorEnHash = "";
         boolean autenticado = false;
@@ -87,7 +88,9 @@ public class LoginController {
         	passwordOperadorEnHash = operador.getPassword();
         	
         	//autenticado = BCrypt.checkpw(passTextoPlanoRecibida, passwordOperadorEnHash);
-        	autenticado = passTextoPlanoRecibida == passwordOperadorEnHash;
+        	if (passTextoPlanoRecibida.equals(passwordOperadorEnHash)) {
+        		autenticado = true;
+        	}
         	
         }
         
