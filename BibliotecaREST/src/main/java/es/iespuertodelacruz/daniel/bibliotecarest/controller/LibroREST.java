@@ -167,7 +167,7 @@ public class LibroREST {
 		}
 	}
 	
-/*
+
 	@PutMapping("/{idLib}/ejemplar/{idEjem}")
 	public ResponseEntity<?> updateEjemplar(
 			@PathVariable Integer idLib,
@@ -201,7 +201,7 @@ public class LibroREST {
 			return
 			ResponseEntity.status(HttpStatus.BAD_REQUEST).body("el id del registro no existe");
 		}
-	}*/
+	}
 	
 	@PostMapping("/{idLib}/ejemplar")
 	public ResponseEntity<?> saveEjemplar(

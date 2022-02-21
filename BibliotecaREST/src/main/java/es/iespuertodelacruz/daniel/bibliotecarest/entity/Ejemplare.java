@@ -2,6 +2,9 @@ package es.iespuertodelacruz.daniel.bibliotecarest.entity;
 
 import java.io.Serializable;
 import javax.persistence.*;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import java.util.List;
 
 
@@ -21,11 +24,13 @@ public class Ejemplare implements Serializable {
 
 	private String localizacion;
 
+	@JsonIgnore
 	//bi-directional many-to-one association to Libro
 	@ManyToOne
 	@JoinColumn(name="fklibroid")
 	private Libro libro;
 
+	@JsonIgnore
 	//bi-directional many-to-one association to Prestamo
 	@OneToMany(mappedBy="ejemplare")
 	private List<Prestamo> prestamos;

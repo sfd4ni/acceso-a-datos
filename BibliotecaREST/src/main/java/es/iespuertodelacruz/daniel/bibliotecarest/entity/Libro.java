@@ -26,13 +26,16 @@ public class Libro implements Serializable {
 
 	private String titulo;
 
-	@JsonIgnore
+	
 	//bi-directional many-to-one association to Ejemplare
 	@OneToMany(mappedBy="libro")
 	private List<Ejemplare> ejemplares;
 
 	//bi-directional many-to-many association to Autor
-	@ManyToMany(mappedBy="libros")
+	@ManyToMany
+	@JoinTable( name="autor_libro",
+	joinColumns = @JoinColumn(name="fklibroid"),
+	inverseJoinColumns = @JoinColumn(name="fkautorid"))
 	private List<Autor> autores;
 
 	public Libro() {

@@ -37,8 +37,8 @@ public class BibliotecaRestApplication {
 		{
 			webSecurity
 			.ignoring()
-			.antMatchers(HttpMethod.POST, "/api/login")
-			.antMatchers("/api/v1/**");
+			.antMatchers(HttpMethod.POST, "/api/login");
+			//.antMatchers("/api/v1/**");
 			//.antMatchers("/**");
 		}
 		@Override

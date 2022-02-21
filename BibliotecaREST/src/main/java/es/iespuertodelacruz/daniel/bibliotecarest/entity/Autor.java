@@ -30,11 +30,12 @@ public class Autor implements Serializable {
 
 	@JsonIgnore
 	//bi-directional many-to-many association to Libro
-	@ManyToMany
+	/*@ManyToMany
 	@JoinTable( name="autor_libro",
 	joinColumns = @JoinColumn(name="fkautorid"),
 	inverseJoinColumns = @JoinColumn(name="fklibroid")
-	)
+	)*/
+	@ManyToMany(mappedBy="autores")
 	private List<Libro> libros;
 
 	public Autor() {

@@ -2,6 +2,9 @@ package es.iespuertodelacruz.daniel.bibliotecarest.entity;
 
 import java.io.Serializable;
 import javax.persistence.*;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import java.math.BigInteger;
 
 
@@ -23,6 +26,7 @@ public class Prestamo implements Serializable {
 
 	private BigInteger fechaprestamo;
 
+	@JsonIgnore
 	//bi-directional many-to-one association to Cliente
 	@ManyToOne
 	@JoinColumn(name="fkclienteid")
