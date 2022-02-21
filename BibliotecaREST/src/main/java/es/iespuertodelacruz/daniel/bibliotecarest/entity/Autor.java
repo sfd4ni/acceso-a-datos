@@ -2,6 +2,9 @@ package es.iespuertodelacruz.daniel.bibliotecarest.entity;
 
 import java.io.Serializable;
 import javax.persistence.*;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import java.util.List;
 
 
@@ -25,6 +28,7 @@ public class Autor implements Serializable {
 
 	private String nombre;
 
+	@JsonIgnore
 	//bi-directional many-to-many association to Libro
 	@ManyToMany
 	@JoinTable( name="autor_libro",

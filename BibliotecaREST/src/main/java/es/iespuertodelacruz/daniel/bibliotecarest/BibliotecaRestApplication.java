@@ -52,6 +52,8 @@ public class BibliotecaRestApplication {
 			.authorizeRequests()
 			.requestMatchers(CorsUtils::isCorsRequest).permitAll()
 			.antMatchers(HttpMethod.OPTIONS, "**").permitAll()				
+			//.antMatchers("/api/v3/**").hasRole("ADMIN")
+			//.antMatchers("/api/v2/**").hasRole("USER")
 			.anyRequest().authenticated()
 			;
 	    	
@@ -69,6 +71,6 @@ public class BibliotecaRestApplication {
 	    	 .toString());
 	    	 });
 		
-	    }
+	    }	
 	}
 }

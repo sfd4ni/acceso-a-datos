@@ -2,6 +2,9 @@ package es.iespuertodelacruz.daniel.bibliotecarest.entity;
 
 import java.io.Serializable;
 import javax.persistence.*;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import java.util.List;
 
 
@@ -23,6 +26,7 @@ public class Libro implements Serializable {
 
 	private String titulo;
 
+	@JsonIgnore
 	//bi-directional many-to-one association to Ejemplare
 	@OneToMany(mappedBy="libro")
 	private List<Ejemplare> ejemplares;
