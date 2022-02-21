@@ -87,7 +87,7 @@ public class LoginController {
         if(operador != null) { 
         	passwordOperadorEnHash = operador.getPassword();
         	
-        	//autenticado = BCrypt.checkpw(passTextoPlanoRecibida, passwordOperadorEnHash);
+        	autenticado = BCrypt.checkpw(passTextoPlanoRecibida, passwordOperadorEnHash);
         	if (passTextoPlanoRecibida.equals(passwordOperadorEnHash)) {
         		autenticado = true;
         	}
