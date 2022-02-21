@@ -1,8 +1,12 @@
 package es.iespuertodelacruz.daniel.bibliotecarest.dto;
 
-import es.iespuertodelacruz.daniel.bibliotecarest.entity.Cliente;
+import java.util.ArrayList;
+import java.util.List;
 
-public class ClienteDTO {
+import es.iespuertodelacruz.daniel.bibliotecarest.entity.Cliente;
+import es.iespuertodelacruz.daniel.bibliotecarest.entity.Prestamo;
+
+public class ClienteGET {
 	
 	private String apellidos;
 
@@ -10,12 +14,18 @@ public class ClienteDTO {
 
 	private String nombre;
 	
-	public ClienteDTO() {}
+	private List<PrestamoDTO> prestamos;
 	
-	public ClienteDTO(Cliente cliente) {
+	public ClienteGET() {}
+	
+	public ClienteGET(Cliente cliente) {
 		this.apellidos = cliente.getApellidos();
 		this.direccion = cliente.getDireccion();
 		this.nombre = cliente.getNombre();
+		this.prestamos = new ArrayList<>();
+		for (Prestamo prestamo : cliente.getPrestamos()) {
+			this.prestamos.add(new PrestamoDTO(prestamo));
+		}
 	}
 
 	public String getApellidos() {
@@ -41,6 +51,13 @@ public class ClienteDTO {
 	public void setNombre(String nombre) {
 		this.nombre = nombre;
 	}
-	
+
+	public List<PrestamoDTO> getPrestamos() {
+		return prestamos;
+	}
+
+	public void setPrestamos(List<PrestamoDTO> prestamos) {
+		this.prestamos = prestamos;
+	}
 	
 }

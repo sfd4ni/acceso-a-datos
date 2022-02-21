@@ -99,9 +99,9 @@ public class LoginController {
 		if(autenticado) {
 
 				
-			String rol = "";
+			
 			List<String> roles = new ArrayList<String>(); 
-			roles.add(rol);
+			roles.add("ROLE_USER");
 			logger.info("los roles obtenidos: " + roles);
 			
 

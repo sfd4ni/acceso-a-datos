@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import es.iespuertodelacruz.daniel.bibliotecarest.dto.ClienteDTO;
+import es.iespuertodelacruz.daniel.bibliotecarest.dto.ClienteGET;
 import es.iespuertodelacruz.daniel.bibliotecarest.dto.EjemplarDTO;
 import es.iespuertodelacruz.daniel.bibliotecarest.dto.PrestamoDTO;
 import es.iespuertodelacruz.daniel.bibliotecarest.dto.ClienteDTO;
@@ -45,7 +46,11 @@ public class ClienteREST {
 	@GetMapping
 	public ResponseEntity<?> getAll(){
 		List<Cliente> l = (List<Cliente>) clienteService.findAll();
-		return new ResponseEntity<>(l, HttpStatus.OK);
+		List<ClienteGET> clientes = new ArrayList<>();
+		for (Cliente cliente : l) {
+			clientes.add(new ClienteGET(cliente));
+		}
+		return new ResponseEntity<>(clientes, HttpStatus.OK);
 	}
 	
 
@@ -70,7 +75,7 @@ public class ClienteREST {
 		
 		Optional<Cliente> optCliente = clienteService.findById(id);
 		if(optCliente.isPresent()) {
-			return ResponseEntity.ok(optCliente.get());
+			return ResponseEntity.ok(new ClienteGET(optCliente.get()));
 		}else {
 			return ResponseEntity.notFound().build();
 		}
