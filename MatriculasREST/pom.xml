@@ -11,7 +11,7 @@
 	<groupId>es.iespuertodelacruz.daniel</groupId>
 	<artifactId>MatriculasREST</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<packaging>war</packaging>
+	<packaging>jar</packaging>
 	<name>MatriculasREST</name>
 	<description>REST project to work with Instituto.db</description>
 	<properties>
