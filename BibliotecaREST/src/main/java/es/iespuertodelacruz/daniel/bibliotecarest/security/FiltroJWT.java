@@ -20,64 +20,54 @@ import org.springframework.web.filter.OncePerRequestFilter;
 
 import io.jsonwebtoken.Claims;
 
-public class FiltroJWT extends OncePerRequestFilter{
-	
+public class FiltroJWT extends OncePerRequestFilter {
+
 	private static final Logger logger = LoggerFactory.getLogger(FiltroJWT.class);
+
 	@Override
 	protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
 			throws ServletException, IOException {
-		
+
 		GestorDeJWT gestorDeJWT = GestorDeJWT.getInstance();
 		String token = null;
-		try{
-			token = request
-					.getHeader(gestorDeJWT.AUTHORIZATIONHEADER)
-					.replace(gestorDeJWT.BEARERPREFIX, "");
-			
+		try {
+			token = request.getHeader(gestorDeJWT.AUTHORIZATIONHEADER).replace(gestorDeJWT.BEARERPREFIX, "");
+
 			logger.info(token);
 			Claims claims = gestorDeJWT.getClaims(token);
-			
-			
+
 			if (claims.get(gestorDeJWT.ROLSCLAIMS) != null) {
 				setUpSpringAuthentication(claims);
 			} else {
 				SecurityContextHolder.clearContext();
-				
-			}		
 
-		
-		}catch(Exception ex) {
-			//únicamente para debug.Luego comentar o quitar el printStackTrace()
+			}
+
+		} catch (Exception ex) {
+			// únicamente para debug.Luego comentar o quitar el printStackTrace()
 			ex.printStackTrace();
 			SecurityContextHolder.clearContext();
 
-			
 		}
 		filterChain.doFilter(request, response);
-		
+
 	}
-	
+
 	private void setUpSpringAuthentication(Claims claims) {
 		GestorDeJWT gestorDeJWT = GestorDeJWT.getInstance();
 		@SuppressWarnings("unchecked")
 		List<String> authorities = (List) claims.get(gestorDeJWT.ROLSCLAIMS);
 
-		//la password no es importante
-		//lo único que se usará es el nombre del usuario
-		//y sus roles ( que viene todo en el token y no 
-		//precisa consulta adicional a DDBB )
-		UserDetails usuario = new User(claims.getSubject(), "1234", authorities.stream()
-				.map(SimpleGrantedAuthority::new)
-				.collect(Collectors.toList())
-		);
-		
-		UsernamePasswordAuthenticationToken auth = 
-				new UsernamePasswordAuthenticationToken(
-						usuario, 
-						null,
-						usuario.getAuthorities()
-				);
-		
+		// la password no es importante
+		// lo único que se usará es el nombre del usuario
+		// y sus roles ( que viene todo en el token y no
+		// precisa consulta adicional a DDBB )
+		UserDetails usuario = new User(claims.getSubject(), "1234",
+				authorities.stream().map(SimpleGrantedAuthority::new).collect(Collectors.toList()));
+
+		UsernamePasswordAuthenticationToken auth = new UsernamePasswordAuthenticationToken(usuario, null,
+				usuario.getAuthorities());
+
 		SecurityContextHolder.getContext().setAuthentication(auth);
-	}	
+	}
 }

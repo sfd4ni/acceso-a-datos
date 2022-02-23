@@ -20,72 +20,57 @@ import org.springframework.web.bind.annotation.RestController;
 import es.iespuertodelacruz.daniel.bibliotecarest.entity.Operadore;
 import es.iespuertodelacruz.daniel.bibliotecarest.service.OperadorService;
 
-
-
-
-
 @RestController
 @RequestMapping("/api/v1/operador")
 public class OperadorREST {
-	//private Logger logger = (Logger) LoggerFactory.logger(getClass());
+	// private Logger logger = (Logger) LoggerFactory.logger(getClass());
 	@Autowired
 	OperadorService operadorService;
-	
 
 	@GetMapping
-	public ResponseEntity<?> getAll(){
+	public ResponseEntity<?> getAll() {
 		List<Operadore> l = (List<Operadore>) operadorService.findAll();
 		return new ResponseEntity<>(l, HttpStatus.OK);
 	}
-	
 
 	@DeleteMapping("/{id}")
-	public ResponseEntity<?> delete(
-			@PathVariable Integer id
-			) {
+	public ResponseEntity<?> delete(@PathVariable Integer id) {
 		Optional<Operadore> optM = operadorService.findById(id);
-		if(optM.isPresent()) {
+		if (optM.isPresent()) {
 			operadorService.deleteById(id);
 			return ResponseEntity.ok("operador borrada");
-		}else {
+		} else {
 			return ResponseEntity.status(HttpStatus.NOT_FOUND).body("el id del registro no existe");
 		}
 
 	}
-	
+
 	@GetMapping("/{id}")
-	public ResponseEntity<?> getOperadorById(
-			@PathVariable("id") Integer id
-			) {
-		
+	public ResponseEntity<?> getOperadorById(@PathVariable("id") Integer id) {
+
 		Optional<Operadore> optOperadore = operadorService.findById(id);
-		if(optOperadore.isPresent()) {
+		if (optOperadore.isPresent()) {
 			return ResponseEntity.ok(optOperadore.get());
-		}else {
+		} else {
 			return ResponseEntity.notFound().build();
 		}
 	}
-	
 
 	@PutMapping("/{id}")
-	public ResponseEntity<?> update(
-			@PathVariable Integer id,
-			@RequestBody Operadore operadorIn){
+	public ResponseEntity<?> update(@PathVariable Integer id, @RequestBody Operadore operadorIn) {
 		Optional<Operadore> optOp = operadorService.findById(id);
-		if(optOp.isPresent()) {
+		if (optOp.isPresent()) {
 			Operadore operador = optOp.get();
 			operador.setNick(operadorIn.getNick());
 			operador.setPassword(BCrypt.hashpw(operadorIn.getPassword(), BCrypt.gensalt(10)));
 			return ResponseEntity.ok(operadorService.save(operador));
-		}else {
-			return
-			ResponseEntity.status(HttpStatus.BAD_REQUEST).body("el id del registro no existe");
+		} else {
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("el id del registro no existe");
 		}
 	}
-	
+
 	@PostMapping
-	public ResponseEntity<?> saveOperador(
-			@RequestBody Operadore operadorDto) {
+	public ResponseEntity<?> saveOperador(@RequestBody Operadore operadorDto) {
 		Operadore operador = new Operadore();
 		operador.setNick(operadorDto.getNick());
 		operador.setPassword(BCrypt.hashpw(operadorDto.getPassword(), BCrypt.gensalt(10)));
@@ -100,7 +85,6 @@ public class OperadorREST {
 		} else {
 			return new ResponseEntity<>("Ya existe esa combinación de valores (Nick, Password)", HttpStatus.CONFLICT);
 		}
-		
+
 	}
 }
-

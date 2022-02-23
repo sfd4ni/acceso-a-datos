@@ -4,19 +4,18 @@ import java.io.Serializable;
 import javax.persistence.*;
 import java.util.List;
 
-
 /**
  * The persistent class for the clientes database table.
  * 
  */
 @Entity
-@Table(name="clientes")
-@NamedQuery(name="Cliente.findAll", query="SELECT c FROM Cliente c")
+@Table(name = "clientes")
+@NamedQuery(name = "Cliente.findAll", query = "SELECT c FROM Cliente c")
 public class Cliente implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int clienteid;
 
 	private String apellidos;
@@ -25,8 +24,8 @@ public class Cliente implements Serializable {
 
 	private String nombre;
 
-	//bi-directional many-to-one association to Prestamo
-	@OneToMany(mappedBy="cliente")
+	// bi-directional many-to-one association to Prestamo
+	@OneToMany(mappedBy = "cliente")
 	private List<Prestamo> prestamos;
 
 	public Cliente() {

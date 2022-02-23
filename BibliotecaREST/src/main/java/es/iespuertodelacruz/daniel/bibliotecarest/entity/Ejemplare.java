@@ -7,32 +7,31 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import java.util.List;
 
-
 /**
  * The persistent class for the ejemplares database table.
  * 
  */
 @Entity
-@Table(name="ejemplares")
-@NamedQuery(name="Ejemplare.findAll", query="SELECT e FROM Ejemplare e")
+@Table(name = "ejemplares")
+@NamedQuery(name = "Ejemplare.findAll", query = "SELECT e FROM Ejemplare e")
 public class Ejemplare implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int ejemplarid;
 
 	private String localizacion;
 
 	@JsonIgnore
-	//bi-directional many-to-one association to Libro
+	// bi-directional many-to-one association to Libro
 	@ManyToOne
-	@JoinColumn(name="fklibroid")
+	@JoinColumn(name = "fklibroid")
 	private Libro libro;
 
 	@JsonIgnore
-	//bi-directional many-to-one association to Prestamo
-	@OneToMany(mappedBy="ejemplare")
+	// bi-directional many-to-one association to Prestamo
+	@OneToMany(mappedBy = "ejemplare")
 	private List<Prestamo> prestamos;
 
 	public Ejemplare() {

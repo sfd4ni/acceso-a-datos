@@ -8,41 +8,41 @@ interface IProps {
 }
 
 export const EjemplarComponent = (props: IProps) => {
-    const [pulsado, setPulsado] = React.useState(false);
-    const { ejemplar } = props;
-    const { libroid } = useParams();
-    const ip = "localhost";
-    const puerto = 8080  ;
-    const rutaBase = "http://" + ip + ":" + puerto + "/api/v1/libro/" + libroid + "/ejemplar/";
-    const navigate = useNavigate();
+  const [pulsado, setPulsado] = React.useState(false);
+  const { ejemplar } = props;
+  const { libroid } = useParams();
+  const ip = "localhost";
+  const puerto = 8080;
+  const rutaBase = "http://" + ip + ":" + puerto + "/api/v1/libro/" + libroid + "/ejemplar/";
+  const navigate = useNavigate();
 
-    const token = localStorage.getItem("token") as string;
-    const headers = {
-      headers: { Authorization: token }
-    };
+  const token = localStorage.getItem("token") as string;
+  const headers = {
+    headers: { Authorization: token }
+  };
 
-    React.useEffect(() => {
-        const eliminarEjemplar = async (id: string | undefined) =>{
-            if (pulsado) {
-                console.log(rutaBase + id);
-                await axios.delete(rutaBase + id, headers)
-                .then(function (response) {
-                  navigate(-1);
-                  })
-                  .catch(function (error) {
-                      console.log(error);
-                });
-            }
-        }
-        eliminarEjemplar(ejemplar.ejemplarid+"");
-    }, [pulsado]);
-    function eliminarEjemplar(event: React.MouseEvent<HTMLButtonElement>) {
-        event.preventDefault();
-        setPulsado(true);
+  React.useEffect(() => {
+    const eliminarEjemplar = async (id: string | undefined) => {
+      if (pulsado) {
+        console.log(rutaBase + id);
+        await axios.delete(rutaBase + id, headers)
+          .then(function (response) {
+            navigate(-1);
+          })
+          .catch(function (error) {
+            console.log(error);
+          });
+      }
     }
-    function modificarEjemplar(event: React.MouseEvent<HTMLButtonElement>) {
-      event.preventDefault();
-      navigate('put/');
+    eliminarEjemplar(ejemplar.ejemplarid + "");
+  }, [pulsado]);
+  function eliminarEjemplar(event: React.MouseEvent<HTMLButtonElement>) {
+    event.preventDefault();
+    setPulsado(true);
+  }
+  function modificarEjemplar(event: React.MouseEvent<HTMLButtonElement>) {
+    event.preventDefault();
+    navigate('put/');
   }
   return (
     <>
@@ -52,5 +52,5 @@ export const EjemplarComponent = (props: IProps) => {
       <button onClick={eliminarEjemplar}>Eliminar</button>
       <button onClick={modificarEjemplar}>Modificar</button>
     </>
-    );
-  }
+  );
+}

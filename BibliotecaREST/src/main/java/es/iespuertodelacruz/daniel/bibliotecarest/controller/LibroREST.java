@@ -28,54 +28,47 @@ import es.iespuertodelacruz.daniel.bibliotecarest.service.LibroService;
 @RestController
 @RequestMapping("/api/v1/libro")
 public class LibroREST {
-	//private Logger logger = (Logger) LoggerFactory.logger(getClass());
+	// private Logger logger = (Logger) LoggerFactory.logger(getClass());
 	@Autowired
 	LibroService libroService;
 	@Autowired
 	AutorService autorService;
 	@Autowired
 	EjemplarService ejemplarService;
+
 	@GetMapping
-	public ResponseEntity<?> getAll(){
+	public ResponseEntity<?> getAll() {
 		List<Libro> l = (List<Libro>) libroService.findAll();
 		return new ResponseEntity<>(l, HttpStatus.OK);
 	}
-	
 
 	@DeleteMapping("/{id}")
-	public ResponseEntity<?> delete(
-			@PathVariable Integer id
-			) {
+	public ResponseEntity<?> delete(@PathVariable Integer id) {
 		Optional<Libro> optM = libroService.findById(id);
-		if(optM.isPresent()) {
+		if (optM.isPresent()) {
 			libroService.deleteById(id);
 			return ResponseEntity.ok("libro borrada");
-		}else {
+		} else {
 			return ResponseEntity.status(HttpStatus.NOT_FOUND).body("el id del registro no existe");
 		}
 
 	}
-	
+
 	@GetMapping("/{id}")
-	public ResponseEntity<?> getLibroById(
-			@PathVariable("id") Integer id
-			) {
-		
+	public ResponseEntity<?> getLibroById(@PathVariable("id") Integer id) {
+
 		Optional<Libro> optLibro = libroService.findById(id);
-		if(optLibro.isPresent()) {
+		if (optLibro.isPresent()) {
 			return ResponseEntity.ok(optLibro.get());
-		}else {
+		} else {
 			return ResponseEntity.notFound().build();
 		}
 	}
-	
 
 	@PutMapping("/{id}")
-	public ResponseEntity<?> update(
-			@PathVariable Integer id,
-			@RequestBody LibroDTO libroIn){
+	public ResponseEntity<?> update(@PathVariable Integer id, @RequestBody LibroDTO libroIn) {
 		Optional<Libro> optOp = libroService.findById(id);
-		if(optOp.isPresent()) {
+		if (optOp.isPresent()) {
 			Libro libro = optOp.get();
 			libro.setEditorial(libroIn.getEditorial());
 			libro.setTitulo(libroIn.getTitulo());
@@ -89,17 +82,15 @@ public class LibroREST {
 				}
 			}
 			libro.setAutores(autores);
-			
+
 			return ResponseEntity.ok(libroService.save(libro));
-		}else {
-			return
-			ResponseEntity.status(HttpStatus.BAD_REQUEST).body("el id del registro no existe");
+		} else {
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("el id del registro no existe");
 		}
 	}
-	
+
 	@PostMapping
-	public ResponseEntity<?> saveLibro(
-			@RequestBody Libro libroDto) {
+	public ResponseEntity<?> saveLibro(@RequestBody Libro libroDto) {
 		Libro libro = new Libro();
 		libro.setEditorial(libroDto.getEditorial());
 		libro.setTitulo(libroDto.getTitulo());
@@ -124,17 +115,13 @@ public class LibroREST {
 		} else {
 			return new ResponseEntity<>("Ya existe esa combinación de valores (Nick, Password)", HttpStatus.CONFLICT);
 		}
-		
+
 	}
-	
 
 	@DeleteMapping("/{idLib}/ejemplar/{idEjem}")
-	public ResponseEntity<?> deleteEjemplar(
-			@PathVariable Integer idLib,
-			@PathVariable Integer idEjem
-			) {
+	public ResponseEntity<?> deleteEjemplar(@PathVariable Integer idLib, @PathVariable Integer idEjem) {
 		Optional<Libro> optM = libroService.findById(idLib);
-		if(optM.isPresent()) {
+		if (optM.isPresent()) {
 			Optional<Ejemplare> optMatr = ejemplarService.findById(idEjem);
 			if (optMatr.isPresent()) {
 				ejemplarService.deleteById(idEjem);
@@ -142,62 +129,52 @@ public class LibroREST {
 			} else {
 				return ResponseEntity.status(HttpStatus.NOT_FOUND).body("el id de matricula no existe en el alumno");
 			}
-		}else {
+		} else {
 			return ResponseEntity.status(HttpStatus.NOT_FOUND).body("el id del alumno no existe");
 		}
 
 	}
-	
+
 	@GetMapping("/{idLib}/ejemplar/{idEjem}")
-	public ResponseEntity<?> getEjemplarById(
-			@PathVariable Integer idLib,
-			@PathVariable Integer idEjem
-			) {
-		
+	public ResponseEntity<?> getEjemplarById(@PathVariable Integer idLib, @PathVariable Integer idEjem) {
+
 		Optional<Libro> optM = libroService.findById(idLib);
-		if(optM.isPresent()) {
+		if (optM.isPresent()) {
 			Optional<Ejemplare> optMatr = ejemplarService.findById(idEjem);
 			if (optMatr.isPresent()) {
 				return ResponseEntity.ok(optMatr.get());
 			} else {
 				return ResponseEntity.status(HttpStatus.NOT_FOUND).body("el id de ejemplar no existe en el libro");
 			}
-		}else {
+		} else {
 			return ResponseEntity.status(HttpStatus.NOT_FOUND).body("el id del libro no existe");
 		}
 	}
-	
 
 	@PutMapping("/{idLib}/ejemplar/{idEjem}")
-	public ResponseEntity<?> updateEjemplar(
-			@PathVariable Integer idLib,
-			@PathVariable Integer idEjem,
-			@RequestBody EjemplarDTO ejemplarIn){
+	public ResponseEntity<?> updateEjemplar(@PathVariable Integer idLib, @PathVariable Integer idEjem,
+			@RequestBody EjemplarDTO ejemplarIn) {
 		Optional<Libro> optOp = libroService.findById(idLib);
-		if(optOp.isPresent()) {
+		if (optOp.isPresent()) {
 			Optional<Ejemplare> optEjem = ejemplarService.findById(idEjem);
-			if(optEjem.isPresent()) {
+			if (optEjem.isPresent()) {
 				Ejemplare ejemplar = optEjem.get();
 				ejemplar.setLocalizacion(ejemplarIn.getLocalizacion());
-				
+
 				return ResponseEntity.ok(ejemplarService.save(ejemplar));
 			} else {
-				return
-						ResponseEntity.status(HttpStatus.BAD_REQUEST).body("el id del ejemplar no existe");
+				return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("el id del ejemplar no existe");
 			}
-			
-		}else {
-			return
-			ResponseEntity.status(HttpStatus.BAD_REQUEST).body("el id del registro no existe");
+
+		} else {
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("el id del registro no existe");
 		}
 	}
-	
+
 	@PostMapping("/{idLib}/ejemplar")
-	public ResponseEntity<?> saveEjemplar(
-			@PathVariable Integer idLib,
-			@RequestBody EjemplarDTO ejemplarDto) {
+	public ResponseEntity<?> saveEjemplar(@PathVariable Integer idLib, @RequestBody EjemplarDTO ejemplarDto) {
 		Optional<Libro> optOp = libroService.findById(idLib);
-		if(optOp.isPresent()) {
+		if (optOp.isPresent()) {
 			Ejemplare ejemplar = new Ejemplare();
 			ejemplar.setLibro(optOp.get());
 			ejemplar.setLocalizacion(ejemplarDto.getLocalizacion());
@@ -210,12 +187,12 @@ public class LibroREST {
 			if (ejemplarC != null) {
 				return new ResponseEntity<>(ejemplarC, HttpStatus.OK);
 			} else {
-				return new ResponseEntity<>("Ya existe esa combinación de valores (Nick, Password)", HttpStatus.CONFLICT);
+				return new ResponseEntity<>("Ya existe esa combinación de valores (Nick, Password)",
+						HttpStatus.CONFLICT);
 			}
 		} else {
-			return
-			ResponseEntity.status(HttpStatus.BAD_REQUEST).body("el id del libro no existe");
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("el id del libro no existe");
 		}
-		
+
 	}
 }

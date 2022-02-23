@@ -7,19 +7,18 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import java.util.List;
 
-
 /**
  * The persistent class for the autores database table.
  * 
  */
 @Entity
-@Table(name="autores")
-@NamedQuery(name="Autor.findAll", query="SELECT a FROM Autor a")
+@Table(name = "autores")
+@NamedQuery(name = "Autor.findAll", query = "SELECT a FROM Autor a")
 public class Autor implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int autorid;
 
 	private String apellidos;
@@ -29,13 +28,7 @@ public class Autor implements Serializable {
 	private String nombre;
 
 	@JsonIgnore
-	//bi-directional many-to-many association to Libro
-	/*@ManyToMany
-	@JoinTable( name="autor_libro",
-	joinColumns = @JoinColumn(name="fkautorid"),
-	inverseJoinColumns = @JoinColumn(name="fklibroid")
-	)*/
-	@ManyToMany(mappedBy="autores")
+	@ManyToMany(mappedBy = "autores")
 	private List<Libro> libros;
 
 	public Autor() {

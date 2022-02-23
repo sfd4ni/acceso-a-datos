@@ -7,35 +7,31 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import java.util.List;
 
-
 /**
  * The persistent class for the libros database table.
  * 
  */
 @Entity
-@Table(name="libros")
-@NamedQuery(name="Libro.findAll", query="SELECT l FROM Libro l")
+@Table(name = "libros")
+@NamedQuery(name = "Libro.findAll", query = "SELECT l FROM Libro l")
 public class Libro implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int libroid;
 
 	private String editorial;
 
 	private String titulo;
 
-	
-	//bi-directional many-to-one association to Ejemplare
-	@OneToMany(mappedBy="libro")
+	// bi-directional many-to-one association to Ejemplare
+	@OneToMany(mappedBy = "libro")
 	private List<Ejemplare> ejemplares;
 
-	//bi-directional many-to-many association to Autor
+	// bi-directional many-to-many association to Autor
 	@ManyToMany
-	@JoinTable( name="autor_libro",
-	joinColumns = @JoinColumn(name="fklibroid"),
-	inverseJoinColumns = @JoinColumn(name="fkautorid"))
+	@JoinTable(name = "autor_libro", joinColumns = @JoinColumn(name = "fklibroid"), inverseJoinColumns = @JoinColumn(name = "fkautorid"))
 	private List<Autor> autores;
 
 	public Libro() {

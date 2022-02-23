@@ -10,30 +10,30 @@ interface IState {
 export const AutorGet = () => {
     const ip = "localhost";
     const puerto = 8080;
-    
-    const [state, setstate] = React.useState<IState>({autor: new Autor(0, "", "", "")});
+
+    const [state, setstate] = React.useState<IState>({ autor: new Autor(0, "", "", "") });
     const rutaBase = "http://" + ip + ":" + puerto + "/api/v1/autor/";
     const { autorid } = useParams();
-    
-    
+
+
     const navigate = useNavigate();
 
     const token = localStorage.getItem("token") as string;
     const headers = {
-      headers: { Authorization: token }
+        headers: { Authorization: token }
     };
 
     React.useEffect(() => {
-        const getAutor = async (id: string | undefined) =>{
+        const getAutor = async (id: string | undefined) => {
             let { data } = await axios.get(rutaBase + id, headers);
-            setstate({autor: data});
-            }
+            setstate({ autor: data });
+        }
         getAutor(autorid);
     }, [autorid]);
     return (
         <>
             <div>
-              <AutorComponent autor={state.autor}/>
+                <AutorComponent autor={state.autor} />
             </div>
         </>
     );

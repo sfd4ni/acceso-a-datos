@@ -10,30 +10,30 @@ interface IState {
 export const ClienteGet = () => {
     const ip = "localhost";
     const puerto = 8080;
-    
-    const [state, setstate] = React.useState<IState>({cliente: new Cliente(0, "", "", "", [])});
+
+    const [state, setstate] = React.useState<IState>({ cliente: new Cliente(0, "", "", "", []) });
     const rutaBase = "http://" + ip + ":" + puerto + "/api/v1/cliente/";
     const { clienteid } = useParams();
-    
-    
+
+
     const navigate = useNavigate();
 
     const token = localStorage.getItem("token") as string;
     const headers = {
-      headers: { Authorization: token }
+        headers: { Authorization: token }
     };
 
     React.useEffect(() => {
-        const getCliente = async (id: string | undefined) =>{
+        const getCliente = async (id: string | undefined) => {
             let { data } = await axios.get(rutaBase + id, headers);
-            setstate({cliente: data});
-            }
+            setstate({ cliente: data });
+        }
         getCliente(clienteid);
     }, [clienteid]);
     return (
         <>
             <div>
-              <ClienteComponent cliente={state.cliente}/>
+                <ClienteComponent cliente={state.cliente} />
             </div>
         </>
     );

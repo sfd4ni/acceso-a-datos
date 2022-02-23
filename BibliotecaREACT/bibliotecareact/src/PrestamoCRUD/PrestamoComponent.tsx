@@ -10,8 +10,8 @@ export const PrestamoComponent = (props: IProps) => {
   const [pulsado, setPulsado] = React.useState(false);
   const { prestamo } = props;
   const ip = "localhost";
-  const puerto = 8080  ;
-  const {clienteid} = useParams();
+  const puerto = 8080;
+  const { clienteid } = useParams();
   const rutaBase = "http://" + ip + ":" + puerto + "/api/v1/cliente/" + clienteid + "/prestamo/";
   const token = localStorage.getItem("token") as string;
   const headers = {
@@ -22,45 +22,45 @@ export const PrestamoComponent = (props: IProps) => {
 
   const navigate = useNavigate();
   React.useEffect(() => {
-      const eliminarPrestamo = async (id: string | undefined) =>{
-          if (pulsado) {
-              console.log(rutaBase + id, headers);
-              await axios.delete(rutaBase + id, headers)
-              .then(function (response) {
-                navigate(-1);
-                })
-                .catch(function (error) {
-                    console.log(error);
-              });
-          }
+    const eliminarPrestamo = async (id: string | undefined) => {
+      if (pulsado) {
+        console.log(rutaBase + id, headers);
+        await axios.delete(rutaBase + id, headers)
+          .then(function (response) {
+            navigate(-1);
+          })
+          .catch(function (error) {
+            console.log(error);
+          });
       }
-      eliminarPrestamo(prestamo.prestamoid+"");
+    }
+    eliminarPrestamo(prestamo.prestamoid + "");
   }, [pulsado]);
   function eliminarPrestamo(event: React.MouseEvent<HTMLButtonElement>) {
-      event.preventDefault();
-      setPulsado(true);
+    event.preventDefault();
+    setPulsado(true);
   }
   function modificarPrestamo(event: React.MouseEvent<HTMLButtonElement>) {
     event.preventDefault();
     localStorage.removeItem("ejemplarid");
-    localStorage.setItem("ejemplarid",prestamo.ejemplar.ejemplarid+"");
+    localStorage.setItem("ejemplarid", prestamo.ejemplar.ejemplarid + "");
     localStorage.removeItem("fechaDevolucionMod");
-    localStorage.setItem("fechaDevolucionMod",prestamo.fechadevolucion.toString());
+    localStorage.setItem("fechaDevolucionMod", prestamo.fechadevolucion.toString());
     navigate('put/');
-}
-return (
-  <>
-    
-    <div>
-      <h3>Ejemplar {prestamo.ejemplar.localizacion}</h3>
-      <h4>Fecha devolución: {
-      (prestamo.fechadevolucion !== null) ? 
-      prestamo.fechadevolucion.toString() :
-      "Indefinida"}</h4>
-      <h4>Fecha prestamo: {prestamo.fechaprestamo.toString()}</h4>
-    </div>
-    <button onClick={eliminarPrestamo}>Eliminar</button>
-    <button onClick={modificarPrestamo}>Modificar</button>
-  </>
+  }
+  return (
+    <>
+
+      <div>
+        <h3>Ejemplar {prestamo.ejemplar.localizacion}</h3>
+        <h4>Fecha devolución: {
+          (prestamo.fechadevolucion !== null) ?
+            prestamo.fechadevolucion.toString() :
+            "Indefinida"}</h4>
+        <h4>Fecha prestamo: {prestamo.fechaprestamo.toString()}</h4>
+      </div>
+      <button onClick={eliminarPrestamo}>Eliminar</button>
+      <button onClick={modificarPrestamo}>Modificar</button>
+    </>
   );
 }

@@ -2,8 +2,6 @@ package es.iespuertodelacruz.daniel.bibliotecarest.dto;
 
 import java.util.List;
 
-
-
 import es.iespuertodelacruz.daniel.bibliotecarest.entity.Autor;
 import es.iespuertodelacruz.daniel.bibliotecarest.entity.Ejemplare;
 import es.iespuertodelacruz.daniel.bibliotecarest.entity.Libro;
@@ -14,10 +12,10 @@ public class LibroDTO {
 	private String titulo;
 
 	private List<Autor> autores;
-	
-	
-	public LibroDTO() {}
-	
+
+	public LibroDTO() {
+	}
+
 	public LibroDTO(Libro libro) {
 		this.editorial = libro.getEditorial();
 		this.titulo = libro.getTitulo();
@@ -47,5 +45,5 @@ public class LibroDTO {
 	public void setAutores(List<Autor> autores) {
 		this.autores = autores;
 	}
-	
+
 }

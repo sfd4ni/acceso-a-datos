@@ -13,9 +13,9 @@ import es.iespuertodelacruz.daniel.bibliotecarest.entity.Ejemplare;
 import es.iespuertodelacruz.daniel.bibliotecarest.entity.Prestamo;
 
 public class PrestamoDTO {
-	
+
 	private int prestamoid;
-	
+
 	private Ejemplare ejemplar;
 	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
 	private Date fechaprestamo;
@@ -23,25 +23,23 @@ public class PrestamoDTO {
 	private Date fechadevolucion;
 
 	public PrestamoDTO() {
-		
+
 	}
-	
+
 	public PrestamoDTO(Prestamo prestamo) {
-		this.prestamoid = prestamo.getPrestamoid(); 
+		this.prestamoid = prestamo.getPrestamoid();
 		this.ejemplar = prestamo.getEjemplare();
 		Date fechaprestamo = new Date(prestamo.getFechaprestamo().longValue());
 		if (prestamo.getFechaprestamo() != null) {
 			this.fechaprestamo = fechaprestamo;
 		}
-		
+
 		if (prestamo.getFechadevolucion() != null) {
 			Date fechadevolucion = new Date(prestamo.getFechadevolucion().longValue());
 			this.fechadevolucion = fechadevolucion;
 		}
-		
+
 	}
-	
-	
 
 	public int getPrestamoid() {
 		return prestamoid;
@@ -74,5 +72,5 @@ public class PrestamoDTO {
 	public void setFechadevolucion(Date fechadevolucion) {
 		this.fechadevolucion = fechadevolucion;
 	}
-	
+
 }

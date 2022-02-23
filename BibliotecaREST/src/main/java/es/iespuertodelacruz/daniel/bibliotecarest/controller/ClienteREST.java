@@ -35,7 +35,7 @@ import es.iespuertodelacruz.daniel.bibliotecarest.service.PrestamoService;
 @RestController
 @RequestMapping("/api/v1/cliente")
 public class ClienteREST {
-	//private Logger logger = (Logger) LoggerFactory.logger(getClass());
+	// private Logger logger = (Logger) LoggerFactory.logger(getClass());
 	@Autowired
 	ClienteService clienteService;
 	@Autowired
@@ -44,7 +44,7 @@ public class ClienteREST {
 	PrestamoService prestamoService;
 
 	@GetMapping
-	public ResponseEntity<?> getAll(){
+	public ResponseEntity<?> getAll() {
 		List<Cliente> l = (List<Cliente>) clienteService.findAll();
 		List<ClienteGET> clientes = new ArrayList<>();
 		for (Cliente cliente : l) {
@@ -52,56 +52,46 @@ public class ClienteREST {
 		}
 		return new ResponseEntity<>(clientes, HttpStatus.OK);
 	}
-	
 
 	@DeleteMapping("/{id}")
-	public ResponseEntity<?> delete(
-			@PathVariable Integer id
-			) {
+	public ResponseEntity<?> delete(@PathVariable Integer id) {
 		Optional<Cliente> optM = clienteService.findById(id);
-		if(optM.isPresent()) {
+		if (optM.isPresent()) {
 			clienteService.deleteById(id);
 			return ResponseEntity.ok("cliente borrada");
-		}else {
+		} else {
 			return ResponseEntity.status(HttpStatus.NOT_FOUND).body("el id del registro no existe");
 		}
 
 	}
-	
+
 	@GetMapping("/{id}")
-	public ResponseEntity<?> getClienteById(
-			@PathVariable("id") Integer id
-			) {
-		
+	public ResponseEntity<?> getClienteById(@PathVariable("id") Integer id) {
+
 		Optional<Cliente> optCliente = clienteService.findById(id);
-		if(optCliente.isPresent()) {
+		if (optCliente.isPresent()) {
 			return ResponseEntity.ok(new ClienteGET(optCliente.get()));
-		}else {
+		} else {
 			return ResponseEntity.notFound().build();
 		}
 	}
-	
 
 	@PutMapping("/{id}")
-	public ResponseEntity<?> update(
-			@PathVariable Integer id,
-			@RequestBody ClienteDTO clienteIn){
+	public ResponseEntity<?> update(@PathVariable Integer id, @RequestBody ClienteDTO clienteIn) {
 		Optional<Cliente> optOp = clienteService.findById(id);
-		if(optOp.isPresent()) {
+		if (optOp.isPresent()) {
 			Cliente cliente = optOp.get();
 			cliente.setNombre(clienteIn.getNombre());
 			cliente.setApellidos(clienteIn.getApellidos());
 			cliente.setDireccion(clienteIn.getDireccion());
 			return ResponseEntity.ok(clienteService.save(cliente));
-		}else {
-			return
-			ResponseEntity.status(HttpStatus.BAD_REQUEST).body("el id del registro no existe");
+		} else {
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("el id del registro no existe");
 		}
 	}
-	
+
 	@PostMapping
-	public ResponseEntity<?> saveCliente(
-			@RequestBody Cliente clienteDto) {
+	public ResponseEntity<?> saveCliente(@RequestBody Cliente clienteDto) {
 		Cliente cliente = new Cliente();
 		cliente.setNombre(clienteDto.getNombre());
 		cliente.setApellidos(clienteDto.getApellidos());
@@ -117,16 +107,13 @@ public class ClienteREST {
 		} else {
 			return new ResponseEntity<>("Ya existe esa combinación de valores (Nick, Password)", HttpStatus.CONFLICT);
 		}
-		
+
 	}
-	
+
 	@DeleteMapping("/{idCli}/prestamo/{idPrest}")
-	public ResponseEntity<?> deletePrestamo(
-			@PathVariable Integer idCli,
-			@PathVariable Integer idPrest
-			) {
+	public ResponseEntity<?> deletePrestamo(@PathVariable Integer idCli, @PathVariable Integer idPrest) {
 		Optional<Cliente> optM = clienteService.findById(idCli);
-		if(optM.isPresent()) {
+		if (optM.isPresent()) {
 			Optional<Prestamo> optMatr = prestamoService.findById(idPrest);
 			if (optMatr.isPresent()) {
 				prestamoService.deleteById(idPrest);
@@ -134,73 +121,63 @@ public class ClienteREST {
 			} else {
 				return ResponseEntity.status(HttpStatus.NOT_FOUND).body("el id de prestamo no existe en el ejemplar");
 			}
-		}else {
+		} else {
 			return ResponseEntity.status(HttpStatus.NOT_FOUND).body("el id del alumno no existe");
 		}
 
 	}
-	
+
 	@GetMapping("/{idCli}/prestamo/{idPrest}")
-	public ResponseEntity<?> getPrestamoById(
-			@PathVariable Integer idCli,
-			@PathVariable Integer idPrest
-			) {
-		
+	public ResponseEntity<?> getPrestamoById(@PathVariable Integer idCli, @PathVariable Integer idPrest) {
+
 		Optional<Cliente> optM = clienteService.findById(idCli);
-		if(optM.isPresent()) {
+		if (optM.isPresent()) {
 			Optional<Prestamo> optMatr = prestamoService.findById(idPrest);
 			if (optMatr.isPresent()) {
 				return ResponseEntity.ok(new PrestamoDTO(optMatr.get()));
 			} else {
 				return ResponseEntity.status(HttpStatus.NOT_FOUND).body("el id de ejemplar no existe en el cliente");
 			}
-		}else {
+		} else {
 			return ResponseEntity.status(HttpStatus.NOT_FOUND).body("el id del cliente no existe");
 		}
 	}
-	
 
 	@PutMapping("/{idCli}/prestamo/{idPrest}")
-	public ResponseEntity<?> updateEjemplar(
-			@PathVariable Integer idCli,
-			@PathVariable Integer idPrest,
-			@RequestBody PrestamoDTO prestamoDto){
+	public ResponseEntity<?> updateEjemplar(@PathVariable Integer idCli, @PathVariable Integer idPrest,
+			@RequestBody PrestamoDTO prestamoDto) {
 		Optional<Cliente> optOp = clienteService.findById(idCli);
-		if(optOp.isPresent()) {
+		if (optOp.isPresent()) {
 			Optional<Prestamo> optEjem = prestamoService.findById(idPrest);
-			if(optEjem.isPresent()) {
+			if (optEjem.isPresent()) {
 				Prestamo prestamo = optEjem.get();
 				if (prestamoDto.getFechadevolucion() != null) {
 					prestamo.setFechadevolucion(BigInteger.valueOf(prestamoDto.getFechadevolucion().getTime()));
 				}
-			
+
 				prestamo.setFechaprestamo(BigInteger.valueOf(prestamoDto.getFechaprestamo().getTime()));
 				prestamo.setEjemplare(prestamoDto.getEjemplar());
-				
+
 				return ResponseEntity.ok(prestamoService.save(prestamo));
 			} else {
-				return
-						ResponseEntity.status(HttpStatus.BAD_REQUEST).body("el id del prestamo no existe");
+				return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("el id del prestamo no existe");
 			}
-			
-		}else {
-			return
-			ResponseEntity.status(HttpStatus.BAD_REQUEST).body("el id del cliente no existe");
+
+		} else {
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("el id del cliente no existe");
 		}
 	}
-	
+
 	@PostMapping("/{idCli}/prestamo")
-	public ResponseEntity<?> savePrestamo(
-			@PathVariable Integer idCli,
-			@RequestBody PrestamoDTO prestamoDto) {
+	public ResponseEntity<?> savePrestamo(@PathVariable Integer idCli, @RequestBody PrestamoDTO prestamoDto) {
 		Optional<Cliente> optOp = clienteService.findById(idCli);
-		if(optOp.isPresent()) {
+		if (optOp.isPresent()) {
 			Prestamo prestamo = new Prestamo();
 			prestamo.setCliente(optOp.get());
 			if (prestamoDto.getFechadevolucion() != null) {
 				prestamo.setFechadevolucion(BigInteger.valueOf(prestamoDto.getFechadevolucion().getTime()));
 			}
-			
+
 			prestamo.setFechaprestamo(BigInteger.valueOf(prestamoDto.getFechaprestamo().getTime()));
 			prestamo.setEjemplare(prestamoDto.getEjemplar());
 			Prestamo prestamoC = null;
@@ -215,9 +192,8 @@ public class ClienteREST {
 				return new ResponseEntity<>("Error al guardar su nuevo prestamo.", HttpStatus.CONFLICT);
 			}
 		} else {
-			return
-			ResponseEntity.status(HttpStatus.BAD_REQUEST).body("el id del cliente no existe");
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("el id del cliente no existe");
 		}
-		
+
 	}
 }

@@ -7,40 +7,40 @@ interface IProps {
 }
 
 export const AutorComponent = (props: IProps) => {
-    const [pulsado, setPulsado] = React.useState(false);
-    const { autor } = props;
-    const ip = "localhost";
-    const puerto = 8080  ;
-    const rutaBase = "http://" + ip + ":" + puerto + "/api/v1/autor/";
-    const navigate = useNavigate();
+  const [pulsado, setPulsado] = React.useState(false);
+  const { autor } = props;
+  const ip = "localhost";
+  const puerto = 8080;
+  const rutaBase = "http://" + ip + ":" + puerto + "/api/v1/autor/";
+  const navigate = useNavigate();
 
-    const token = localStorage.getItem("token") as string;
-    const headers = {
-      headers: { Authorization: token }
-    };
+  const token = localStorage.getItem("token") as string;
+  const headers = {
+    headers: { Authorization: token }
+  };
 
-    React.useEffect(() => {
-        const eliminarAutor = async (id: string | undefined) =>{
-            if (pulsado) {
-                console.log(rutaBase + id);
-                await axios.delete(rutaBase + id, headers)
-                .then(function (response) {
-                  navigate(-1);
-                  })
-                  .catch(function (error) {
-                      console.log(error);
-                });
-            }
-        }
-        eliminarAutor(autor.autorid+"");
-    }, [pulsado]);
-    function eliminarAutor(event: React.MouseEvent<HTMLButtonElement>) {
-        event.preventDefault();
-        setPulsado(true);
+  React.useEffect(() => {
+    const eliminarAutor = async (id: string | undefined) => {
+      if (pulsado) {
+        console.log(rutaBase + id);
+        await axios.delete(rutaBase + id, headers)
+          .then(function (response) {
+            navigate(-1);
+          })
+          .catch(function (error) {
+            console.log(error);
+          });
+      }
     }
-    function modificarAutor(event: React.MouseEvent<HTMLButtonElement>) {
-      event.preventDefault();
-      navigate('put/');
+    eliminarAutor(autor.autorid + "");
+  }, [pulsado]);
+  function eliminarAutor(event: React.MouseEvent<HTMLButtonElement>) {
+    event.preventDefault();
+    setPulsado(true);
+  }
+  function modificarAutor(event: React.MouseEvent<HTMLButtonElement>) {
+    event.preventDefault();
+    navigate('put/');
   }
   return (
     <>
@@ -49,5 +49,5 @@ export const AutorComponent = (props: IProps) => {
       <button onClick={eliminarAutor}>Eliminar</button>
       <button onClick={modificarAutor}>Modificar</button>
     </>
-    );
-  }
+  );
+}

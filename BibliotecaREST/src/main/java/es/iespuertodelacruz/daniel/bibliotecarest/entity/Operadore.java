@@ -3,19 +3,18 @@ package es.iespuertodelacruz.daniel.bibliotecarest.entity;
 import java.io.Serializable;
 import javax.persistence.*;
 
-
 /**
  * The persistent class for the operadores database table.
  * 
  */
 @Entity
-@Table(name="operadores")
-@NamedQuery(name="Operadore.findAll", query="SELECT o FROM Operadore o")
+@Table(name = "operadores")
+@NamedQuery(name = "Operadore.findAll", query = "SELECT o FROM Operadore o")
 public class Operadore implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int operadorid;
 
 	private String nick;

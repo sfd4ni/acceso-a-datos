@@ -3,15 +3,16 @@ package es.iespuertodelacruz.daniel.bibliotecarest.dto;
 import es.iespuertodelacruz.daniel.bibliotecarest.entity.Cliente;
 
 public class ClienteDTO {
-	
+
 	private String apellidos;
 
 	private String direccion;
 
 	private String nombre;
-	
-	public ClienteDTO() {}
-	
+
+	public ClienteDTO() {
+	}
+
 	public ClienteDTO(Cliente cliente) {
 		this.apellidos = cliente.getApellidos();
 		this.direccion = cliente.getDireccion();
@@ -41,6 +42,5 @@ public class ClienteDTO {
 	public void setNombre(String nombre) {
 		this.nombre = nombre;
 	}
-	
-	
+
 }

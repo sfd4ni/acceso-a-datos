@@ -7,19 +7,20 @@ import es.iespuertodelacruz.daniel.bibliotecarest.entity.Cliente;
 import es.iespuertodelacruz.daniel.bibliotecarest.entity.Prestamo;
 
 public class ClienteGET {
-	
+
 	private int clienteid;
-	
+
 	private String apellidos;
 
 	private String direccion;
 
 	private String nombre;
-	
+
 	private List<PrestamoDTO> prestamos;
-	
-	public ClienteGET() {}
-	
+
+	public ClienteGET() {
+	}
+
 	public ClienteGET(Cliente cliente) {
 		this.clienteid = cliente.getClienteid();
 		this.apellidos = cliente.getApellidos();
@@ -70,6 +71,5 @@ public class ClienteGET {
 	public void setClienteid(int clienteid) {
 		this.clienteid = clienteid;
 	}
-	
-	
+
 }

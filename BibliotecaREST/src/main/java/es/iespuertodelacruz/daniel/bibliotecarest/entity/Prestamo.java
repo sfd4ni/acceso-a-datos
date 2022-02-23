@@ -7,19 +7,18 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import java.math.BigInteger;
 
-
 /**
  * The persistent class for the prestamos database table.
  * 
  */
 @Entity
-@Table(name="prestamos")
-@NamedQuery(name="Prestamo.findAll", query="SELECT p FROM Prestamo p")
+@Table(name = "prestamos")
+@NamedQuery(name = "Prestamo.findAll", query = "SELECT p FROM Prestamo p")
 public class Prestamo implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int prestamoid;
 
 	private BigInteger fechadevolucion;
@@ -27,14 +26,14 @@ public class Prestamo implements Serializable {
 	private BigInteger fechaprestamo;
 
 	@JsonIgnore
-	//bi-directional many-to-one association to Cliente
+	// bi-directional many-to-one association to Cliente
 	@ManyToOne
-	@JoinColumn(name="fkclienteid")
+	@JoinColumn(name = "fkclienteid")
 	private Cliente cliente;
 
-	//bi-directional many-to-one association to Ejemplare
+	// bi-directional many-to-one association to Ejemplare
 	@ManyToOne
-	@JoinColumn(name="fkejemplarid")
+	@JoinColumn(name = "fkejemplarid")
 	private Ejemplare ejemplare;
 
 	public Prestamo() {

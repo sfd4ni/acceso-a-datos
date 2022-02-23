@@ -22,66 +22,55 @@ import es.iespuertodelacruz.daniel.bibliotecarest.service.AutorService;
 @RestController
 @RequestMapping("/api/v1/autor")
 public class AutorREST {
-	//private Logger logger = (Logger) LoggerFactory.logger(getClass());
+	// private Logger logger = (Logger) LoggerFactory.logger(getClass());
 	@Autowired
 	AutorService autorService;
-	
 
 	@GetMapping
-	public ResponseEntity<?> getAll(){
+	public ResponseEntity<?> getAll() {
 		List<Autor> l = (List<Autor>) autorService.findAll();
 		return new ResponseEntity<>(l, HttpStatus.OK);
 	}
-	
 
 	@DeleteMapping("/{id}")
-	public ResponseEntity<?> delete(
-			@PathVariable Integer id
-			) {
+	public ResponseEntity<?> delete(@PathVariable Integer id) {
 		Optional<Autor> optM = autorService.findById(id);
-		if(optM.isPresent()) {
+		if (optM.isPresent()) {
 			autorService.deleteById(id);
 			return ResponseEntity.ok("autor borrada");
-		}else {
+		} else {
 			return ResponseEntity.status(HttpStatus.NOT_FOUND).body("el id del registro no existe");
 		}
 
 	}
-	
+
 	@GetMapping("/{id}")
-	public ResponseEntity<?> getAutorById(
-			@PathVariable("id") Integer id
-			) {
-		
+	public ResponseEntity<?> getAutorById(@PathVariable("id") Integer id) {
+
 		Optional<Autor> optAutor = autorService.findById(id);
-		if(optAutor.isPresent()) {
+		if (optAutor.isPresent()) {
 			return ResponseEntity.ok(optAutor.get());
-		}else {
+		} else {
 			return ResponseEntity.notFound().build();
 		}
 	}
-	
 
 	@PutMapping("/{id}")
-	public ResponseEntity<?> update(
-			@PathVariable Integer id,
-			@RequestBody AutorDTO autorIn){
+	public ResponseEntity<?> update(@PathVariable Integer id, @RequestBody AutorDTO autorIn) {
 		Optional<Autor> optOp = autorService.findById(id);
-		if(optOp.isPresent()) {
+		if (optOp.isPresent()) {
 			Autor autor = optOp.get();
 			autor.setNombre(autorIn.getNombre());
 			autor.setApellidos(autorIn.getApellidos());
 			autor.setNacionalidad(autorIn.getNacionalidad());
 			return ResponseEntity.ok(autorService.save(autor));
-		}else {
-			return
-			ResponseEntity.status(HttpStatus.BAD_REQUEST).body("el id del registro no existe");
+		} else {
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("el id del registro no existe");
 		}
 	}
-	
+
 	@PostMapping
-	public ResponseEntity<?> saveAutor(
-			@RequestBody Autor autorDto) {
+	public ResponseEntity<?> saveAutor(@RequestBody Autor autorDto) {
 		Autor autor = new Autor();
 		autor.setNombre(autorDto.getNombre());
 		autor.setApellidos(autorDto.getApellidos());
@@ -97,6 +86,6 @@ public class AutorREST {
 		} else {
 			return new ResponseEntity<>("Ya existe esa combinación de valores (Nick, Password)", HttpStatus.CONFLICT);
 		}
-		
+
 	}
 }
