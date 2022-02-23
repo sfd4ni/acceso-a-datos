@@ -25,7 +25,7 @@ export const PrestamoComponent = (props: IProps) => {
       const eliminarPrestamo = async (id: string | undefined) =>{
           if (pulsado) {
               console.log(rutaBase + id, headers);
-              await axios.delete(rutaBase + id)
+              await axios.delete(rutaBase + id, headers)
               .then(function (response) {
                 navigate(-1);
                 })
@@ -42,6 +42,10 @@ export const PrestamoComponent = (props: IProps) => {
   }
   function modificarPrestamo(event: React.MouseEvent<HTMLButtonElement>) {
     event.preventDefault();
+    localStorage.removeItem("ejemplarid");
+    localStorage.setItem("ejemplarid",prestamo.ejemplar.ejemplarid+"");
+    localStorage.removeItem("fechaDevolucionMod");
+    localStorage.setItem("fechaDevolucionMod",prestamo.fechadevolucion.toString());
     navigate('put/');
 }
 return (

@@ -16,12 +16,15 @@ const direccioncliente = React.useRef<HTMLInputElement>(null);
 const apellidoscliente = React.useRef<HTMLInputElement>(null);
 const navigate = useNavigate();
 
-
+const token = localStorage.getItem("token") as string;
+const headers = {
+  headers: { Authorization: token }
+};
 const postClienteEffect = React.useEffect(() => {
     const postCliente = async (cliente: ClientePost) =>{
       if (cliente.nombre !== "" && cliente.direccion !== ""
       && cliente.apellidos !== "") {
-        await axios.post(rutaClientes, cliente)
+        await axios.post(rutaClientes, cliente, headers)
           .then(function (response) {
             navigate(-1);
             console.log(response);
@@ -44,6 +47,7 @@ const postCliente = (event: React.MouseEvent<HTMLButtonElement>) =>  {
         let cliente = new ClientePost(apellidosCliente, direccionCliente, nombreCliente);
         setStatePost({clientePost: cliente});
     }
+    
 }
 return (
     <>

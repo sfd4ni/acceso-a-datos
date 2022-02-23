@@ -172,26 +172,15 @@ public class LibroREST {
 	public ResponseEntity<?> updateEjemplar(
 			@PathVariable Integer idLib,
 			@PathVariable Integer idEjem,
-			@RequestBody LibroDTO libroIn){
+			@RequestBody EjemplarDTO ejemplarIn){
 		Optional<Libro> optOp = libroService.findById(idLib);
 		if(optOp.isPresent()) {
 			Optional<Ejemplare> optEjem = ejemplarService.findById(idEjem);
 			if(optEjem.isPresent()) {
-				Libro libro = optOp.get();
-				libro.setEditorial(libroIn.getEditorial());
-				libro.setTitulo(libroIn.getTitulo());
-				List<Autor> autores = new ArrayList<>();
-				if (libroIn.getAutores() != null) {
-					for (Autor autor : libroIn.getAutores()) {
-						Optional<Autor> optAutor = autorService.findById(autor.getAutorid());
-						if (optAutor.isPresent()) {
-							autores.add(optAutor.get());
-						}
-					}
-				}
-				libro.setAutores(autores);
+				Ejemplare ejemplar = optEjem.get();
+				ejemplar.setLocalizacion(ejemplarIn.getLocalizacion());
 				
-				return ResponseEntity.ok(libroService.save(libro));
+				return ResponseEntity.ok(ejemplarService.save(ejemplar));
 			} else {
 				return
 						ResponseEntity.status(HttpStatus.BAD_REQUEST).body("el id del ejemplar no existe");

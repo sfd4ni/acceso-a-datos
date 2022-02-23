@@ -22,7 +22,7 @@ const postOperadorEffect = React.useEffect(() => {
           .then(function (response) {
             localStorage.clear();
             localStorage.setItem("token",response.data)
-            navigate('/clientes');
+            navigate('/cliente');
             console.log(response.data);
           })
           .catch(function (error) {

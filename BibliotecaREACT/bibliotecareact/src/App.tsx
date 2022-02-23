@@ -14,30 +14,20 @@ import { PrestamoAdd } from './PrestamoCRUD/PrestamoAdd';
 import { LibroAdd } from './LibroCRUD/LibroAdd';
 import AutorGetAll from './AutorCRUD/AutorGetAll';
 import { AutorGet } from './AutorCRUD/AutorGet';
+import { AutorAdd } from './AutorCRUD/AutorAdd';
+import { RequireAuth } from './RequireAuth';
+import { Logout } from './logout';
+import { AutorPut } from './AutorCRUD/AutorPut';
+import { EjemplarPut } from './EjemplarCRUD/EjemplarPut';
+import { LibroPut } from './LibroCRUD/LibroPut';
+import { PrestamoPut } from './PrestamoCRUD/PrestamoPut';
+import { ClientePut } from './ClienteCRUD/ClientePut';
 interface IProps { }
 interface IState { alumnos: [] }
 class App extends React.Component<IProps, IState>{
-    ip: string;
-    puerto: number;
-    rutaBase: string;
-    rutaAlumnos: string;
     constructor(props: IProps) {
         super(props);
-        this.state = {
-            alumnos: []
-        };
-        this.ip = "localhost";
-        this.puerto = 8080;
-        this.rutaBase = "http://" + this.ip + ":" + this.puerto + "/api/v1";
-        this.rutaAlumnos = this.rutaBase + "/cliente";
     }
-
-    public async componentDidMount() {
-        let ruta = this.rutaAlumnos;
-        let respuesta = await axios.get(ruta);
-        this.setState({ alumnos: respuesta.data });
-    }
-    
     render() {
         return (
             <BrowserRouter>
@@ -46,22 +36,29 @@ class App extends React.Component<IProps, IState>{
                     <Link to={'autor/'}>Autores</Link><br/>
                     <Link to={'libro/'}>Libros</Link><br/>
                     <Link to={'cliente/'}>Clientes</Link><br/>
+                    <Link to={'logout/'}>Logout</Link><br/>
                 </nav>
                 <Routes>
-                    <Route path="/" element={<Login/>}/>
                     <Route path="/login" element={<Login/>}/>
-                    <Route path="/cliente" element={<ClienteGetAll/>}/>
-                    <Route path="/cliente/add" element={<ClienteAdd/>}/>
-                    <Route path="/cliente/:clienteid" element={<ClienteGet/>}/>
-                    <Route path="/cliente/:clienteid/prestamo/:prestamoid" element={<PrestamoGet/>}/>
-                    <Route path="/cliente/:clienteid/prestamo/add" element={<PrestamoAdd/>}/>
-                    <Route path="/libro" element={<LibroGetAll/>}/>
-                    <Route path="/libro/add" element={<LibroAdd/>}/>
-                    <Route path="/libro/:libroid" element={<LibroGet/>}/>
-                    <Route path="/libro/:libroid/ejemplar/:ejemplarid" element={<EjemplarGet/>}/>
-                    <Route path="/libro/:libroid/ejemplar/add" element={<EjemplarAdd/>}/>
-                    <Route path="/autor" element={<AutorGetAll/>}/>
-                    <Route path="/autor/:autorid" element={<AutorGet/>}/>
+                    <Route path="/logout" element={<RequireAuth><Logout/></RequireAuth>}/>
+                    <Route path="/cliente" element={<RequireAuth><ClienteGetAll/></RequireAuth>}/>
+                    <Route path="/cliente/add" element={<RequireAuth><ClienteAdd/></RequireAuth>}/>
+                    <Route path="/cliente/:clienteid" element={<RequireAuth><ClienteGet/></RequireAuth>}/>
+                    <Route path="/cliente/:clienteid/put" element={<RequireAuth><ClientePut/></RequireAuth>}/>
+                    <Route path="/cliente/:clienteid/prestamo/:prestamoid" element={<RequireAuth><PrestamoGet/></RequireAuth>}/>
+                    <Route path="/cliente/:clienteid/prestamo/:prestamoid/put" element={<RequireAuth><PrestamoPut/></RequireAuth>}/>
+                    <Route path="/cliente/:clienteid/prestamo/add" element={<RequireAuth><PrestamoAdd/></RequireAuth>}/>
+                    <Route path="/libro" element={<RequireAuth><LibroGetAll/></RequireAuth>}/>
+                    <Route path="/libro/add" element={<RequireAuth><LibroAdd/></RequireAuth>}/>
+                    <Route path="/libro/:libroid" element={<RequireAuth><LibroGet/></RequireAuth>}/>
+                    <Route path="/libro/:libroid/put" element={<RequireAuth><LibroPut/></RequireAuth>}/>
+                    <Route path="/libro/:libroid/ejemplar/:ejemplarid" element={<RequireAuth><EjemplarGet/></RequireAuth>}/>
+                    <Route path="/libro/:libroid/ejemplar/:ejemplarid/put" element={<RequireAuth><EjemplarPut/></RequireAuth>}/>
+                    <Route path="/libro/:libroid/ejemplar/add" element={<RequireAuth><EjemplarAdd/></RequireAuth>}/>
+                    <Route path="/autor" element={<RequireAuth><AutorGetAll/></RequireAuth>}/>
+                    <Route path="/autor/add" element={<RequireAuth><AutorAdd/></RequireAuth>}/>
+                    <Route path="/autor/:autorid/put" element={<RequireAuth><AutorPut/></RequireAuth>}/>
+                    <Route path="/autor/:autorid" element={<RequireAuth><AutorGet/></RequireAuth>}/>
 
                 </Routes>
             </BrowserRouter>

@@ -31,6 +31,7 @@ class ClienteGetAll extends React.Component<IProps, IState>{
     let ruta = this.rutaClientes;
     let respuesta = await axios.get(ruta, this.headers);
     this.setState({ clientes: respuesta.data });
+    console.log(this.token);
   }
   
   render() {

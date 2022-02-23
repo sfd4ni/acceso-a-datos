@@ -10,18 +10,26 @@ interface IState {
 interface IStateLibros {
   libros: Array<Libro>
 }
-export const PrestamoAdd = () => {
+interface IStatePrestamo {
+  prestamo: PrestamoPost
+}
+export const PrestamoPut = () => {
 const ip = "localhost";
 const puerto = 8080;
 const rutaBase = "http://" + ip + ":" + puerto + "/api/v1";
-const {clienteid} = useParams();
+const {clienteid, prestamoid} = useParams();
 const rutaPrestamos = rutaBase + "/cliente/" + clienteid + "/prestamo";
 const [stateEjemplar, setStateEjemplar] = React.useState<IState>({ejemplar: new Ejemplar(0, "")});
 const [stateLibros, setStateLibros] =  React.useState<IStateLibros>({libros: new Array<Libro>()});
+const [statePrestamoPut, setStatePrestamoPut] = React.useState<IStatePrestamo>({prestamo: new PrestamoPost(new Ejemplar(0, ""), new Date(), new Date())});
 const fechaprestamo = React.useRef<HTMLInputElement>(null);
 const fechadevolucion = React.useRef<HTMLInputElement>(null);
 const navigate = useNavigate();
-
+const ejemplarid = localStorage.getItem("ejemplarid");
+let fechaDevolucionMod = localStorage.getItem("fechaDevolucionMod");
+if (fechaDevolucionMod === null) {
+  fechaDevolucionMod = new Date().toISOString().split("T")[0];
+}
 const token = localStorage.getItem("token") as string;
 const headers = {
   headers: { Authorization: token }
@@ -36,8 +44,17 @@ React.useEffect(() => {
   getLibros();
 }, []);
 
-const postPrestamoAsync = async function postPrestamoAsync (prestamo: PrestamoPost) {
-  await axios.post(rutaPrestamos, prestamo, headers)
+React.useEffect(() => {
+  const getPrestamo = async (id: string | undefined) =>{
+      let { data } = await axios.get(rutaPrestamos + "/" + id, headers);
+      setStatePrestamoPut({prestamo: data});
+      }
+  getPrestamo(prestamoid);
+}, [prestamoid]);
+
+
+const putPrestamoAsync = async function putPrestamoAsync (prestamo: PrestamoPost) {
+  await axios.put(rutaPrestamos+"/"+prestamoid, prestamo, headers)
     .then(function (response) {
       navigate(-1);
       console.log(response);
@@ -56,30 +73,40 @@ const handleOnChangeEjemplar = (event: React.ChangeEvent<HTMLInputElement>) =>  
   console.log(stateEjemplar.ejemplar);
 }
 
-const postPrestamo = (event: React.MouseEvent<HTMLButtonElement>) =>  {
+const putPrestamo = (event: React.MouseEvent<HTMLButtonElement>) =>  {
     event.preventDefault();
     const fechaDevolucion = fechadevolucion.current?.value;
     if (typeof fechaDevolucion === "string") {
-        let prestamo = new PrestamoPost(stateEjemplar.ejemplar, new Date(), new Date(fechaDevolucion));
-        postPrestamoAsync(prestamo);
+        let prestamo = statePrestamoPut.prestamo;
+        prestamo.fechadevolucion = new Date(fechaDevolucion);
+        prestamo.ejemplar = stateEjemplar.ejemplar;
+        putPrestamoAsync(prestamo);
     }
+}
+const parseoDate = (date: Date) => {
+  if (date !== null) {
+    return date.toISOString().split("T")[0];
+  }
 }
 return (
     <>
-        <h3>Crear una prestamo</h3>
+        <h3>Modificar un prestamo</h3>
         <div>
           <span>Prestamo a introducir:</span><br/>
-          <span>Fecha Devolución: </span><input type="text" ref={fechadevolucion} placeholder="YYYY-MM-DD"></input><br/>
+          <span>Fecha Devolución: </span><input type="text" ref={fechadevolucion} defaultValue={fechaDevolucionMod} placeholder="YYYY-MM-DD"></input><br/>
             <fieldset>
             <legend>Elige un ejemplar</legend>
                   {stateLibros.libros?.map((libro: Libro) => {
-                    return (
+                    return (  
                       <>
                       <h5>{libro.titulo}</h5>
                     {libro.ejemplares.map((ejemplar: Ejemplar) => {
                       return (
-                        <label><input type="radio" key={"ejemplar" + ejemplar.ejemplarid} value={ejemplar.ejemplarid+"/"+ejemplar.localizacion} 
-                        name="ejemplaresGroup" onChange={handleOnChangeEjemplar}/>{ejemplar.localizacion}</label>
+                        (ejemplarid === ejemplar.ejemplarid+"")
+                        ? <label><input type="radio" key={"ejemplar" + ejemplar.ejemplarid} value={ejemplar.ejemplarid+"/"+ejemplar.localizacion} 
+                        name="ejemplaresGroup" onChange={handleOnChangeEjemplar} defaultChecked/>{ejemplar.localizacion} </label>
+                        : <label><input type="radio" key={"ejemplar" + ejemplar.ejemplarid} value={ejemplar.ejemplarid+"/"+ejemplar.localizacion} 
+                        name="ejemplaresGroup" onChange={handleOnChangeEjemplar} />{ejemplar.localizacion}</label>
                       );
                     })}
                   </>
@@ -87,7 +114,7 @@ return (
                     })
                   }
           </fieldset>
-          <button onClick={postPrestamo}>Introducir Prestamo</button>
+          <button onClick={putPrestamo}>Modificar Prestamo</button>
         </div>
     </>
 );
