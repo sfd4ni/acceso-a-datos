@@ -49,7 +49,10 @@ return (
     
     <div>
       <h3>Ejemplar {prestamo.ejemplar.localizacion}</h3>
-      <h4>Fecha devolución: {prestamo.fechadevolucion.toString()}</h4>
+      <h4>Fecha devolución: {
+      (prestamo.fechadevolucion !== null) ? 
+      prestamo.fechadevolucion.toString() :
+      "Indefinida"}</h4>
       <h4>Fecha prestamo: {prestamo.fechaprestamo.toString()}</h4>
     </div>
     <button onClick={eliminarPrestamo}>Eliminar</button>

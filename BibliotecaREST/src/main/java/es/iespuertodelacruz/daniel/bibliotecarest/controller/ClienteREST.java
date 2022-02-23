@@ -170,7 +170,10 @@ public class ClienteREST {
 			Optional<Prestamo> optEjem = prestamoService.findById(idPrest);
 			if(optEjem.isPresent()) {
 				Prestamo prestamo = optEjem.get();
-				prestamo.setFechadevolucion(BigInteger.valueOf(prestamoDto.getFechadevolucion().getTime()));
+				if (prestamoDto.getFechadevolucion() != null) {
+					prestamo.setFechadevolucion(BigInteger.valueOf(prestamoDto.getFechadevolucion().getTime()));
+				}
+			
 				prestamo.setFechaprestamo(BigInteger.valueOf(prestamoDto.getFechaprestamo().getTime()));
 				prestamo.setEjemplare(prestamoDto.getEjemplar());
 				
@@ -194,7 +197,10 @@ public class ClienteREST {
 		if(optOp.isPresent()) {
 			Prestamo prestamo = new Prestamo();
 			prestamo.setCliente(optOp.get());
-			prestamo.setFechadevolucion(BigInteger.valueOf(prestamoDto.getFechadevolucion().getTime()));
+			if (prestamoDto.getFechadevolucion() != null) {
+				prestamo.setFechadevolucion(BigInteger.valueOf(prestamoDto.getFechadevolucion().getTime()));
+			}
+			
 			prestamo.setFechaprestamo(BigInteger.valueOf(prestamoDto.getFechaprestamo().getTime()));
 			prestamo.setEjemplare(prestamoDto.getEjemplar());
 			Prestamo prestamoC = null;

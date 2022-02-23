@@ -30,11 +30,12 @@ public class PrestamoDTO {
 		this.prestamoid = prestamo.getPrestamoid(); 
 		this.ejemplar = prestamo.getEjemplare();
 		Date fechaprestamo = new Date(prestamo.getFechaprestamo().longValue());
-		if (fechaprestamo != null) {
+		if (prestamo.getFechaprestamo() != null) {
 			this.fechaprestamo = fechaprestamo;
 		}
-		Date fechadevolucion = new Date(prestamo.getFechadevolucion().longValue());
-		if (fechadevolucion != null) {
+		
+		if (prestamo.getFechadevolucion() != null) {
+			Date fechadevolucion = new Date(prestamo.getFechadevolucion().longValue());
 			this.fechadevolucion = fechadevolucion;
 		}
 		

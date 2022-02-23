@@ -58,10 +58,9 @@ const handleOnChangeEjemplar = (event: React.ChangeEvent<HTMLInputElement>) =>  
 
 const postPrestamo = (event: React.MouseEvent<HTMLButtonElement>) =>  {
     event.preventDefault();
-    const fechaPrestamo = fechaprestamo.current?.value;
     const fechaDevolucion = fechadevolucion.current?.value;
-    if (typeof fechaPrestamo === "string" && typeof fechaDevolucion === "string") {
-        let prestamo = new PrestamoPost(stateEjemplar.ejemplar, new Date(fechaPrestamo), new Date(fechaPrestamo));
+    if (typeof fechaDevolucion === "string") {
+        let prestamo = new PrestamoPost(stateEjemplar.ejemplar, new Date(), new Date(fechaDevolucion));
         postPrestamoAsync(prestamo);
     }
 }
@@ -70,7 +69,6 @@ return (
         <h3>Crear una prestamo</h3>
         <div>
           <span>Prestamo a introducir:</span><br/>
-          <span>Fecha Préstamo: </span><input type="text" ref={fechaprestamo}></input><br/>
           <span>Fecha Devolución: </span><input type="text" ref={fechadevolucion}></input><br/>
             <fieldset>
             <legend>Elige un ejemplar</legend>

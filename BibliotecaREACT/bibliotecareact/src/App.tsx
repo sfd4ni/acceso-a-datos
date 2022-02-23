@@ -11,6 +11,9 @@ import { LibroGet } from './LibroCRUD/LibroGet';
 import { EjemplarGet } from './EjemplarCRUD/EjemplarGet';
 import { EjemplarAdd } from './EjemplarCRUD/EjemplarAdd';
 import { PrestamoAdd } from './PrestamoCRUD/PrestamoAdd';
+import { LibroAdd } from './LibroCRUD/LibroAdd';
+import AutorGetAll from './AutorCRUD/AutorGetAll';
+import { AutorGet } from './AutorCRUD/AutorGet';
 interface IProps { }
 interface IState { alumnos: [] }
 class App extends React.Component<IProps, IState>{
@@ -53,9 +56,12 @@ class App extends React.Component<IProps, IState>{
                     <Route path="/cliente/:clienteid/prestamo/:prestamoid" element={<PrestamoGet/>}/>
                     <Route path="/cliente/:clienteid/prestamo/add" element={<PrestamoAdd/>}/>
                     <Route path="/libro" element={<LibroGetAll/>}/>
+                    <Route path="/libro/add" element={<LibroAdd/>}/>
                     <Route path="/libro/:libroid" element={<LibroGet/>}/>
                     <Route path="/libro/:libroid/ejemplar/:ejemplarid" element={<EjemplarGet/>}/>
                     <Route path="/libro/:libroid/ejemplar/add" element={<EjemplarAdd/>}/>
+                    <Route path="/autor" element={<AutorGetAll/>}/>
+                    <Route path="/autor/:autorid" element={<AutorGet/>}/>
 
                 </Routes>
             </BrowserRouter>
