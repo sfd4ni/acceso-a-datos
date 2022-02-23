@@ -4,6 +4,6 @@ import App from './App';
 import {Login} from './login'
 
 ReactDOM.render(
-    <Login />,
+    <App />,
   document.getElementById('root')
 );

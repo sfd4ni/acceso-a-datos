@@ -8,6 +8,8 @@ import es.iespuertodelacruz.daniel.bibliotecarest.entity.Prestamo;
 
 public class ClienteGET {
 	
+	private int clienteid;
+	
 	private String apellidos;
 
 	private String direccion;
@@ -19,6 +21,7 @@ public class ClienteGET {
 	public ClienteGET() {}
 	
 	public ClienteGET(Cliente cliente) {
+		this.clienteid = cliente.getClienteid();
 		this.apellidos = cliente.getApellidos();
 		this.direccion = cliente.getDireccion();
 		this.nombre = cliente.getNombre();
@@ -59,5 +62,14 @@ public class ClienteGET {
 	public void setPrestamos(List<PrestamoDTO> prestamos) {
 		this.prestamos = prestamos;
 	}
+
+	public int getClienteid() {
+		return clienteid;
+	}
+
+	public void setClienteid(int clienteid) {
+		this.clienteid = clienteid;
+	}
+	
 	
 }

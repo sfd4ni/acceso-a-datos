@@ -12,7 +12,7 @@ const rutaBase = "http://" + ip + ":" + puerto + "/api/login";
 const [statePost, setStatePost] = React.useState<IState>({operadorPost: new Operador("", "")});
 const nickoperador = React.useRef<HTMLInputElement>(null);
 const pwdoperador = React.useRef<HTMLInputElement>(null);
-//const navigate = useNavigate();
+const navigate = useNavigate();
 
 
 const postOperadorEffect = React.useEffect(() => {
@@ -20,7 +20,9 @@ const postOperadorEffect = React.useEffect(() => {
       if (operador.nick !== "" && operador.password !== "") {
         await axios.post(rutaBase, operador)
           .then(function (response) {
-            //navigate('/operadors');
+            localStorage.clear();
+            localStorage.setItem("token",response.data)
+            navigate('/clientes');
             console.log(response.data);
           })
           .catch(function (error) {

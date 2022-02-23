@@ -1,6 +1,16 @@
 import React from 'react';
 import axios from 'axios';
 import { Link, Route, BrowserRouter, Routes } from 'react-router-dom';
+import { Login } from './login';
+import { ClienteGet } from './ClienteCRUD/ClienteGet';
+import ClienteGetAll from './ClienteCRUD/ClienteGetAll';
+import { PrestamoGet } from './PrestamoCRUD/PrestamoGet';
+import { ClienteAdd } from './ClienteCRUD/ClienteAdd';
+import LibroGetAll from './LibroCRUD/LibroGetAll';
+import { LibroGet } from './LibroCRUD/LibroGet';
+import { EjemplarGet } from './EjemplarCRUD/EjemplarGet';
+import { EjemplarAdd } from './EjemplarCRUD/EjemplarAdd';
+import { PrestamoAdd } from './PrestamoCRUD/PrestamoAdd';
 interface IProps { }
 interface IState { alumnos: [] }
 class App extends React.Component<IProps, IState>{
@@ -30,23 +40,23 @@ class App extends React.Component<IProps, IState>{
             <BrowserRouter>
                 <h1>Biblioteca</h1>
                 <nav>
-                    <Link to={'autores/'}>Autores</Link>
-                    <Link to={'libros/'}>Libros</Link>
-                    <Link to={'clientes/'}>Clientes</Link>
+                    <Link to={'autor/'}>Autores</Link><br/>
+                    <Link to={'libro/'}>Libros</Link><br/>
+                    <Link to={'cliente/'}>Clientes</Link><br/>
                 </nav>
                 <Routes>
-                    <Route path="/" />
-                    {/*<Route path="/alumnos" element={<AlumnosGetAll/>}/>
-                    <Route path="/alumnos/add" element={<AlumnosPost/>}/>
-                    <Route path="/alumnos/:id/put" element={<AlumnosPut/>}/>
-                    <Route path="/asignaturas" element={<AsignaturasGetAll/>}/>
-                    <Route path="alumnos/:dnialumno" element={<AlumnosGet/>} />
-                    <Route path="alumnos/:dnialumno/matriculas/:idmatricula" element={<MatriculasGet/>}/>
-                    <Route path="alumnos/:dnialumno/matriculas/add" element={<MatriculasPost/>}/>
-                    <Route path="alumnos/:dnialumno/matriculas/:idmatricula/asignaturas/:id" element={<AsignaturasGet/>}/>
-                    <Route path="/asignaturas/:id" element={<AsignaturasGet/>}/>
-                    <Route path="/asignaturas/add" element={<AsignaturasPost/>}/>
-        <Route path="/asignaturas/:id/put" element={<AsignaturasPut/>}/>*/}
+                    <Route path="/" element={<Login/>}/>
+                    <Route path="/login" element={<Login/>}/>
+                    <Route path="/cliente" element={<ClienteGetAll/>}/>
+                    <Route path="/cliente/add" element={<ClienteAdd/>}/>
+                    <Route path="/cliente/:clienteid" element={<ClienteGet/>}/>
+                    <Route path="/cliente/:clienteid/prestamo/:prestamoid" element={<PrestamoGet/>}/>
+                    <Route path="/cliente/:clienteid/prestamo/add" element={<PrestamoAdd/>}/>
+                    <Route path="/libro" element={<LibroGetAll/>}/>
+                    <Route path="/libro/:libroid" element={<LibroGet/>}/>
+                    <Route path="/libro/:libroid/ejemplar/:ejemplarid" element={<EjemplarGet/>}/>
+                    <Route path="/libro/:libroid/ejemplar/add" element={<EjemplarAdd/>}/>
+
                 </Routes>
             </BrowserRouter>
         );
